@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.super {
+	display: none;
+}
+#container {
+	width: 1920px;
+	height: 1080px;
+	position: absolute;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+
+body {
+	background: cyan;
+	font-family: Helvetica, Arial, sans-serif;
+}

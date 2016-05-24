@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Caspar control panel</title>
+	<link rel="stylesheet" type="text/css" href="media/control.css">
+	<script src="media/js/jquery.min.js"></script>
+</head>
+<body>
+
+	<h1>Caspar CG Control Panel</h1>
+
+	<div id="control">
+		<div id="personSuper" class="container">
+		</div>
+		<div id="infoSuper" class="container">
+		</div>
+		<div id="infoBox" class="container">
+		</div>
+		<div id="superBox" class="container">
+			<div class="super">
+				<h2>Overordnet</h2>
+				<p><input type="submit" class="out_btn all_out" value="ALT UT">
+				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
+			</div>
+		</div>
+	</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+  var randomNum = function() { return Math.floor(Math.random()*1000)};
+
+
+  $(document).ready(function() {
+
+	function digas_status() {
+		socket.emit("digasstatus", 1);
+		setTimeout(digas_status, 5000);
+	}
+	digas_status();
+
+  	function generatePersonSuper(radio_name) {
+		if (!radio_name) {
+			radio_name = 'personsuper_position_1';
+		} else {
+			radio_name = 'personsuper_position_'+radio_name;
+		}
+  		var html = '<div class="super">\
+				<h2>Personsuper</h2>\
+				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
+				<p><label>Navn\
+					<input type="text" class="txt_personsuper_name"></label></p>\
+				<p><label>Tittel\
+					<input type="text" class="txt_personsuper_title"></label></p>\
+				<p><label>\
+					<div class="cube">\
+					  <input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
+					  <input type="radio" name="'+radio_name+'" value="bottomleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="bottomright">\
+					</div>\
+				</label></p>\
+				<input type="submit" class="personsuper_inn in_btn" value="INN">\
+			</div>';
+		return html;
+  	}
+
+  	function generateInfoSuper(radio_name) {
+		if (!radio_name) {
+			radio_name = 'infosuper_position_1';
+		} else {
+			radio_name = 'infosuper_position_'+radio_name;
+		}
+		var html = '<div class="super">\
+				<h2>Infosuper</h2>\
+				<input type="hidden" class="txt_infosuper_id" value="'+randomNum()+'">\
+				<p><label>Tekst\
+					<input type="text" class="txt_infosuper"></label></p>\
+				<p><label>\
+					<div class="cube">\
+					  <input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="topmiddle">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="topright" checked="checked"><br>\
+					  <input type="radio" name="'+radio_name+'" value="bottomleft">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="bottommiddle">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="bottomright">\
+					</div>\
+				</label></p>\
+				<input type="submit" class="infosuper_inn in_btn" value="INN">\
+				<input type="submit" class="infosuper_out out_btn" value="OUT">\
+			</div>';
+		return html;
+  	}
+
+  	function generateInfoBox(radio_name) {
+		if (!radio_name) {
+			radio_name = 'infobox_position_1';
+		} else {
+			radio_name = 'infobox_position_'+radio_name;
+		}
+		var html = '<div class="super">\
+				<h2>Infoboks</h2>\
+				<input type="hidden" class="txt_infobox_id" value="'+randomNum()+'">\
+				<p><label>Tittel\
+					<input type="text" class="txt_infobox_title"></label></p>\
+				<p><label>Tekst\
+					<textarea class="txt_infobox_text"></textarea></p>\
+				<p><label> \
+					<div class="cube">\
+					  <input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
+					  <input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
+					</div>\
+				</label></p>\
+				<input type="submit" class="infobox_inn in_btn" value="INN">\
+				<input type="submit" class="infobox_out out_btn" value="OUT">\
+			</div>';
+		return html;
+  	}
+
+
+  	$(generatePersonSuper()).appendTo("#personSuper");
+  	$(generateInfoSuper()).appendTo("#infoSuper");
+  	$(generateInfoBox()).appendTo("#infoBox");
+
+  	$("#superBox").on('click', 'input.all_out', function(e) {
+  		socket.emit('all_out', 1);
+  	});
+
+  	$("#personSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+	  	$(generatePersonSuper(randomNum())).appendTo("#personSuper");
+	  	$("#personSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+	  		$("#personSuper .super:last").remove();
+	  	});
+  	});
+  	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+	  	$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
+	  	$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+	  		$("#infoSuper .super:last").remove();
+	  	});
+  	});
+  	$("#infoBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+	  	$(generateInfoBox(randomNum())).appendTo("#infoBox");
+	  	$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+	  		$("#infoBox .super:last").remove();
+	  	});
+  	});
+
+  	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
+  		if ($(this).hasClass('infobox_inn')) {
+  			action = 'in';
+  		} else {
+  			action = 'out';
+  		}
+  		var container = $(this).parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			title: $(container).find('.txt_infobox_title').val(),
+  			text: $(container).find('.txt_infobox_text').val(),
+  			position: $(container).find('input[type="radio"]:checked').val(),
+  			action: action
+  		};
+  		socket.emit('infobox', data);
+  	});
+
+  	$("#infoSuper").on('click', 'input[type="submit"]', function(e) {
+  		if ($(this).hasClass('infosuper_inn')) {
+  			action = 'in';
+  		} else {
+  			action = 'out';
+  		}
+  		var container = $(this).parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			text: $(container).find('.txt_infosuper').val(),
+  			position: $(container).find('input[type="radio"]:checked').val(),
+  			action: action
+  		};
+  		socket.emit('infosuper', data);
+  	});
+  	$("#personSuper").on('click', 'input[type="submit"]', function(e) {
+  		var container = $(this).parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			name: $(container).find('.txt_personsuper_name').val(),
+  			title: $(container).find('.txt_personsuper_title').val(),
+  			position: $(container).find('input[type="radio"]:checked').val(),
+  		};
+  		socket.emit('personsuper', data);
+  	});
+
+	socket.on('digas_super', function(cmd) {
+		console.log(cmd);
+		$("#digas").html(cmd.title);
+	});
+
+
+  });
+</script>
+
+</body>
+</html>
+

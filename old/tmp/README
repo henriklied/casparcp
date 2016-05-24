@@ -1,0 +1,19 @@
+For å sørge for at du er på siste versjon av node, kjør disse tre kommandoene:
+
+
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+
+…så kan du kjøre disse to kommandoene:
+
+sudo npm install --save socket.io
+sudo npm install --save express
+
+For å starte serveren, stå i denne mappen i terminal, og skriv node server.js
+
+Da har du startet en server på localhost:3000
+
+Åpne http://localhost:3000 i ett vindu, og http://localhost:3000/show/ i et annet.
+
+:)

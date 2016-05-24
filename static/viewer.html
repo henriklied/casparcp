@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CasparCG Viewer</title>
+	<script src="media/js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="media/css/common.css">
+</head>
+<body>
+
+	<div id="container"></div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var config;
+var socket = io();
+
+$(document).ready(function() {
+
+	$.get('config.json', function(data) {
+		config = data;
+		$('<link rel="stylesheet" type="text/css" href="media/css/'+config.layout+'.css">').appendTo("head");
+		$.getScript('media/js/'+config.layout+'.js', function(data) {
+		});
+	});
+
+
+	function clearSuper(s) {
+		if (s.action == 'out') {
+			$("#super_"+s.id).fadeOut('slow');
+			setTimeout(function() {
+				$("#super_"+s.id).remove();
+			}, 2000);
+			return true;
+		}
+		if ($("#super_"+s.id).length) {
+			$("#super_"+s.id).remove();
+		}
+		return false;
+	}
+
+	socket.on('all_out', function(e) {
+		$(".super").fadeOut('slow');
+		setTimeout(function() {
+			$(".super").remove()
+		}, 2500);
+	});
+
+  socket.on('personsuper', function(s) {
+  	if (!clearSuper(s)) {
+  		var html = '<div class="super personsuper '+s.position+'" id="super_'+s.id+'">\
+  				<div class="name"><span>'+s.name+'</span></div>';
+  		if (s.title != "") {
+  			html += '<div class="title"><span>'+s.title+'</span></div>';
+  		}
+  		html += '</div>';
+  		$(html).appendTo('#container');
+  		$(document).trigger('personsuper', s);
+  		$("#super_"+s.id).fadeIn('slow')
+			// $("#super_"+s.id).delay(6000).fadeOut('slow');
+			// setTimeout(function() {
+			// 	$("#super_"+s.id).remove();
+			// }, 9000);
+  	}
+	});
+
+  socket.on('infosuper', function(s) {
+  	if (!clearSuper(s)) {
+  		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
+  				<div class="text">'+s.text+'</div></div>';
+  		$(html).appendTo('#container');
+  		$(document).trigger('infosuper', s);
+  		$("#super_"+s.id).fadeIn('slow');
+  	}
+	});
+
+  socket.on('infobox', function(s) {
+  	if (!clearSuper(s)) {
+  		var html = '<div class="super infobox '+s.position+'" id="super_'+s.id+'">';
+  		if (s.title != "") {
+  			html += '<div class="title">'+s.title+'</div>';
+  		}
+  		html += '<div class="text">'+s.text+'</div></div>';
+  		$(html).appendTo('#container');
+  		$(document).trigger('infobox', s);
+  		$("#super_"+s.id).fadeIn('slow');
+  	}
+	});
+
+});
+</script>
+</html>

@@ -1,0 +1,12 @@
+{
+	"name": "Default config",
+	"panes": [
+		{
+			"name": "Kart",
+			"type": "mapViewer",
+			"params": {
+				"url": "http://160.68.74.102/ssr/view/#zoom=14",
+			}
+		}
+	]
+}

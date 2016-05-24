@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'LFTBook';
+  src: url('/media/fonts/LFT_Etica_BookItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'LFTBold';
+  src: url('/media/fonts/LFT_Etica_ExtraboldItalic.woff') format('woff');
+}
+
+
+body {
+	font-family: "LFTBold";
+}
+
+.super {
+	position: absolute;
+}
+
+.personsuper div.name, .personsuper div.title {
+	left: 0;
+}
+.personsuper div.name span, .personsuper div.title span {
+	opacity: 0;
+}
+
+.personsuper, .personsuper div.name, .personsuper div.title {
+	width: 900px;
+}
+.personsuper {
+	color: white;
+	min-height: 150px;
+	position: absolute;
+}
+.personsuper div.name {
+	position: absolute;
+	overflow: hidden;
+	height: 80px;
+	font-size: 60px;
+	top: 0;
+}
+.personsuper div.name span {
+	position: absolute;
+	display: block;
+	text-transform: uppercase;
+	font-weight: 100;
+	bottom: -100px;
+	width: 100%;
+}
+.personsuper div.title {
+	position: absolute;
+	top: 70px;
+	overflow: hidden;
+	height: 60px;
+	font-size: 45px;
+}
+.personsuper div.title span {
+	top: -100px;
+	position: absolute;
+	font-family: "LFTBook";
+	display: block;
+	width: 100%;
+}
+
+.personsuper video {
+	width: 200px;
+	height: auto;
+	position: absolute;
+	left: -60px;
+	top: -40px;
+}
+
+.topleft {
+	top: 100px;
+	left: 100px;
+}
+.topright {
+	top: 100px;
+	right: 100px;
+}
+.bottomleft {
+	bottom: 100px;
+	left: 100px;
+}
+
+.bottomright {
+	bottom: 100px;
+	right: 100px;
+}
+
+.personsuper.bottomright video, .personsuper.topright video {
+	right: -50px;
+	left: auto;
+}
+
+.personsuper.bottomright span, .personsuper.topright span {
+	text-align: right;
+}

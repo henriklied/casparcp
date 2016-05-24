@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Caspar viewer</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</head>
+<body id="viewer">
+
+	<div id="container">
+
+		<div class="super bottomLeftSuper"></div>
+	</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+  // Lytt på "cmd"-kommandoer.
+  socket.on('cmd', function(cmd){
+  	// Når mottatt, kjør fadeIn på div.bottomLeftSuper,
+  	// sett HTML-en til verdien i cmd-kommandoen, og fade out etter 1500ms
+  	$(".bottomLeftSuper").fadeIn("slow").html(cmd).delay(1500).fadeOut("slow");
+  });
+
+</script>
+
+</body>
+</html>
+

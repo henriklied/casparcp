@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Caspar control panel</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</head>
+<body>
+
+	<div id="container">
+		<h1>Caspar CG Control Panel</h1>
+
+		<input type="text" id="text" name="text">
+		<input type="submit" id="sub" value="Send">
+	</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+  $(document).ready(function() {
+  	// Når du fyller inn en tekst i tekstfeltet, og trykker på
+  	// submit, send "cmd" med teksten til serveren.
+
+  	// Serveren kringkaster så denne kommandoen til alle som lytter
+  	// på "cmd"-events (i vårt tilfelle show.html)
+  	$("#sub").click(function(e) {
+  		socket.emit("cmd", $("#text").val());
+  	});
+  });
+</script>
+
+</body>
+</html>
+
