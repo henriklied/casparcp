@@ -7,5 +7,4 @@ $(document).on('personsuper', function(e, s) {
 	$('<video src="media/gfx/hornoya/uin.webm" autoplay></video>').appendTo("#super_"+s.id);
 });
 $(document).on('infobox', function(e, s) {
-	$('<video src="media/gfx/hornoya/uin.webm" autoplay></video>').appendTo("#super_"+s.id);
 });

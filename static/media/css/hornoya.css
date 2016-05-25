@@ -11,9 +11,35 @@
 
 body {
 	font-family: "LFTBold";
+	color: white;
 }
 
 .super {
+	position: absolute;
+}
+
+.super video {
+	position: absolute;
+}
+.infosuper {
+	font-size: 60px;
+}
+
+.infobox {
+	max-width: 430px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4);	
+    color: white;	
+}
+.infobox .title {
+    font-size: 50px;
+    text-transform: uppercase;
+}
+.infobox .text {
+	font-size: 30px;
+	font-family: "LFTBook";
+}
+.infobox video {
 	position: absolute;
 }
 
@@ -94,5 +120,9 @@ body {
 }
 
 .personsuper.bottomright span, .personsuper.topright span {
+	right: 2px;
 	text-align: right;
+}
+.personsuper.bottomleft span, .personsuper.topleft span {
+	left: 2px;
 }

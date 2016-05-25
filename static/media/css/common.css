@@ -9,11 +9,103 @@
 	width: 1920px;
 	height: 1080px;
 	position: absolute;
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
 }
 
 body {
-	background: cyan;
+	background: green;
 	font-family: Helvetica, Arial, sans-serif;
+}
+
+
+
+.sombiSlider {
+  width: 1920px;
+  height: 1080px;
+  display: none;
+  position: absolute;
+}
+
+.sombiSlider figure img {
+  display: none;
+}
+
+.sombiSlider figure .img {
+  width: 250px;
+  height: 250px;
+  background-size: cover;
+  background-position: center center;
+}
+
+.sombiSlider figure figcaption {
+  text-align: center;
+  color: black;
+  font-family: "LFTBook";
+  font-size: 10px;
+}
+
+.sombiSlider figure figcaption h2 {
+  margin: 0;
+  padding: 0;
+  display: block;
+  line-height: 1.5em;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+
+.sombiSlider figure figcaption p {
+  position: absolute;
+  top: 19px;
+  left: 30px;
+  display: block;
+  font-weight: bold;
+}
+
+.sombiSlider figure {
+  background-color: white;
+  box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  margin-top: 20%;
+  width: 250px;
+  transform: scale(0.7);
+  transition: all 1s ease-in-out, z-index 0s ease-in-out 1s;
+  position: absolute;
+  z-index: 0;
+}
+
+.sombiSlider figure:nth-child(2n) {
+  transform: rotate(10deg) scale(0.7);
+}
+
+.sombiSlider figure:nth-child(3n) {
+  transform: rotate(-10deg) scale(0.7);
+}
+
+.sombiSlider figure.prev,
+.sombiSlider figure.next {
+  top: 0;
+  transform: zoom(0.9);
+}
+
+.sombiSlider figure.prev {
+  left: 0%;
+}
+
+.sombiSlider figure.next {
+  left: 100%;
+  margin-left: -300px;
+  z-index: 09;
+  position: absolute;
+}
+
+.sombiSlider figure.current {
+  transform: rotate(0deg) scale(2);
+  left: 50%;
+  margin-top: 20%;
+  margin-left: -125px;
+  z-index: 100;
 }

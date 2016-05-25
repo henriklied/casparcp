@@ -15,6 +15,12 @@ h1 {
 h2 {
 	font-size: 20px;
 }
+
+input[type="text"] {
+	padding: 3px;
+	margin-bottom: 10px;
+}
+
 .container {
 	display: inline-block;
     vertical-align:top;

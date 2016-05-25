@@ -9,6 +9,8 @@ const fs = require('fs');
 
 var digasPath = './digas.xml';
 
+var sombi = 'http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=539e98bcafc807ae130000f1'; // 539e98bcafc807ae130000f1';
+
 var publishDigas = true;
 
 var currentDigas;
@@ -29,6 +31,63 @@ String.prototype.hashCode = function(){
 	}
 	return hash;
 }
+
+
+function sombiGenerator(project_id) {
+	project_id = '539e98bcafc807ae130000f1';
+	try {
+		request(sombi, function (error, response, body) {
+			if(error != null) {
+				console.log("Could not load sombi json");
+				console.log(error);
+				return true;
+			}
+		var images = [];
+		var tweets = []
+		body = JSON.parse(body);
+		for (obj in body.results) {
+			(function(obj, body) {
+				obj = body.results[obj];
+				if (obj.project_metadata[0].starred) {
+					if ((obj.image.standard != null) && (obj.src != 'twitter')) {
+						var urlp = url.parse(obj.image.standard).pathname+'.jpg';
+						urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+						var localfp = './static/images/'+urlp;
+
+						fs.open(localfp, 'r', function(error, fd) {
+							if (error) {
+								request.get({url: obj.image.standard, encoding: 'binary'}, function(error, response, body) {
+									if (response.toJSON().headers['content-length'] < 10000) {
+										return false;
+									}
+
+									var urlp = url.parse(obj.image.standard).pathname+'.jpg';
+									urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+									var localfp = './static/images/'+urlp;
+									fs.writeFile(localfp, body, 'binary');
+								});
+							}
+						});
+						var data = 'images/'+urlp;
+						images.push({url: data, title: obj.title, avatar: obj.user.avatar, user: obj.user});
+					} 
+					else if (obj.src == 'twitter') {
+						var data = '<div class="ticker__item">'+obj.title+'<span>'+obj.user.username+'</span></div>';
+						tweets.push({src: data});
+					}
+				}
+				})(obj, body); 
+			}
+			fs.writeFile('./static/images.json', JSON.stringify(images));
+			fs.writeFile('./static/tweets.json', JSON.stringify(tweets));
+		});
+	} catch (e) {
+		console.log("Error in Sombi");
+	}
+	setTimeout(sombiGenerator, 30000);
+}
+
+sombiGenerator();
 
 function parseDigas() {
 	if (!publishDigas) {
@@ -84,6 +143,11 @@ io.on('connection', function(socket){
 	});
 	socket.on('infobox', function(person) {
 		io.emit('infobox', person);
+	});
+	socket.on('instagram', function(s) {
+		fs.readFile('./static/images.json', function(err, data) {
+			io.emit("instagram", {action: 'in', id: 'lksad123', images: JSON.parse(data)});
+		});
 	});
 	socket.on('infosuper', function(person) {
 		io.emit('infosuper', person);

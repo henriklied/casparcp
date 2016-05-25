@@ -22,6 +22,9 @@
 				<h2>Overordnet</h2>
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
+				<p><label>Sombi-ID: <input type="text" value="jnaks2183j92313" id="sombi_id"></label><input type="submit" class="in_btn" value="Oppdater Sombi-bilder"></p>
+				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
+
 			</div>
 		</div>
 	</div>
@@ -191,6 +194,10 @@
   		};
   		socket.emit('personsuper', data);
   	});
+
+  	$("#superBox").on('click', 'input.instagram_start', function(e) {
+  		socket.emit('instagram', 1);
+  	})
 
 	socket.on('digas_super', function(cmd) {
 		console.log(cmd);
