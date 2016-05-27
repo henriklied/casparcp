@@ -25,21 +25,21 @@ body {
 	font-size: 60px;
 }
 
-.infobox {
+.infobox, .somesuper {
 	max-width: 430px;
     padding: 20px;
     background: rgba(0, 0, 0, 0.4);	
     color: white;	
 }
-.infobox .title {
+.infobox .title, .somesuper .title {
     font-size: 50px;
     text-transform: uppercase;
 }
-.infobox .text {
+.infobox .text, .somesuper .text {
 	font-size: 30px;
 	font-family: "LFTBook";
 }
-.infobox video {
+.infobox video, .somesuper video {
 	position: absolute;
 }
 

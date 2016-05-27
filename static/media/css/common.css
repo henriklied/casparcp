@@ -18,7 +18,22 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+/*.somesuper {
+    height : 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.somesuper > div  {
+  width: 500px;
+  background: white;
+  padding: 20px;
+  color: black;
+}
+*/
 
 .sombiSlider {
   width: 1920px;

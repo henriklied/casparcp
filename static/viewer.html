@@ -66,6 +66,19 @@ $(document).ready(function() {
   	}
 	});
 
+	socket.on('somesuper', function(s) {
+		if (!clearSuper(s)) {
+  		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
+  		if (s.title != "") {
+  			html += '<div class="title">'+s.title+'</div>';
+  		}
+  		html += '<div class="text">'+s.text+'</div></div>';
+  		$(html).appendTo('#container');
+  		$(document).trigger('superbox', s);
+  		$("#super_"+s.id).fadeIn('slow');
+  	}
+	});
+
   socket.on('infosuper', function(s) {
   	if (!clearSuper(s)) {
   		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
@@ -90,7 +103,7 @@ $(document).ready(function() {
 	});
 
 	socket.on('instagram', function(s) {
-		console.log('Har William Svart');
+
 		if (!clearSuper(s)) {
 			unloadSlider();
 			var html = '<div class="sombiSlider super" id="super_'+s.id+'"></div>';

@@ -8,7 +8,37 @@
 </head>
 <body>
 
-	<h1>Caspar CG Control Panel</h1>
+		<div id="superBox">
+			<div class="super">
+				<h2>Overordnet</h2>
+				<p><input type="submit" class="out_btn all_out" value="ALT UT">
+				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
+				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
+				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
+				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
+				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
+			</div>
+		</div>
+
+<!-- 	<div id="config">
+		<h2>Innstillinger</h2>
+		<div class="container">
+			<div class="super">
+				<p><label>Sombi-URL <input type="text" value="" id="config_sombi_url"></label></p>
+
+				<p><label>GPS-ID</label>
+					<select id="config_gps_id">
+					  <option value="8">8</option>
+					  <option value="9">9</option>
+					  <option value="10">10</option>
+					  <option value="11">11</option>
+					  <option value="12">12</option>
+					</select></p>
+
+				<input type="submit" value="Lagre" id="config_save">
+			</div>
+		</div>
+	</div> -->
 
 	<div id="control">
 		<div id="personSuper" class="container">
@@ -17,26 +47,41 @@
 		</div>
 		<div id="infoBox" class="container">
 		</div>
-		<div id="superBox" class="container">
-			<div class="super">
-				<h2>Overordnet</h2>
-				<p><input type="submit" class="out_btn all_out" value="ALT UT">
-				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
-				<p><label>Sombi-ID: <input type="text" value="jnaks2183j92313" id="sombi_id"></label><input type="submit" class="in_btn" value="Oppdater Sombi-bilder"></p>
-				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
-
-			</div>
+		<div id="someBox" class="container">
 		</div>
 	</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io();
+  var config;
 
   var randomNum = function() { return Math.floor(Math.random()*1000)};
 
-
   $(document).ready(function() {
+
+  	function loadConfig() {
+		$.get('config.json', function(data) {
+			config = data;
+			socket.emit('get_personsuper', config.personsuper_csv);
+		});  		
+  	}
+
+  	loadConfig();
+
+  	function updatePersonsuper(data) {
+  		config.personsuper = data;
+  		$(".personsuper_csv").html('');
+  		$.each(data, function(k,v) {
+  			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.personsuper_csv');
+  		});
+  	}
+
+
+  	$('#config input[type="submit"]').click(function(e) {
+  		socket.emit('config_save', {sombi_url: $("#config_sombi_url").val(), gps_id: $("#config_gps_id").val()})
+  		setTimeout(loadConfig, 1500);
+  	});
 
 	function digas_status() {
 		socket.emit("digasstatus", 1);
@@ -53,6 +98,8 @@
   		var html = '<div class="super">\
 				<h2>Personsuper</h2>\
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
+				<p><label class="personsuper_csv_label">Personsupre\
+					<select class="personsuper_csv"></select> <input type="submit" value="Sett inn"></label></p>\
 				<p><label>Navn\
 					<input type="text" class="txt_personsuper_name"></label></p>\
 				<p><label>Tittel\
@@ -124,10 +171,42 @@
 		return html;
   	}
 
+  	function generateSomeBox(radio_name) {
+		if (!radio_name) {
+			radio_name = 'somebox_position_1';
+		} else {
+			radio_name = 'somebox_position_'+radio_name;
+		}
+		var html = '<div class="super">\
+				<h2>SoMe-boks</h2>\
+				<input type="hidden" class="txt_somebox_id" value="'+randomNum()+'">\
+				<p><label>URL\
+					<input type="url" class="txt_somebox_url" style="display: inline;"> <input type="submit" class="load_someurl" value="Last inn"></label></p>\
+				<p><label>Tittel\
+					<input type="text" class="txt_somebox_title"></label></p>\
+				<p><label>Tekst\
+					<textarea class="txt_somebox_text"></textarea></p>\
+				<p><label><input type="checkbox" class="source-facebook some-source" value="facebook"> Facebook</label><br><label><input type="checkbox" class="source-twitter some-source" value="twitter"> Twitter</label></p>\
+				<p><label> \
+					<div class="cube">\
+					  <input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
+					  <input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
+					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
+					</div>\
+				</label></p>\
+				<input type="submit" class="somebox_inn in_btn" value="INN">\
+				<input type="submit" class="somebox_out out_btn" value="OUT">\
+			</div>';
+		return html;
+  	}
+
 
   	$(generatePersonSuper()).appendTo("#personSuper");
   	$(generateInfoSuper()).appendTo("#infoSuper");
   	$(generateInfoBox()).appendTo("#infoBox");
+  	$(generateSomeBox()).appendTo("#someBox");
+
 
   	$("#superBox").on('click', 'input.all_out', function(e) {
   		socket.emit('all_out', 1);
@@ -135,6 +214,7 @@
 
   	$("#personSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 	  	$(generatePersonSuper(randomNum())).appendTo("#personSuper");
+	  	updatePersonsuper(config.personsuper);
 	  	$("#personSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
 	  		$("#personSuper .super:last").remove();
 	  	});
@@ -149,6 +229,12 @@
 	  	$(generateInfoBox(randomNum())).appendTo("#infoBox");
 	  	$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
 	  		$("#infoBox .super:last").remove();
+	  	});
+  	});
+  	$("#someBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+	  	$(generateSomeBox(randomNum())).appendTo("#someBox");
+	  	$("#someBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+	  		$("#someBox .super:last").remove();
 	  	});
   	});
 
@@ -184,7 +270,7 @@
   		};
   		socket.emit('infosuper', data);
   	});
-  	$("#personSuper").on('click', 'input[type="submit"]', function(e) {
+  	$("#personSuper").on('click', '.personsuper_inn', function(e) {
   		var container = $(this).parent();
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
@@ -195,9 +281,71 @@
   		socket.emit('personsuper', data);
   	});
 
+  	$("#personSuper").on('click', '.personsuper_csv_label input[type="submit"]', function(e) {
+  		var choice = $(this).parent().find('select').val();
+  		choice = config.personsuper[choice];
+  		$(this).parent().parent().parent().find('.txt_personsuper_name').val(choice.name);
+  		$(this).parent().parent().parent().find('.txt_personsuper_title').val(choice.title);
+	});
+
   	$("#superBox").on('click', 'input.instagram_start', function(e) {
   		socket.emit('instagram', 1);
-  	})
+  	});
+
+  	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
+  		console.log("KLIKKA");
+  		socket.emit('instagram_refresh', config.sombi_url);
+  	});
+
+  	$("#superBox").on('change', 'input#activate_digas', function(e) {
+  		console.log(this.checked);
+  	});
+
+  	$("#superBox").on('click', 'input.update_personsuper', function(e) {
+  		socket.emit('get_personsuper', config.personsuper_csv);
+  	});
+
+  	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
+  		if ($(this).hasClass('somebox_inn')) {
+  			action = 'in';
+  		} else {
+  			action = 'out';
+  		}
+  		var container = $(this).parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			title: $(container).find('.txt_somebox_title').val(),
+  			text: $(container).find('.txt_somebox_text').val(),
+  			position: $(container).find('input[type="radio"]:checked').val(),
+  			source: $(container).find('input.some-source:checked').val(),
+  			action: action
+  		};
+  		console.log(data);
+  		socket.emit('somesuper', data);
+  	});
+
+
+  	$("#someBox").on('click', 'input.load_someurl', function(e) {
+  		var container = $(this).parent().parent().parent();
+  		socket.emit('get_some', {url: $(container).find(".txt_somebox_url").val(), id: $(container).find('input[type="hidden"]').val()});
+  	});
+
+  	socket.on('get_some', function(data) {
+  		container = $('input[value="'+data.id+'"]').parent();
+  		$(container).find('.some-source').prop('checked', false);
+  		$(container).find(".txt_somebox_text").val(data.text);
+  		$(container).find(".txt_somebox_title").val(data.title);
+  		$(container).find(".source-"+data.source).prop('checked', true);
+  	});
+
+  	socket.on('instagram_refresh', function(msg) {
+  		console.log("Insta refresh", msg);
+  	});
+
+  	socket.on('get_personsuper', function(data) {
+  		updatePersonsuper(data);
+  	});
+
 
 	socket.on('digas_super', function(cmd) {
 		console.log(cmd);

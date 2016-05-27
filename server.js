@@ -1,5 +1,6 @@
 var request = require('request');
 var url = require('url');
+var cheerio = require('cheerio');
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -32,9 +33,9 @@ String.prototype.hashCode = function(){
 	return hash;
 }
 
-
-function sombiGenerator(project_id) {
-	project_id = '539e98bcafc807ae130000f1';
+function sombiGenerator(sombi_url) {
+	sombi_url = url.parse(sombi_url);
+	var project_id = sombi_url.search.split('project_id=')[1];
 	try {
 		request(sombi, function (error, response, body) {
 			if(error != null) {
@@ -43,7 +44,6 @@ function sombiGenerator(project_id) {
 				return true;
 			}
 		var images = [];
-		var tweets = []
 		body = JSON.parse(body);
 		for (obj in body.results) {
 			(function(obj, body) {
@@ -52,6 +52,7 @@ function sombiGenerator(project_id) {
 					if ((obj.image.standard != null) && (obj.src != 'twitter')) {
 						var urlp = url.parse(obj.image.standard).pathname+'.jpg';
 						urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+
 						var localfp = './static/images/'+urlp;
 
 						fs.open(localfp, 'r', function(error, fd) {
@@ -60,34 +61,27 @@ function sombiGenerator(project_id) {
 									if (response.toJSON().headers['content-length'] < 10000) {
 										return false;
 									}
-
 									var urlp = url.parse(obj.image.standard).pathname+'.jpg';
 									urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+									
 									var localfp = './static/images/'+urlp;
 									fs.writeFile(localfp, body, 'binary');
 								});
 							}
 						});
-						var data = 'images/'+urlp;
-						images.push({url: data, title: obj.title, avatar: obj.user.avatar, user: obj.user});
+						images.push({url: 'images/'+urlp, title: obj.title, avatar: obj.user.avatar, user: obj.user});
 					} 
-					else if (obj.src == 'twitter') {
-						var data = '<div class="ticker__item">'+obj.title+'<span>'+obj.user.username+'</span></div>';
-						tweets.push({src: data});
-					}
 				}
 				})(obj, body); 
 			}
 			fs.writeFile('./static/images.json', JSON.stringify(images));
-			fs.writeFile('./static/tweets.json', JSON.stringify(tweets));
 		});
 	} catch (e) {
 		console.log("Error in Sombi");
 	}
-	setTimeout(sombiGenerator, 30000);
+	// setTimeout(sombiGenerator, 30000);
 }
 
-sombiGenerator();
 
 function parseDigas() {
 	if (!publishDigas) {
@@ -144,6 +138,10 @@ io.on('connection', function(socket){
 	socket.on('infobox', function(person) {
 		io.emit('infobox', person);
 	});
+	socket.on('instagram_refresh', function(s) {
+		sombiGenerator(s);
+		io.emit('instagram_refresh', 1);
+	});
 	socket.on('instagram', function(s) {
 		fs.readFile('./static/images.json', function(err, data) {
 			io.emit("instagram", {action: 'in', id: 'lksad123', images: JSON.parse(data)});
@@ -152,8 +150,53 @@ io.on('connection', function(socket){
 	socket.on('infosuper', function(person) {
 		io.emit('infosuper', person);
 	});
+	socket.on('somesuper', function(s) {
+		io.emit('somesuper', s);
+	});
 	socket.on('all_out', function(e) {
 		io.emit('all_out', 1);
+	});
+
+	socket.on('get_some', function(s) {
+		if (s.url.indexOf('facebook.com') > -1) {
+			var oembed = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
+			var source = 'facebook';
+		}
+		if (s.url.indexOf('twitter.com') > -1) {
+			var oembed = 'https://api.twitter.com/1/statuses/oembed.json?url=';
+			var source = 'twitter';
+		}
+		if (oembed == null) {
+			return false;
+		}
+		request.get({
+			url: oembed+s.url,
+			headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}}, 
+			function(error, response, body) {
+				body = JSON.parse(body);
+				var b = cheerio.load(body.html);
+				socket.emit('get_some', {
+					title: body.author_name,
+					text: cheerio(b.html()).find('blockquote p').text(),
+					source: source,
+					id: s.id
+				});
+			});
+	});
+
+	socket.on('get_personsuper', function(url) {
+		request.get({url: url}, function(error, response, body) {
+			body = body.split("\r\n");
+			var data = [];
+			for (var line in body) {
+				if (line == 0) {
+					continue;
+				}
+				line = body[line].split(",");
+				data.push({name: line[0], title: line[1]});
+			}
+			socket.emit('get_personsuper', data);
+		});
 	});
 
 	socket.on('digasstatus', function(msg) {
@@ -178,7 +221,6 @@ io.on('connection', function(socket){
 			});
 		});
 	});
-
 
 });
 
