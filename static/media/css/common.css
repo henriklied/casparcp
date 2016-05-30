@@ -9,12 +9,9 @@
 	width: 1920px;
 	height: 1080px;
 	position: absolute;
-	border-bottom: 1px solid white;
-	border-right: 1px solid white;
 }
 
 body {
-	background: green;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
