@@ -151,6 +151,9 @@ io.on('connection', function(socket){
 	socket.on('infobox', function(person) {
 		io.emit('infobox', person);
 	});
+	socket.on('restart_casparcg', function() {
+		loadCaspar();
+	});
 	socket.on('instagram_refresh', function(s) {
 		sombiGenerator(s);
 		io.emit('instagram_refresh', 1);

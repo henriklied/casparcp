@@ -332,6 +332,10 @@
   		socket.emit('somesuper', data);
   	});
 
+  	$(".restart_casparcg").click(function() {
+  		socket.emit('restart_casparcg', 1);
+  	});
+
 
   	$("#someBox").on('click', 'input.load_someurl', function(e) {
   		var container = $(this).parent().parent().parent();
