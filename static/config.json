@@ -1,0 +1,6 @@
+{
+	"gps_id": 13,
+	"layout": "hornoya",
+	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1gFr1pWUn3qA6OphGPImzYi6x7CjJzDnkeaetmNlKHys&exportFormat=csv",
+	"sombi_url": "http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=539e98bcafc807ae130000f1"
+}
