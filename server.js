@@ -19,10 +19,17 @@ var currentDigas;
 
 var digasTimers = {outTimer: null};
 
-var client = new net.Socket();
-client.connect(5250, '127.0.0.1', function() {
-	client.write('PLAY 1-10 [HTML] "http://127.0.0.1:8000/viewer.html" CUT 1 Linear RIGHT\r\n');
-});
+function loadCaspar() {
+	var client = new net.Socket();
+	client.connect(5250, '127.0.0.1', function() {
+		client.write('PLAY 1-10 [HTML] "http://127.0.0.1:8000/viewer.html" CUT 1 Linear RIGHT\r\n');
+	});
+	client.on('error', function(err) {
+		console.log("Could not connect to Caspar CG Server.");
+	});	
+}
+
+setTimeout(loadCaspar, 8000);
 
 function clearDigas() {
 	clearTimeout(digasTimers.outTimer);
