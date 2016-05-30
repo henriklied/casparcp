@@ -112,7 +112,9 @@
 					  <input type="radio" name="'+radio_name+'" value="bottomright">\
 					</div>\
 				</label></p>\
-				<input type="submit" class="personsuper_inn in_btn" value="INN">\
+				<div class="submitters">\
+					<input type="submit" class="personsuper_inn in_btn" value="INN">\
+				</div>\
 			</div>';
 		return html;
   	}
@@ -138,8 +140,10 @@
 					  <input type="radio" name="'+radio_name+'" value="bottomright">\
 					</div>\
 				</label></p>\
-				<input type="submit" class="infosuper_inn in_btn" value="INN">\
-				<input type="submit" class="infosuper_out out_btn" value="OUT">\
+				<div class="submitters">\
+					<input type="submit" class="infosuper_inn in_btn" value="INN">\
+					<input type="submit" class="infosuper_out out_btn" value="OUT">\
+				</div>\
 			</div>';
 		return html;
   	}
@@ -165,8 +169,10 @@
 					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
 				</label></p>\
-				<input type="submit" class="infobox_inn in_btn" value="INN">\
-				<input type="submit" class="infobox_out out_btn" value="OUT">\
+				<div class="submitters">\
+					<input type="submit" class="infobox_inn in_btn" value="INN">\
+					<input type="submit" class="infobox_out out_btn" value="OUT">\
+				</div>\
 			</div>';
 		return html;
   	}
@@ -195,8 +201,10 @@
 					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
 				</label></p>\
-				<input type="submit" class="somebox_inn in_btn" value="INN">\
-				<input type="submit" class="somebox_out out_btn" value="OUT">\
+				<div class="submitters">\
+					<input type="submit" class="somebox_inn in_btn" value="INN">\
+					<input type="submit" class="somebox_out out_btn" value="OUT">\
+				</div>\
 			</div>';
 		return html;
   	}
@@ -216,25 +224,25 @@
 	  	$(generatePersonSuper(randomNum())).appendTo("#personSuper");
 	  	updatePersonsuper(config.personsuper);
 	  	$("#personSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$("#personSuper .super:last").remove();
+	  		$(this).parent().remove();
 	  	});
   	});
   	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 	  	$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
 	  	$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$("#infoSuper .super:last").remove();
+	  		$(this).parent().remove();
 	  	});
   	});
   	$("#infoBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 	  	$(generateInfoBox(randomNum())).appendTo("#infoBox");
 	  	$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$("#infoBox .super:last").remove();
+	  		$(this).parent().remove();
 	  	});
   	});
   	$("#someBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 	  	$(generateSomeBox(randomNum())).appendTo("#someBox");
 	  	$("#someBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$("#someBox .super:last").remove();
+	  		$(this).parent().remove();
 	  	});
   	});
 
@@ -244,7 +252,7 @@
   		} else {
   			action = 'out';
   		}
-  		var container = $(this).parent();
+  		var container = $(this).parent().parent();
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
   			title: $(container).find('.txt_infobox_title').val(),
@@ -261,7 +269,7 @@
   		} else {
   			action = 'out';
   		}
-  		var container = $(this).parent();
+  		var container = $(this).parent().parent();
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
   			text: $(container).find('.txt_infosuper').val(),
@@ -271,7 +279,7 @@
   		socket.emit('infosuper', data);
   	});
   	$("#personSuper").on('click', '.personsuper_inn', function(e) {
-  		var container = $(this).parent();
+  		var container = $(this).parent().parent();
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
   			name: $(container).find('.txt_personsuper_name').val(),
@@ -311,7 +319,7 @@
   		} else {
   			action = 'out';
   		}
-  		var container = $(this).parent();
+  		var container = $(this).parent().parent();
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
   			title: $(container).find('.txt_somebox_title').val(),

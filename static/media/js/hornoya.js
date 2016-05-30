@@ -1,5 +1,4 @@
 $(document).on('infosuper', function(e, s) {
-	$('<video src="media/gfx/hornoya/uin.webm" autoplay></video>').appendTo("#super_"+s.id);
 });
 $(document).on('personsuper', function(e, s) {
 	$("#super_"+s.id).find('.title span').delay(1000).animate({top: "0", opacity: 1}, 500);

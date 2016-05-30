@@ -7,6 +7,24 @@ body {
 	display: block;
 }
 
+.submitters {
+	float: right;
+}
+.submitters:after {
+	content: " ";
+	display: block;
+	clear: both;
+	height: 30px;
+}
+
+.super {
+	clear: both;
+}
+
+#infoSuper {
+	width: 300px;
+}
+
 #control, h1, #config, #superBox {
 	max-width: 95%;
 	margin: 0 auto;
@@ -120,4 +138,5 @@ textarea {
 	border: 1px solid #ccc;
 	padding: 5px;
 	display: inline-block;
+	float: left;
 }
