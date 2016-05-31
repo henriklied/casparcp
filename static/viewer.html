@@ -62,11 +62,12 @@ $(document).ready(function() {
 			$("#super_"+s.id).delay(6000).fadeOut('slow');
 			setTimeout(function() {
 				$("#super_"+s.id).remove();
-			}, 8000);
+			}, 9000);
   	}
 	});
 
 	socket.on('somesuper', function(s) {
+			console.log("Heia");
 		if (!clearSuper(s)) {
   		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
   		if (s.title != "") {
@@ -103,7 +104,7 @@ $(document).ready(function() {
 	});
 
 	socket.on('instagram', function(s) {
-
+		console.log('Har William Svart');
 		if (!clearSuper(s)) {
 			unloadSlider();
 			var html = '<div class="sombiSlider super" id="super_'+s.id+'"></div>';
