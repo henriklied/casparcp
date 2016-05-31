@@ -100,7 +100,7 @@ body {
 .sombiSlider figure.prev,
 .sombiSlider figure.next {
   top: 0;
-  transform: zoom(0.9);
+  -webkit-transform: zoom(0.9);
 }
 
 .sombiSlider figure.prev {
@@ -115,7 +115,7 @@ body {
 }
 
 .sombiSlider figure.current {
-  transform: rotate(0deg) scale(2);
+  -webkit-transform: rotate(0deg) scale(2);
   left: 50%;
   margin-top: 20%;
   margin-left: -125px;
