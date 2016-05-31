@@ -83,18 +83,18 @@ body {
   padding: 30px;
   margin-top: 20%;
   width: 250px;
-  transform: scale(0.7);
-  transition: all 1s ease-in-out, z-index 0s ease-in-out 1s;
+  -webkit-transform: scale(0.7);
+  -webkit-transition: all 1s linear, z-index 0s linear 1s;
   position: absolute;
   z-index: 0;
 }
 
 .sombiSlider figure:nth-child(2n) {
-  transform: rotate(10deg) scale(0.7);
+  -webkit-transform: rotate(10deg) scale(0.7);
 }
 
 .sombiSlider figure:nth-child(3n) {
-  transform: rotate(-10deg) scale(0.7);
+  -webkit-transform: rotate(-10deg) scale(0.7);
 }
 
 .sombiSlider figure.prev,
