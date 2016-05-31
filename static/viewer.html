@@ -59,10 +59,10 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
   		$("#super_"+s.id).fadeIn('slow')
-			// $("#super_"+s.id).delay(6000).fadeOut('slow');
-			// setTimeout(function() {
-			// 	$("#super_"+s.id).remove();
-			// }, 9000);
+			$("#super_"+s.id).delay(6000).fadeOut('slow');
+			setTimeout(function() {
+				$("#super_"+s.id).remove();
+			}, 8000);
   	}
 	});
 
