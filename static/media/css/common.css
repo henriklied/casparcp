@@ -84,7 +84,7 @@ body {
   margin-top: 20%;
   width: 250px;
   -webkit-transform: scale(0.7);
-  -webkit-transition: all 0.5s linear, z-index 0s linear 0.5s;
+  -webkit-transition: all 3s linear, z-index 0s linear 3s;
   position: absolute;
   z-index: 0;
 }

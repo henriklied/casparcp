@@ -16,7 +16,7 @@ function loadSlider() {
 
 		nxt.addClass("current")
 			.removeClass("next");
-	}, 5000);  
+	}, 3000);  
 }
 
 function unloadSlider() {
