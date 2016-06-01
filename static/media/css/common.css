@@ -20,6 +20,14 @@ body {
   overflow-y: hidden;
 }
 
+body.debug {
+  background: green;
+}
+body.debug #container {
+  border-bottom: 1px solid white;
+  border-right: 1px solid white;
+}
+
 /*.somesuper {
     height : 100%;
     width: 100%;
@@ -37,105 +45,32 @@ body {
 }
 */
 
+
 .sombiSlider {
-    position:absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -360px;
-    margin-left: -640px;
-    width:1280px;
-    height:720px;
-    overflow:hidden;
+  width: 1200px;
+  height: 800px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -600px;
+  margin-top: -400px;
+  z-index: 2;
+  background: white;
 }
 
-/**
- * Styling the images
- *
- * position:absolute is to put all images in a stack. Dimensions are set to increase the size of these images so their edges do not appear in the parent box when we move them inside the said box.
- * Because the images are now larger than their parent container, we use top, left and margin values to align them in the center of the box.
- * Finally, we set the transition (property and duration). Note that duration values are different for opacity and transform as we want the "fade-in" effect to be faster than the "panning" effect.
- */
-
-.sombiSlider figure {
-    position:absolute;
-    width:105%;
-    overflow: hidden;
-    height:105%;
-    top:-5%;
-    left:-5%;
-    opacity:0;
-    -webkit-transition-property: opacity, -webkit-transform;
-    -webkit-transition-duration: 5s, 10s;
-       -moz-transition-property: opacity, -moz-transform;
-       -moz-transition-duration: 5s, 10s;
-        -ms-transition-property: opacity, -ms-transform;
-        -ms-transition-duration: 5s, 10s;
-         -o-transition-property: opacity, -o-transform;
-         -o-transition-duration: 5s, 10s;
-            transition-property: opacity, transform;
-            transition-duration: 5s, 10s;
+.sombiSlider .shower {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 800px;
 }
 
-/**
- * We change the point of origin using four corners so images do not move in the same direction. 
- * This technique allows us to create various paths while applying the same translate() values to all images (see the 'fx' class further below).
- */
-
-.sombiSlider figure div  {
-    -webkit-transform-origin: bottom left;
-       -moz-transform-origin: bottom left;
-        -ms-transform-origin: bottom left;
-         -o-transform-origin: bottom left;
-            transform-origin: bottom left;
-}
-
-.sombiSlider :nth-child(2n+1) {
-    -webkit-transform-origin: top right;
-       -moz-transform-origin: top right;
-        -ms-transform-origin: top right;
-         -o-transform-origin: top right;
-            transform-origin: top right;
-}
-
-.sombiSlider :nth-child(3n+1) {
-    -webkit-transform-origin: top left;
-       -moz-transform-origin: top left;
-        -ms-transform-origin: top left;
-         -o-transform-origin: top left;
-            transform-origin: top left;
-}
-.sombiSlider :nth-child(4n+1) {
-  -webkit-transform-origin: bottom right;
-     -moz-transform-origin: bottom right;
-      -ms-transform-origin: bottom right;
-       -o-transform-origin: bottom right;
-          transform-origin: bottom right;
-}
-
-/**
- * Because of the stacking context, we need to make sure that the first image (in source) is not hidden by the last one. 
- * The rule below moves all images past the second one down the stack. 
- * This is because the second image needs to show on top of the first one when it transitions in.
- */
-
-.sombiSlider .fx:first-child + figure ~ figure  {
-    z-index:-1;
-}
-.sombiSlider div {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-}
-
-/**
- * Because images are styled with a different point of origin, the following rule will create different panning effects.
- */
-
-.sombiSlider .fx {
-    opacity:1;
-    -webkit-transform: scale(1.1) translate(30px);
-       -moz-transform: scale(1.1) translate(30px);
-        -ms-transform: scale(1.1) translate(30px);
-         -o-transform: scale(1.1) translate(30px);
-            transform: scale(1.1) translate(30px);
+.sombiSlider .titles {
+  position: absolute;
+  width: 340px;
+  top: 30px;
+  right: 30px;
+  height: 800px;
+  color: black;
 }

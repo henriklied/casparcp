@@ -21,6 +21,18 @@ body {
 .super video {
 	position: absolute;
 }
+.sombiSlider .titles h2:before {
+	content: "– ";
+}
+.sombiSlider .titles h2 {
+	font-size: 20px;
+	margin-top: 10px;
+}
+.sombiSlider .titles p {
+  font-family: "LFTBook";
+  font-size: 30px;
+}
+
 .infosuper {
 }
 
