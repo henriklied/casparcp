@@ -21,9 +21,9 @@ body {
 }
 
 body.debug {
-  background: green;
 }
 body.debug #container {
+  background: green;
   border-bottom: 1px solid white;
   border-right: 1px solid white;
 }
@@ -71,6 +71,16 @@ body.debug #container {
   width: 340px;
   top: 30px;
   right: 30px;
-  height: 800px;
+  height: 600px;
   color: black;
+}
+
+.somesuper.twitter .title, .somesuper.facebook .title {
+  padding-right: 50px;
+  background: url(../gfx/white_facebook_logo.png) no-repeat top right;
+  background-size: 50px auto;
+}
+.somesuper.twitter .title {
+  background: url(../gfx/white_twitter_logo.png) no-repeat top right;
+  background-size: 50px auto;
 }

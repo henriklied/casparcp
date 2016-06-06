@@ -34,6 +34,8 @@ body {
 }
 
 .infosuper {
+	font-family: "LFTBook";
+	font-size: 30px;
 }
 
 .infobox, .somesuper {
@@ -43,7 +45,7 @@ body {
     color: white;	
 }
 .infobox .title, .somesuper .title {
-    font-size: 50px;
+    font-size: 40px;
     text-transform: uppercase;
 }
 .infobox .text, .somesuper .text {
@@ -53,6 +55,10 @@ body {
 .infobox video, .somesuper video {
 	position: absolute;
 }
+
+/*.topright.infobox {
+	text-align: right;
+}*/
 
 .personsuper div.name, .personsuper div.title {
 	left: 0;
@@ -125,6 +131,18 @@ body {
 	right: 100px;
 }
 
+.topmiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	top: 100px;
+}
+.bottommiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	bottom: 100px;
+}
 .personsuper.bottomright video, .personsuper.topright video {
 	right: -50px;
 	left: auto;

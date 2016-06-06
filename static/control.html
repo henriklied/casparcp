@@ -64,7 +64,7 @@
 		$.get('config.json', function(data) {
 			config = data;
 			socket.emit('get_personsuper', config.personsuper_csv);
-		});  		
+		});
   	}
 
   	loadConfig();
