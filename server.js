@@ -103,6 +103,7 @@ function parseDigas() {
 	try {
 		fs.readFile(digasPath, function(err, data) {
 			if (err) {
+				console.log("Error reading Digas");
 				return true;
 			} else {
 				parseString(data, function(err, result) {
@@ -113,7 +114,7 @@ function parseDigas() {
 							startTime = new Date(item.Time_RealStart[0]);
 							endTime = new Date(item.Time_RealStop[0]);
 							endTimer = endTime - startTime;
-							currentDigas_tmp = {title: item.Title[0], performer: item.Music_Performer[0], composer: item.Music_Composer[0], start: startTime, stop: endTime};
+							currentDigas_tmp = {title: item.Title[0], performer: item.Music_Performer[0], composer: item.Music_Composer[0], start: startTime, stop: endTime, recordcc: item['NRK.PLNUMMER'][0].split(';')[0], release_year: item['NRK.RELEASE_YEAR']};
 							if (currentDigas && (currentDigas.title == currentDigas_tmp.title)) {
 								continue;
 							}
@@ -121,11 +122,12 @@ function parseDigas() {
 							currentDigas = currentDigas_tmp;
 							digasTimers.outTimer = setTimeout(function() {
 								io.emit("digassuper", currentDigas);
-								console.log("Fired out");
+								console.log("Fired out digas", currentDigas);
 								clearTimeout(digasTimers.outTimer);
 							}, endTimer-15000);
 							setTimeout(function() {
 								io.emit("digassuper", currentDigas);
+								console.log("Fired digas", currentDigas);
 							}, 0);
 						}
 					}

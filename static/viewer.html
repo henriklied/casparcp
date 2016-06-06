@@ -5,10 +5,11 @@
 	<title>CasparCG Viewer</title>
 	<script src="media/js/jquery.min.js"></script>
 	<script src="media/js/sombiSlider.js"></script>
+	<script src="media/js/typeit.min.js"></script>
 	<script src="media/js/smoothslide.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="media/css/common.css">
 </head>
-<body class="debug2">
+<body class="debug">
 
 	<div id="container"></div>
 
@@ -17,6 +18,7 @@
 <script>
 var config;
 var socket = io();
+var timers = [];
 
 $(document).ready(function() {
 
@@ -31,9 +33,9 @@ $(document).ready(function() {
 	function clearSuper(s) {
 		if (s.action == 'out') {
 			$("#super_"+s.id).fadeOut('slow');
-			setTimeout(function() {
+			timers.push(setTimeout(function() {
 				$("#super_"+s.id).remove();
-			}, 2000);
+			}, 2000));
 			return true;
 		}
 		if ($("#super_"+s.id).length) {
@@ -44,9 +46,13 @@ $(document).ready(function() {
 
 	socket.on('all_out', function(e) {
 		$(".super").fadeOut('slow');
+		for (var timer in timers) {
+			clearTimeout(timers[timer]);
+		}
 		setTimeout(function() {
 			$(".super").remove()
-		}, 2500);
+			timers = [];
+		}, 800);
 	});
 
   socket.on('personsuper', function(s) {
@@ -59,11 +65,11 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow')
+  		$("#super_"+s.id).fadeIn('slow');
 			$("#super_"+s.id).delay(6000).fadeOut('slow');
-			setTimeout(function() {
+			timers.push(setTimeout(function() {
 				$("#super_"+s.id).remove();
-			}, 9000);
+			}, 8000));
   	}
 	});
 
@@ -78,6 +84,8 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('superbox', s);
   		$("#super_"+s.id).fadeIn('slow');
+  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
+  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
   	}
 	});
 
@@ -88,7 +96,20 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('infosuper', s);
   		$("#super_"+s.id).fadeIn('slow');
+  		$("#super_"+s.id).find('div.text').typeIt({ speed: 30, breakLines: true, cursor: false });
   	}
+	});
+
+	socket.on('digassuper', function(s) {
+		var html = '<div class="super digassuper bottomleft">\
+		<div class="digas_title"><span>'+s.title+'</span></div>\
+		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
+		$(html).appendTo('#container');
+		$(document).trigger('digassuper', s);
+		$('.digassuper').fadeIn('slow').delay(6000).fadeOut(1000);
+		timers.push(setTimeout(function() {
+			$('.digassuper').remove();
+		}, 10000));
 	});
 
   socket.on('infobox', function(s) {
@@ -101,6 +122,8 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('infobox', s);
   		$("#super_"+s.id).fadeIn('slow');
+  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
+  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
   	}
 	});
 

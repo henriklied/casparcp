@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<easy_xml>
+ <item sequence="past">
+  <Class>Music</Class>
+  <Title>I Wish to Weep</Title>
+  <Music_Performer>Dadafon</Music_Performer>
+  <Music_Composer>Kristin Asbj¯rnsen</Music_Composer>
+  <Music_Album>Lost Love Chords</Music_Album>
+  <Music_MusicID>NONRO162570CD0001</Music_MusicID>
+  <NRK.DMAID>NONRO162570CD0001</NRK.DMAID>
+  <NRK.PLNUMMER>Universal; 987 326-2</NRK.PLNUMMER>
+  <NRK.RELEASE_YEAR>2005</NRK.RELEASE_YEAR>
+  <Time_Start>2016-04-07 11:31:31.575</Time_Start>
+  <Time_RealStart>2016-04-07 11:31:31.575</Time_RealStart>
+  <Time_Stop>2016-04-07 11:33:06.005</Time_Stop>
+  <Time_RealStop>2016-04-07 11:33:06.005</Time_RealStop>
+  <Time_Duration>94425</Time_Duration>
+  <News_Author>DMA</News_Author>
+  <Fade_LinkIn>0</Fade_LinkIn>
+  <Fade_LinkOut>0</Fade_LinkOut>
+ </item>
+ <item sequence="present">
+  <Class>Music</Class>
+  <Title>Penile Dance</Title>
+  <Music_Performer>Håkon Storm-Mathisen + Finn Guttormsen + Jarle Vespestad + Nils Jansen</Music_Performer>
+  <Music_Composer>Håkon Storm-Mathisen</Music_Composer>
+  <Music_Album>Canned Second</Music_Album>
+  <Music_MusicID>NONRO159447CD0001</Music_MusicID>
+  <NRK.DMAID>NONRO159447CD0001</NRK.DMAID>
+  <NRK.PLNUMMER>Curling Legs; Clp CD 87</NRK.PLNUMMER>
+  <NRK.RELEASE_YEAR>2004</NRK.RELEASE_YEAR>
+  <Info>Utgiver er medlem i FONO</Info>
+  <Time_Start>2016-04-07 11:33:06.000</Time_Start>
+  <Time_RealStart>2016-04-07 11:33:06.000</Time_RealStart>
+  <Time_Stop>2016-04-07 11:34:02.198</Time_Stop>
+  <Time_RealStop>2016-04-07 11:33:40.198</Time_RealStop>
+  <Time_Duration>96198</Time_Duration>
+  <News_Author>DMA</News_Author>
+  <Fade_LinkIn>0</Fade_LinkIn>
+  <Fade_LinkOut>0</Fade_LinkOut>
+ </item>
+ <item sequence="future1">
+  <Class>Music</Class>
+  <Title>Bonden og Ingeni¯ren</Title>
+  <Music_Performer>Håkon H¯gemo</Music_Performer>
+  <Music_Composer>/Trad./</Music_Composer>
+  <Music_Album>Solo</Music_Album>
+  <Music_MusicID>NONRO133771CD0015</Music_MusicID>
+  <NRK.DMAID>NONRO133771CD0015</NRK.DMAID>
+  <NRK.PLNUMMER>NORCD; 0036</NRK.PLNUMMER>
+  <NRK.RELEASE_YEAR>2000</NRK.RELEASE_YEAR>
+  <Info>Utgiver er medlem i FONO</Info>
+  <Time_Start>2016-04-07 11:34:42.198</Time_Start>
+  <Time_Stop>2016-04-07 11:36:20.413</Time_Stop>
+  <Time_Duration>98215</Time_Duration>
+  <News_Author>DMA</News_Author>
+  <Fade_LinkIn>0</Fade_LinkIn>
+  <Fade_LinkOut>0</Fade_LinkOut>
+ </item>
+</easy_xml>
