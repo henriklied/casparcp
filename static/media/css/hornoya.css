@@ -113,6 +113,8 @@ body {
 
 .digassuper small {
 	font-size: 30px;
+	margin-top: -5px;
+	display: block;
 }
 
 .personsuper video, .digassuper video {
@@ -121,6 +123,10 @@ body {
 	position: absolute;
 	left: -60px;
 	top: -40px;
+}
+
+.ghost {
+	opacity: 0;
 }
 
 .topleft {

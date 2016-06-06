@@ -307,6 +307,7 @@
 
   	$("#superBox").on('change', 'input#activate_digas', function(e) {
   		console.log(this.checked);
+  		socket.emit('activate_digas', this.checked);
   	});
 
   	$("#superBox").on('click', 'input.update_personsuper', function(e) {

@@ -98,6 +98,7 @@ function sombiGenerator(sombi_url) {
 
 function parseDigas() {
 	if (!publishDigas) {
+		setTimeout(parseDigas, 1000);
 		return true;
 	}
 	try {
@@ -152,6 +153,10 @@ io.on('connection', function(socket){
 	});
 	socket.on('infobox', function(person) {
 		io.emit('infobox', person);
+	});
+	socket.on('activate_digas', function(b) {
+		console.log("Activate Digas", b);
+		publishDigas = b;
 	});
 	socket.on('restart_casparcg', function() {
 		loadCaspar();
