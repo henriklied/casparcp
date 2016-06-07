@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'LFTBook';
-  src: url('/media/fonts/LFT_Etica_BookItalic.woff') format('woff');
+  src: url('/media/fonts/LFT_Etica_BookItalic.svg') format('svg');
 }
 
 @font-face {
   font-family: 'LFTBold';
-  src: url('/media/fonts/LFT_Etica_ExtraboldItalic.woff') format('woff');
+  src: url('/media/fonts/LFT_Etica_ExtraboldItalic.svg') format('svg');
 }
 
 html {
