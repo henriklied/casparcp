@@ -8,6 +8,11 @@
   src: url('/media/fonts/LFT_Etica_ExtraboldItalic.woff') format('woff');
 }
 
+html {
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
 
 body {
 	font-family: "LFTBold";

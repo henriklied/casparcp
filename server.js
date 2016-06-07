@@ -122,6 +122,9 @@ function parseDigas() {
 							clearTimeout(digasTimers.outTimer);
 							currentDigas = currentDigas_tmp;
 							digasTimers.outTimer = setTimeout(function() {
+								if (!publishDigas) {
+									return true;
+								}
 								io.emit("digassuper", currentDigas);
 								console.log("Fired out digas", currentDigas);
 								clearTimeout(digasTimers.outTimer);

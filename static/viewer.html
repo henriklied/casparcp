@@ -9,7 +9,7 @@
 	<script src="media/js/smoothslide.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="media/css/common.css">
 </head>
-<body class="debug">
+<body>
 
 	<div id="container"></div>
 
@@ -24,6 +24,9 @@ $(document).ready(function() {
 
 	$.get('config.json', function(data) {
 		config = data;
+		if (config.debug) {
+			$("body").addClass("debug");
+		}
 		$('<link rel="stylesheet" type="text/css" href="media/css/'+config.layout+'.css">').appendTo("head");
 		$.getScript('media/js/'+config.layout+'.js', function(data) {
 		});
@@ -32,10 +35,9 @@ $(document).ready(function() {
 
 	function clearSuper(s) {
 		if (s.action == 'out') {
-			$("#super_"+s.id).fadeOut('slow');
-			timers.push(setTimeout(function() {
-				$("#super_"+s.id).remove();
-			}, 2000));
+			$("#super_"+s.id).fadeOut('slow', function() {
+					$("#super_"+s.id).remove();
+			});
 			return true;
 		}
 		if ($("#super_"+s.id).length) {
@@ -45,12 +47,13 @@ $(document).ready(function() {
 	}
 
 	socket.on('all_out', function(e) {
-		$(".super").fadeOut('slow');
+		$(".super").fadeOut('slow', function() {			
+			$(".super").remove();
+		});
 		for (var timer in timers) {
 			clearTimeout(timers[timer]);
 		}
 		setTimeout(function() {
-			$(".super").remove()
 			timers = [];
 		}, 800);
 	});
@@ -65,11 +68,9 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow');
-			$("#super_"+s.id).delay(6000).fadeOut('slow');
-			timers.push(setTimeout(function() {
-				$("#super_"+s.id).remove();
-			}, 8000));
+  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
+				$(this).remove();				
+			});
   	}
 	});
 
@@ -110,10 +111,9 @@ $(document).ready(function() {
 		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
 		$(html).appendTo('#container');
 		$(document).trigger('digassuper', s);
-		$('.digassuper').fadeIn('slow').delay(6000).fadeOut(1000);
-		timers.push(setTimeout(function() {
-			$('.digassuper').remove();
-		}, 10000));
+		$('.digassuper').fadeIn('slow').delay(6000).fadeOut('slow', function() {
+			$(this).remove();
+		});
 	});
 
   socket.on('infobox', function(s) {
@@ -146,7 +146,7 @@ $(document).ready(function() {
 			$.each(s.images, function(k,v) {
 				$('<img src="'+this.url+'" data-title="'+this.title+'" data-user="'+this.user.username+'">').appendTo('.sombiSlider');
 			});
-			$(".sombiSlider").fadeIn(1000);
+			$(".sombiSlider").fadeIn('slow');
 			loadSlider();
 		}
 	});

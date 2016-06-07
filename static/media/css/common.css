@@ -50,12 +50,12 @@ body.debug #container {
 
 .sombiSlider {
   width: 1200px;
-  height: 800px;
+  height: 750px;
   position: absolute;
   left: 50%;
   top: 50%;
   margin-left: -600px;
-  margin-top: -400px;
+  margin-top: -375px;
   z-index: 2;
   background: white;
 }
@@ -65,7 +65,7 @@ body.debug #container {
   top: 0;
   left: 0;
   width: 800px;
-  height: 800px;
+  height: 750px;
 }
 
 .sombiSlider .titles {
