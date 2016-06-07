@@ -8,6 +8,15 @@ var net = require('net');
 var io = require('socket.io')(http);
 var parseString = require('xml2js').parseString;
 const fs = require('fs');
+var WebSocketServer = require('ws').Server
+  , wss = new WebSocketServer({ port: 8001 });
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+  });
+  console.log('Got connextion');
+});
 
 var digasPath = './digas.xml';
 
@@ -257,6 +266,6 @@ process.on('uncaughtException', function(err) {
 
 // Lytt på localhost:3000
 http.listen(8000, function(){
-	console.log('listening on *:8000');
+	console.log('listening on *:8000 and 8001 (ws)');
 });
 
