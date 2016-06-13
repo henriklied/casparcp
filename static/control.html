@@ -16,6 +16,7 @@
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
 				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
+				<input type="submit" class="out_btn instagram_out" value="UT Instagram"></p>
 				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
 			</div>
 		</div>
@@ -298,6 +299,9 @@
 
   	$("#superBox").on('click', 'input.instagram_start', function(e) {
   		socket.emit('instagram', 1);
+  	});
+  	$("#superBox").on('click', 'input.instagram_out', function(e) {
+  		socket.emit('instagram_out', 1);
   	});
 
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {

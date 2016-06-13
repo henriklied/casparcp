@@ -18,7 +18,12 @@ wss.on('connection', function connection(ws) {
   console.log('Got connextion');
 });
 
-var digasPath = './digas.xml';
+var digasPath;
+
+fs.readFile('./static/config.json', function(err, data) {
+	data = JSON.parse(data);
+	digasPath = data.digasPath;
+});
 
 var sombi = 'http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=539e98bcafc807ae130000f1'; // 539e98bcafc807ae130000f1';
 
@@ -152,7 +157,7 @@ function parseDigas() {
 	}
 	setTimeout(parseDigas, 1000);
 }
-setTimeout(parseDigas, 3000);
+setTimeout(function() {console.log("Connecting to DIGAS"); parseDigas();}, 15000);
 
 app.use(express.static('static'));
 
@@ -181,6 +186,9 @@ io.on('connection', function(socket){
 		fs.readFile('./static/images.json', function(err, data) {
 			io.emit("instagram", {action: 'in', id: 'lksad123', images: JSON.parse(data)});
 		});
+	});
+	socket.on('instagram_out', function(s) {
+		io.emit("instagram_out", 1);
 	});
 	socket.on('infosuper', function(person) {
 		io.emit('infosuper', person);

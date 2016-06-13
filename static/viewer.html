@@ -151,6 +151,12 @@ $(document).ready(function() {
 		}
 	});
 
+	socket.on('instagram_out', function(s) {
+		$(".sombiSlider").fadeOut("slow", function() {
+			$(this).remove();
+		});		
+	})
+
 });
 </script>
 </html>
