@@ -21,6 +21,7 @@ body {
 
 .super {
 	position: absolute;
+	text-shadow: rgb(71, 71, 71) 2px 2px 2px;
 }
 
 .super video {
