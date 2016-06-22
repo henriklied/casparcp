@@ -209,8 +209,23 @@ io.on('connection', function(socket){
 	socket.on('playersuper', function(person) {
 		io.emit('playersuper', person);
 	});
+	socket.on('playersuper_info', function(person) {
+		io.emit('playersuper_info', person);
+	});
 	socket.on('somesuper', function(s) {
 		io.emit('somesuper', s);
+	});
+	socket.on('smallmap', function(s) {
+		io.emit('smallmap', s);
+	});
+	socket.on('largemap', function(s) {
+		io.emit('largemap', s);
+	});
+	socket.on('placesuper', function(s) {
+		io.emit('placesuper', s);
+	});
+	socket.on('county', function(s) {
+		io.emit('county', s);
 	});
 	socket.on('all_out', function(e) {
 		io.emit('all_out', 1);

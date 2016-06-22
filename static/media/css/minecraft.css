@@ -65,7 +65,7 @@ html {
 	color: white;
 }
 
-.personsuper .title {
+.personsuper .title, .infobox .who {
 	background: url(../gfx/minecraft/venstresuper_info.png) repeat-y top left;
 	display: inline-block;
 	padding: 10px;
@@ -73,6 +73,14 @@ html {
 	height: 30px;
 	text-transform: lowercase;
 }
+
+.infobox .who {
+	text-transform: none;
+	display: block;
+	width: 100%;
+	background: url(../gfx/minecraft/venstresupring_transpararent.png) repeat-y top left;
+}
+
 .personsuper .name {
 	height: 30px;
 	background-position: 0 -4px;
@@ -101,7 +109,7 @@ html {
 .digassuper {}
 .digassuper div.digas_extra {}
 .digassuper div.digas_title {}
-.personsuper .name, .personsuper .title, .personsuper .name, .infobox .title, .somesuper .title, .infobox .text, .somesuper .text, .sombiSlider .desc, .sombiSlider .title {
+.personsuper .name, .personsuper .title, .personsuper .name, .infobox .title, .somesuper .title, .infobox .text, .somesuper .text, .sombiSlider .desc, .sombiSlider .title, .infobox .who {
 	padding-left: 96px;
 	padding-right: 20px;
 }
@@ -164,14 +172,43 @@ html {
 	background: transparent url(../gfx/minecraft/spillersuper_info.png) repeat-y bottom left;
 	padding-bottom: 15px;
 	font-weight: 500;
+	overflow: hidden;
 	padding-right: 70px;
 	font-size: 20px;
+}
+
+.spillersuper .minecraft_info span {
+	display: block;
+}
+
+.spillersuper .minecraft_info h3 {
+	font-style: italic;
+	font-weight: normal;
 }
 
 #model {
 	display: inline-block;
 	position: absolute;
 	left: 250px;
+}
+
+.largemap {
+	width: 752px;
+    height: 755px;
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    opacity: 0;
+    overflow: hidden;
+	transform: scale(0.8, 0.8);
+	-webkit-transform: scale(0.8, 0.8);
+}
+.largemap iframe {
+    margin-top: -234px;
+    margin-left: -158px;
+    width: 1200px;
+    height: 1200px;
+    zoom: 1;
 }
 
 .sombiSlider {

@@ -42,6 +42,8 @@
 	</div> -->
 
 	<div id="control">
+		<div id="locationSuper" class="container">
+		</div>
 		<div id="personSuper" class="container">
 		</div>
 		<div id="infoSuper" class="container">
@@ -59,6 +61,9 @@
   var socket = io();
   var config;
   var minecraftData;
+String.prototype.capitalize = function() {
+return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
   var randomNum = function() { return Math.floor(Math.random()*1000)};
 
@@ -161,8 +166,14 @@
 		var html = '<div class="super">\
 				<h2>Infoboks</h2>\
 				<input type="hidden" class="txt_infobox_id" value="'+randomNum()+'">\
-				<p><label>Tittel\
+				<p><label class="infosuper_label">Byggverk <select class="infosuper_data">';
+		  		$.each(minecraftData, function(i, e) {
+					html += '<option value="'+this.id+'">'+this.build+'</option>';
+		  		});
+			html += '</select></label></p><p><label>Tittel\
 					<input type="text" class="txt_infobox_title"></label></p>\
+				<p><label>Hvem\
+					<input type="text" class="txt_infobox_who"></label></p>\
 				<p><label>Tekst\
 					<textarea class="txt_infobox_text"></textarea></p>\
 				<p><label> \
@@ -185,6 +196,7 @@
 		url = 'https://messenger.sosial.me/index.php?names';
 		$.getJSON(url, function(data) {
 			minecraftData = data;
+		  	$(generateInfoBox()).appendTo("#infoBox");
 	  		var html = '<div class="super">\
 					<h2>Spillersuper</h2>\
 					<input type="hidden" class="txt_playersuper_id" value="'+randomNum()+'">\
@@ -203,15 +215,33 @@
 						<input type="text" class="txt_playersuper_age"></label></p>\
 					<p><label>Om-tekst\
 						<textarea class="txt_playersuper_about"></textarea></label></p>\
+						<textarea class="txt_playersuper_about2"></textarea></label></p>\
 					<div class="submitters">\
 						<input type="submit" class="playersuper_inn in_btn" value="INN">\
 						<input type="submit" class="playersuper_out out_btn" value="OUT">\
+						<input type="submit" class="infotxts" value="0">\
+						<input type="submit" class="infotxts" value="1">\
 					</div>\
 				</div>';
 			$(html).appendTo("#playerBox");
 		});		
   	}
   	generatePlayerSuper();
+
+
+  	function generateLocationBox() {
+  		var html = '<div class="super">\
+				<h2>Lokasjonssuper</h2>\
+				<div class="submitters">\
+					<input type="submit" class="placesuper_inn in_btn" value="Inn stedssuper">\
+					<input type="submit" class="placesuper_out out_btn" value="Ut stedssuper">\
+					<input type="submit" class="smallmap_inn in_btn" value="Inn lite kart">\
+					<input type="submit" class="smallmap_out out_btn" value="Ut lite kart">\
+				</div>\
+			</div>';
+		$(html).appendTo("#locationSuper");
+  	}
+  	generateLocationBox();
 
   	function generateSomeBox(radio_name) {
 		if (!radio_name) {
@@ -248,7 +278,6 @@
 
   	$(generatePersonSuper()).appendTo("#personSuper");
   	$(generateInfoSuper()).appendTo("#infoSuper");
-  	$(generateInfoBox()).appendTo("#infoBox");
   	$(generateSomeBox()).appendTo("#someBox");
 
 
@@ -291,7 +320,11 @@
   				$(".txt_playersuper_name").val(this.name);
   				$(".txt_playersuper_place").val(this.city);
   				$(".txt_playersuper_age").val(this.age);
-  				$(".txt_playersuper_about").val(this.infotext1);
+  				$(".txt_playersuper_about").val('<h3>To setninger om meg</h3>'+this.infotext3);
+  				$(".txt_playersuper_about2").val('<h3>Hvor lenge har du spilt?</h3>'+this.infotext2);
+  				$(".txt_infobox_title").val(this.build);
+  				$(".txt_infobox_text").val(this.infotext1);
+  				$(".txt_infobox_who").val(this.group_type.capitalize()+' fra '+this.city);
   			}
   		});
   	});
@@ -310,12 +343,16 @@
   			username: $(container).find('.txt_playersuper_username').val(),
   			city: $(container).find('.txt_playersuper_place').val(),
   			age: $(container).find('.txt_playersuper_age').val(),
-  			infotext: $(container).find('.txt_playersuper_about').val(),
+  			infotext: [$(container).find('.txt_playersuper_about').val(), $(container).find('.txt_playersuper_about2').val(), $(container).find('.txt_playersuper_about3').val()],
   			action: action
   		};
   		socket.emit("playersuper", data);
+  	});
 
-  	})
+  	$("#playerBox").on('click', 'input.infotxts', function(e) {
+  		console.log("Clicked");
+  		socket.emit("playersuper_info", parseInt($(this).val()));
+  	});
 
   	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
   		if ($(this).hasClass('infobox_inn')) {
@@ -328,6 +365,7 @@
   			id: $(container).find('input[type="hidden"]').val(),
   			title: $(container).find('.txt_infobox_title').val(),
   			text: $(container).find('.txt_infobox_text').val(),
+  			who: $(container).find('.txt_infobox_who').val(),
   			position: $(container).find('input[type="radio"]:checked').val(),
   			action: action
   		};
@@ -404,6 +442,25 @@
   			action: action
   		};
   		socket.emit('somesuper', data);
+  	});
+
+
+  	$("#locationSuper").on('click', 'input.smallmap_out, input.smallmap_inn', function(e) {
+  		console.log(this);
+  		if ($(this).hasClass("smallmap_inn")) {
+  			socket.emit('smallmap', {action: 'in'});
+  		} else {
+  			socket.emit('smallmap', {action: 'out'});
+  		}
+  	});
+
+  	$("#locationSuper").on('click', 'input.placesuper_out, input.placesuper_inn', function(e) {
+  		console.log(this);
+  		if ($(this).hasClass("placesuper_inn")) {
+  			socket.emit('placesuper', {action: 'in'});
+  		} else {
+  			socket.emit('placesuper', {action: 'out'});
+  		}
   	});
 
   	$(".restart_casparcg").click(function() {
