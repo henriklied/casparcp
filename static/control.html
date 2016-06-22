@@ -46,6 +46,8 @@
 		</div>
 		<div id="infoSuper" class="container">
 		</div>
+		<div id="playerBox" class="container">
+		</div>
 		<div id="infoBox" class="container">
 		</div>
 		<div id="someBox" class="container">
@@ -56,6 +58,7 @@
 <script>
   var socket = io();
   var config;
+  var minecraftData;
 
   var randomNum = function() { return Math.floor(Math.random()*1000)};
 
@@ -178,6 +181,38 @@
 		return html;
   	}
 
+  	function generatePlayerSuper() {
+		url = 'https://messenger.sosial.me/index.php?names';
+		$.getJSON(url, function(data) {
+			minecraftData = data;
+	  		var html = '<div class="super">\
+					<h2>Spillersuper</h2>\
+					<input type="hidden" class="txt_playersuper_id" value="'+randomNum()+'">\
+					<p><label class="playersuper_label">Personsupre <select class="playersuper_data">';
+			$.each(data, function(i, e) {
+				html += '<option value="'+this.id+'">'+this.username+'</option>';
+			});
+			html += '</select> <input type="submit" value="Sett inn"></label></p>\
+					<p><label>Brukernavn\
+						<input type="text" class="txt_playersuper_username"></label></p>\
+					<p><label>Navn\
+						<input type="text" class="txt_playersuper_name"></label></p>\
+					<p><label>Sted\
+						<input type="text" class="txt_playersuper_place"></label></p>\
+					<p><label>Alder\
+						<input type="text" class="txt_playersuper_age"></label></p>\
+					<p><label>Om-tekst\
+						<textarea class="txt_playersuper_about"></textarea></label></p>\
+					<div class="submitters">\
+						<input type="submit" class="playersuper_inn in_btn" value="INN">\
+						<input type="submit" class="playersuper_out out_btn" value="OUT">\
+					</div>\
+				</div>';
+			$(html).appendTo("#playerBox");
+		});		
+  	}
+  	generatePlayerSuper();
+
   	function generateSomeBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'somebox_position_1';
@@ -246,6 +281,41 @@
 	  		$(this).parent().remove();
 	  	});
   	});
+
+
+  	$("#playerBox").on('click', '.playersuper_label input[type="submit"]', function(e) {
+  		user_id = $(this).parent().find('select').val();
+  		$.each(minecraftData, function(i, e) {
+  			if (this.id == user_id) {
+  				$(".txt_playersuper_username").val(this.username);
+  				$(".txt_playersuper_name").val(this.name);
+  				$(".txt_playersuper_place").val(this.city);
+  				$(".txt_playersuper_age").val(this.age);
+  				$(".txt_playersuper_about").val(this.infotext1);
+  			}
+  		});
+  	});
+
+  	$("#playerBox").on('click', 'input.in_btn, input.out_btn', function(e) {
+  		console.log(this);
+  		if ($(this).hasClass('out_btn')) {
+  			action = 'out';
+  		} else {
+  			action = 'in';
+  		}
+  		var container = $(this).parent().parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			name: $(container).find('.txt_playersuper_name').val(),
+  			username: $(container).find('.txt_playersuper_username').val(),
+  			city: $(container).find('.txt_playersuper_place').val(),
+  			age: $(container).find('.txt_playersuper_age').val(),
+  			infotext: $(container).find('.txt_playersuper_about').val(),
+  			action: action
+  		};
+  		socket.emit("playersuper", data);
+
+  	})
 
   	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
   		if ($(this).hasClass('infobox_inn')) {

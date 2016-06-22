@@ -1,3 +1,245 @@
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #200e47;
+}
+
+
+html {
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+
+.county, .countyImage {
+	position: absolute;
+	width: 242px;
+	text-align: center;
+}
+.county {
+	opacity: 0.67;
+	color: white;
+	font-weight: 500;
+	font-size: 25px;
+	letter-spacing: -1px;
+	top: 195px;
+	right: 85px;
+	text-shadow: 2px 2px 2px #555;
+}
+
+.countyImage {
+	top: 250px;
+	right: 85px;
+}
+
+.super {
+	position: absolute;
+}
+
+.infobox, .sombiSlider {
+	width: 600px;
+	bottom: 40px;
+	padding-bottom: 5px;
+}
+
+.infobox .text {
+	background: url(../gfx/minecraft/venstresuper_info.png) repeat-y bottom left;
+	padding: 10px;
+	padding-bottom: 20px;
+	font-size: 20px;
+	font-weight: 500;
+	padding-right: 80px!important;
+}
+.somesuper {
+
+}
+.personsuper {
+	top: 323px;
+}
+
+.personsuper .name, .infobox .title, .somesuper .title, .sombiSlider .title {
+	background: url(../gfx/minecraft/venstresuper_header.png) repeat-y top left;
+	padding: 10px;
+	font-size: 30px;
+	font-weight: 500;
+	height: 32px;
+	color: white;
+}
+
+.personsuper .title {
+	background: url(../gfx/minecraft/venstresuper_info.png) repeat-y top left;
+	display: inline-block;
+	padding: 10px;
+	font-size: 24px;
+	height: 30px;
+	text-transform: lowercase;
+}
+.personsuper .name {
+	height: 30px;
+	background-position: 0 -4px;
+}
+.personsuper .name > span {
+	display: block;
+	margin-top: -4px;
+}
+.personsuper .name span span {
+	letter-spacing: -1px;
+}
+
+
+.infosuper {
+	padding: 10px 15px;
+	font-size: 20px;
+	background: white;
+	width: 710px;
+	font-weight: 500;
+	bottom: 49px;
+	left: 588px;
+	outline: 4px solid rgba(255, 255, 255, 0.6);
+}
+.infosuper, .infobox, .somesuper {
+}
+.digassuper {}
+.digassuper div.digas_extra {}
+.digassuper div.digas_title {}
+.personsuper .name, .personsuper .title, .personsuper .name, .infobox .title, .somesuper .title, .infobox .text, .somesuper .text, .sombiSlider .desc, .sombiSlider .title {
+	padding-left: 96px;
+	padding-right: 20px;
+}
+
+.spillersuper {
+	bottom: 45px;
+	right: 0;
+	width: 560px;
+}
+
+.spillersuper .avatar {
+	position: absolute;
+	margin-top: -220px;
+	z-index: 9999;
+}
+
+.spillersuper .real_name, .spillersuper .username, .spillersuper .metainfo, .spillersuper .minecraft_info {
+	padding: 10px;
+	margin-left: -55px;
+	padding-left: 70px;
+}
+
+
+.spillersuper .username {
+	background: url(../gfx/minecraft/spillersuper_header.png) repeat-y top left;
+	font-size: 24px;
+	height: 29px;
+	color: white;
+	font-weight: bold;
+}
+
+.spillersuper .real_name {
+	background: url(../gfx/minecraft/spillersuper_navn.png) repeat-y top left;
+	font-size: 24px;
+	height: 29px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+}
+
+.spillersuper .metainfo {
+	background: url(../gfx/minecraft/spillersuper_sted.png) repeat-y top left;
+	position: relative;
+	font-size: 24px;
+	font-weight: bold;
+	height: 24px;
+	padding-top: 5px;
+}
+.spillersuper .metainfo span.place {
+	position: absolute;
+	left: 70px;
+}
+.spillersuper .metainfo span.age {
+	position: absolute;
+	left: 355px;
+	width: 200px;
+}
+
+.spillersuper .minecraft_info {
+	background: transparent url(../gfx/minecraft/spillersuper_info.png) repeat-y bottom left;
+	padding-bottom: 15px;
+	font-weight: 500;
+	padding-right: 70px;
+	font-size: 20px;
+}
+
+#model {
+	display: inline-block;
+	position: absolute;
+	left: 250px;
+}
+
+.sombiSlider {
+	height: 500px;
+}
+.sombiSlider img {
+}
+
+.sombiSlider {
+	bottom: 386px;
+	left: 0;
+	position: absolute;
+	height: 635px;
+	width: 561px;
+	z-index: 2;
+	background: transparent url(../gfx/minecraft/instabg.png) no-repeat 0 50px;
+	top: auto;
+	margin-left: 0;
+	margin-top: 0;
+	border-right: 5px solid rbga(0, 0, 0, 0.5);
+}
+
+.sombiSlider .shower {
+	position: absolute;
+	top: 58px;
+	left: 96px;
+	width: 450px;
+	height: 450px;
+	overflow: hidden;
+}
+
+.sombiSlider .title {
+	position: absolute;
+	width: 115%;
+	top: -5px;
+	zoom: 1;
+}
+.sombiSlider h2 {
+	font-size: 30px;
+}
+
+.sombiSlider .desc {
+	position: absolute;
+	top: 520px;
+	font-size: 20px;
+	font-weight: 500;
+	width: 426px;
+	height: 80px;
+	display: table;
+	overflow: hidden;
+}
+.sombiSlider .desc p {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
+
+.ghost {
+	text-indent: -9999px;
+}
+
+
+.ghost2 {
+	opacity: 0;
+}
+
+
+.ghost3 {
+	color: rgba(255, 255, 255, 0.01);
 }

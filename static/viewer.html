@@ -6,12 +6,17 @@
 	<script src="media/js/jquery.min.js"></script>
 	<script src="media/js/sombiSlider.js"></script>
 	<script src="media/js/typeit.min.js"></script>
+	<script src="media/js/three.min.js"></script>
+	<script src="media/js/2dskin.js"></script>
 	<script src="media/js/smoothslide.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="media/css/common.css">
 </head>
 <body>
 
-	<div id="container"></div>
+	<div id="container">
+		<div class="county">Møre og Romsdal</div>
+		<img src="media/gfx/minecraft/counties/referansekart_1.png" class="countyImage">
+	</div>
 
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -19,6 +24,30 @@
 var config;
 var socket = io();
 var timers = [];
+
+var county_graphics = {
+	"Finnmark": "referansekart_1",
+	"Troms": "referansekart_2",
+	"Nord-Trøndelag": "referansekart_3",
+	"Oppland": "referansekart_4",
+	"Hedmark": "referansekart_5",
+	"Oslo": "referansekart_6",
+	"Akershus": "referansekart_7",
+	"Østfold": "referansekart_8",
+	"Vestfold": "referansekart_9",
+	"Buskerud": "referansekart_10",
+	"Telemark": "referansekart_11",
+	"Aust-Agder": "referansekart_12",
+	"Vest-Agder": "referansekart_13",
+	"Rogaland": "referansekart_14",
+	"Hordaland": "referansekart_15",
+	"Sogn og fjordane": "referansekart_16",
+	"Møre og romsdal": "referansekart_17",
+	"Sør-Trøndelag": "referansekart_18",
+	"Nordland": "referansekart_19"
+};
+
+var current_county;
 
 $(document).ready(function() {
 
@@ -61,18 +90,65 @@ $(document).ready(function() {
   socket.on('personsuper', function(s) {
   	if (!clearSuper(s)) {
   		var html = '<div class="super personsuper '+s.position+'" id="super_'+s.id+'">\
-  				<div class="name"><span>'+s.name+'</span></div>';
+  				<div class="name"><span class="ghost2">'+s.name+'</span></div>';
   		if (s.title != "") {
-  			html += '<div class="title"><span>'+s.title+'</span></div>';
+  			html += '<div class="title"><span class="ghost2">'+s.title+'</span></div>';
   		}
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
-				$(this).remove();				
-			});
+  		$("#super_"+s.id).fadeIn(500, function() {
+	  		$("#super_"+s.id).find('div.title').css('width', $("#super_"+s.id).find('div.title').width());
+	  		$("#super_"+s.id).find('div.name').css('width', $("#super_"+s.id).find('div.name').width());
+  		}).delay(6000).fadeOut('slow', function() {
+				$(this).remove();
+  		});
+   		setTimeout(function() {
+   			$("#super_"+s.id).find('span').removeClass("ghost2");
+	  		$("#super_"+s.id).find('div.name span').typeIt({ speed: 30, breakLines: false, cursor: false });
+	  		$("#super_"+s.id).find('div.title span').typeIt({ startDelay: 500, speed: 30, breakLines: false, cursor: false });
+  		}, 550);
+
   	}
 	});
+
+socket.on('county', function(s) {
+	if (s.county == current_county) {
+		return true;
+	}
+	$("div.county").html(s.county);
+	$("div.county").typeIt({ speed: 30, breakLines: false, cursor: false });
+	$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/'+county_graphics[s.county]+'.png');
+});
+
+socket.on('playersuper', function(s){
+	if (!clearSuper(s)) {
+		var html = '<div class="super spillersuper" id="super_'+s.id+'">\
+			<div class="username"><span class="ghost2">'+s.username+'</span></div>\
+			<div class="real_name"><span class="ghost2">'+s.name+'</span></div>\
+			<div class="avatar"><canvas id="canvas" width="64" height="64"></canvas><div id="model"></div></div>\
+			<div class="metainfo"><span class="place ghost2">'+s.city+'</span> <span class="age ghost2">'+s.age+' år</span></div>\
+			<div class="minecraft_info"><span class="ghost2">'+s.infotext+'</span></div></div>';
+		$(html).appendTo("#container");
+		loadMineCrafter(s.username);
+		setTimeout(function() {
+			$("#super_"+s.id).find('div.minecraft_info').css('height', $("#super_"+s.id).find('div.minecraft_info').height());
+
+		}, 600);
+		$("#super_"+s.id).delay(500).fadeIn('slow', function() {
+		});
+
+		setTimeout(function() {
+				$("#super_"+s.id).find('span').removeClass("ghost2");
+	  		$("#super_"+s.id).find('div.username span').typeIt({ speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.real_name span').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.metainfo span').typeIt({ startDelay: 2000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.minecraft_info span').typeIt({ startDelay: 3000, speed: 30, breakLines: true, cursor: false });			
+		}, 1500);
+
+	};
+
+});
 
 	socket.on('somesuper', function(s) {
 		if (!clearSuper(s)) {
@@ -97,11 +173,17 @@ $(document).ready(function() {
   socket.on('infosuper', function(s) {
   	if (!clearSuper(s)) {
   		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
-  				<div class="text">'+s.text+'</div></div>';
+  				<div class="text ghost2">'+s.text+'</div></div>';
   		$(html).appendTo('#container');
   		$(document).trigger('infosuper', s);
-  		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).find('div.text').typeIt({ speed: 30, breakLines: true, cursor: false });
+  		$("#super_"+s.id).fadeIn('slow', function() {
+	  		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
+	  		$("#super_"+s.id).css('width', $("#super_"+s.id).width());  			
+  		});
+   		setTimeout(function() {
+				$("#super_"+s.id).find('div.text').removeClass('ghost2');
+  			$("#super_"+s.id).find('div.text').typeIt({ speed: 30, breakLines: true, cursor: false });
+			}, 1000);
   	}
 	});
 
@@ -122,14 +204,18 @@ $(document).ready(function() {
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';
   		}
-  		html += '<div class="text ghost">'+s.text+'</div></div>';
+  		html += '<div class="text ghost3">'+s.text+'</div></div>';
   		$(html).appendTo('#container');
   		$(document).trigger('infobox', s);
-  		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
+  		$("#super_"+s.id).fadeIn('slow', function() {
+		  		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
+		  		$("#super_"+s.id).find('div.title').css('height', $("#super_"+s.id).find('div.title').height());
+		  		$("#super_"+s.id).find('div.text').css('height', $("#super_"+s.id).find('div.text').height());
+  		});
+
   		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
-  			$("#super_"+s.id).find('div.text').removeClass('ghost');
+  			$("#super_"+s.id).find('div.text').removeClass('ghost3');
 	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
 	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
   		}, 1000);
@@ -141,10 +227,16 @@ $(document).ready(function() {
 			unloadSlider();
 			var html = '<div class="sombiSlider super" id="super_'+s.id+'"></div>';
 			$(html).appendTo('#container');
+			$('<div class="title"><h2></h2></div>').appendTo('.sombiSlider');
+			$('<div class="hider"></div>').appendTo('.sombiSlider');
 			$('<div class="shower"></div>').appendTo('.sombiSlider');
-			$('<div class="titles"><p></p><h2></h2></div>').appendTo('.sombiSlider');
+			$('<div class="desc"><p></p></div>').appendTo('.sombiSlider');
 			$.each(s.images, function(k,v) {
-				$('<img src="'+this.url+'" data-title="'+this.title+'" data-user="'+this.user.username+'">').appendTo('.sombiSlider');
+				var title = this.title;
+				if (title.length > 140) {
+					title = title.substring(0, 140)+'…';
+				}
+				$('<img src="'+this.url+'" data-title="'+title+'" data-user="'+this.user.username+'">').appendTo('.sombiSlider');
 			});
 			$(".sombiSlider").fadeIn('slow');
 			loadSlider();

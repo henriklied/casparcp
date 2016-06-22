@@ -25,7 +25,7 @@ fs.readFile('./static/config.json', function(err, data) {
 	digasPath = data.digasPath;
 });
 
-var sombi = 'http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=539e98bcafc807ae130000f1'; // 539e98bcafc807ae130000f1';
+var sombi = 'http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=0&starred=false&metadataQuery=true&project_id=5760092bfd3cf1f96d07c306'; // 539e98bcafc807ae130000f1';
 
 var publishDigas = true;
 
@@ -75,7 +75,7 @@ function sombiGenerator(sombi_url) {
 		for (obj in body.results) {
 			(function(obj, body) {
 				obj = body.results[obj];
-				if (obj.project_metadata[0].starred) {
+				if (obj.project_metadata[0]) {
 					if ((obj.image.standard != null) && (obj.src != 'twitter')) {
 						var urlp = url.parse(obj.image.standard).pathname+'.jpg';
 						urlp = project_id+'_'+urlp.hashCode()+'.jpg';
@@ -93,7 +93,10 @@ function sombiGenerator(sombi_url) {
 									
 									var localfp = './static/images/'+urlp;
 									fs.writeFile(localfp, body, 'binary');
+									console.log("Wrote file", localfp);
 								});
+							} else {
+								console.log("File already exists", localfp);
 							}
 						});
 						images.push({url: 'images/'+urlp, title: obj.title, avatar: obj.user.avatar, user: obj.user});
@@ -107,6 +110,16 @@ function sombiGenerator(sombi_url) {
 		console.log("Error in Sombi");
 	}
 	// setTimeout(sombiGenerator, 30000);
+}
+
+function pushCounty() {
+	url = 'http://185.62.39.154:8312/totokaka';
+	request.get({url: url}, function(error, response, body) {
+		body = JSON.parse(body);
+		if (body.error != undefined) {
+			io.emit('county', body.fylke);
+		}
+	});
 }
 
 
@@ -192,6 +205,9 @@ io.on('connection', function(socket){
 	});
 	socket.on('infosuper', function(person) {
 		io.emit('infosuper', person);
+	});
+	socket.on('playersuper', function(person) {
+		io.emit('playersuper', person);
 	});
 	socket.on('somesuper', function(s) {
 		io.emit('somesuper', s);
