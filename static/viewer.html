@@ -130,7 +130,12 @@ socket.on('county', function(s) {
 });
 
 socket.on('largemap', function(s) {
-	$(".largemap").remove();
+	$('.largemap').fadeOut('slow', function() {
+		$(".largemap").remove();
+	});
+	if (s.action == 'out') {
+		return true;
+	}
 	$('<div class="largemap"/>').appendTo('#container');
 	$('<iframe src="'+s.url+' border="0"/>').appendTo('.largemap');
 	setTimeout(function() {

@@ -81,6 +81,10 @@ input[type="text"], input[type="url"] {
 	min-width: 200px;
 }
 
+.bigmap {
+	margin-top: 20px;
+}
+
 .in_btn, .out_btn, .settings_btn {
 	padding: 10px 15px;
 	border-radius: 10px;

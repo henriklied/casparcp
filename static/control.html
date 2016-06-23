@@ -259,7 +259,12 @@ socket.on('list_shared', function(e) {
 					<input type="submit" class="placesuper_inn in_btn" value="Inn stedssuper">\
 					<input type="submit" class="placesuper_out out_btn" value="Ut stedssuper">\
 					<input type="submit" class="smallmap_inn in_btn" value="Inn lite kart">\
-					<input type="submit" class="smallmap_out out_btn" value="Ut lite kart">\
+					<input type="submit" class="smallmap_out out_btn" value="Ut lite kart"><br>\
+					<div class="bigmap"><label>Stort kart:\
+					<input type="text" class="bigmap_url" value="http://139.162.190.146/mapcraft/latest/#world_topdown_day/0/2/187/-21/64"></label><br>\
+					<input type="submit" class="largemap_inn in_btn" value="Inn STORT kart">\
+					<input type="submit" class="largemap_out out_btn" value="Ut STORT kart"><br>\
+				</div>\
 				</div>\
 			</div>';
 		$(html).appendTo("#locationSuper");
@@ -520,6 +525,16 @@ socket.on('list_shared', function(e) {
   			socket.emit('smallmap', {action: 'out'});
   		}
   	});
+  	$("#locationSuper").on('click', 'input.largemap_out, input.largemap_inn', function(e) {
+  		console.log(this);
+  		if ($(this).hasClass("largemap_inn")) {
+  			socket.emit('largemap', {action: 'in', url: $(".bigmap_url").val()});
+  		} else {
+  			socket.emit('largemap', {action: 'out', url: $(".bigmap_url").val()});
+  		}
+  	});
+
+
 
   	$("#locationSuper").on('click', 'input.placesuper_out, input.placesuper_inn', function(e) {
   		console.log(this);
