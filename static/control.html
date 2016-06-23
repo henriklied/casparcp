@@ -14,7 +14,7 @@
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
-				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
+				<p><input type="text" class="instagram_refresh_county" value="01"> <input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
 				<input type="submit" class="out_btn instagram_out" value="UT Instagram"></p>
 				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
@@ -484,8 +484,8 @@ socket.on('list_shared', function(e) {
   	});
 
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
-  		console.log("KLIKKA");
-  		socket.emit('instagram_refresh', config.sombi_url);
+  		url = 'https://sombi.nrk.no/api/1.3/document?county='+$(".instagram_refresh_county").val()+'&moderation=1&projectId=5760092bfd3cf1f96d07c306';
+  		socket.emit('instagram_refresh', url);
   	});
 
   	$("#superBox").on('change', 'input#activate_digas', function(e) {
