@@ -170,38 +170,38 @@ socket.on('playersuper', function(s){
 });
 
 
-socket.on('playersuper_info', function(i) {
-	var el = $('.spillersuper .minecraft_info');
-	$(el).find('span').remove();
-	$('<span/>').appendTo(el);
-	$(el).find('span').addClass("ghost2").html(infotexts[i]);
-	var curHeight = el.height(),
-	autoHeight = el.css('height', 'auto').height();
-	el.height(curHeight).animate({height: autoHeight}, 500);
-	setTimeout(function() {
-		$(el).find('span').removeClass("ghost2");
-		$(el).find('span').typeIt({ speed: 30, breakLines: true, cursor: false });
-	}, 1000);
-});
-
-
+	socket.on('playersuper_info', function(i) {
+		var el = $('.spillersuper .minecraft_info');
+		$(el).find('span').remove();
+		$('<span/>').appendTo(el);
+		$(el).find('span').addClass("ghost2").html(infotexts[i]);
+		var curHeight = el.height(),
+		autoHeight = el.css('height', 'auto').height();
+		el.height(curHeight).animate({height: autoHeight}, 500);
+		setTimeout(function() {
+			$(el).find('span').removeClass("ghost2");
+			$(el).find('span').typeIt({ speed: 30, breakLines: true, cursor: false });
+		}, 1000);
+	});
 
 	socket.on('somesuper', function(s) {
 		if (!clearSuper(s)) {
-  		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
-  		if (s.title != "") {
-  			html += '<div class="title ghost">'+s.title+'</div>';
-  		}
-  		html += '<div class="text ghost">'+s.text+'</div></div>';
+  		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'"><div class="icon '+s.source+'"></div>';
+			html += '<div class="title ghost">'+s.title+'</div>';
+			html += '<div class="who"><span class="ghost2">@'+s.username+'</span></div>';
+  		html += '<div class="text"><span class="ghost2">'+s.text+'</span></div></div>';
   		$(html).appendTo('#container');
   		$(document).trigger('superbox', s);
   		$("#super_"+s.id).fadeIn('slow');
   		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
+  		$("#super_"+s.id).find('div.text').css('height', $("#super_"+s.id).find('div.text').height());
    		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
-  			$("#super_"+s.id).find('div.text').removeClass('ghost');
+  			$("#super_"+s.id).find('div.text span').removeClass('ghost2');
+  			$("#super_"+s.id).find('div.who span').removeClass('ghost2');
 	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.who').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 2000, speed: 30, breakLines: true, cursor: false });
   		}, 1000);
  	}
 	});
@@ -225,13 +225,22 @@ socket.on('playersuper_info', function(i) {
 
 	socket.on('digassuper', function(s) {
 		var html = '<div class="super digassuper bottomleft">\
-		<div class="digas_title"><span>'+s.title+'</span></div>\
-		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
+		<div class="digas_title"><span class="ghost2">'+s.title+'</span></div>\
+		<div class="digas_performer"><span class="ghost2">'+s.performer+'</span></div>\
+		<div class="digas_extra"><span class="ghost2">'+s.recordcc+'  ℗ '+s.release_year+'</span></div></div>';
 		$(html).appendTo('#container');
 		$(document).trigger('digassuper', s);
-		$('.digassuper').fadeIn('slow').delay(6000).fadeOut('slow', function() {
+		$('.digassuper').fadeIn('slow', function() {
+			$('.digassuper').css('width', $(".digassuper").width());
+		}).delay(10000).fadeOut('slow', function() {
 			$(this).remove();
 		});
+		setTimeout(function() {
+  			$(".digassuper").find('span').removeClass('ghost2');
+	  		$(".digassuper").find('.digas_title').typeIt({ speed: 50, breakLines: true, cursor: false });
+	  		$(".digassuper").find('.digas_performer').typeIt({ startDelay: 700, speed: 50, breakLines: true, cursor: false });
+	  		$(".digassuper").find('.digas_extra').typeIt({ startDelay: 1400, speed: 50, breakLines: true, cursor: false });
+		}, 1000);
 	});
 
 	socket.on('placesuper', function(s) {
@@ -275,6 +284,18 @@ socket.on('playersuper_info', function(i) {
   		}, 1000);
   	}
 	});
+
+	socket.on('static_image', function(s) {
+		if (!clearSuper(s)) {
+			var html = '<div class="staticimg super" id="super_'+s.id+'"></div>';
+			$(html).appendTo('#container');
+			$('<div class="title"><h2>'+s.title+'</h2></div>').appendTo('.staticimg');
+			$('<div class="shower"></div>').appendTo('.staticimg');
+			$('<img src="shared/'+s.src+'">').appendTo('.staticimg .shower');
+			$(".staticimg").fadeIn('slow');
+		}
+	});
+
 
 	socket.on('instagram', function(s) {
 		if (!clearSuper(s)) {

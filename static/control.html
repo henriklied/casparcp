@@ -42,17 +42,19 @@
 	</div> -->
 
 	<div id="control">
-		<div id="locationSuper" class="container">
-		</div>
 		<div id="personSuper" class="container">
-		</div>
-		<div id="infoSuper" class="container">
 		</div>
 		<div id="playerBox" class="container">
 		</div>
 		<div id="infoBox" class="container">
 		</div>
 		<div id="someBox" class="container">
+		</div>
+		<div id="locationSuper" class="container">
+		</div>
+		<div id="infoSuper" class="container">
+		</div>
+		<div id="staticBox" class="container">
 		</div>
 	</div>
 
@@ -61,9 +63,20 @@
   var socket = io();
   var config;
   var minecraftData;
-String.prototype.capitalize = function() {
-return this.charAt(0).toUpperCase() + this.slice(1);
-}
+	String.prototype.capitalize = function() {
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+	String.prototype.replaceAll = function(search, replace)
+	{
+	    //if replace is not sent, return original string otherwise it will
+	    //replace search string with 'undefined'.
+	    if (replace === undefined) {
+	        return this.toString();
+	    }
+
+	    return this.replace(new RegExp('[' + search + ']', 'g'), replace);
+	};
+
 
   var randomNum = function() { return Math.floor(Math.random()*1000)};
 
@@ -229,6 +242,16 @@ return this.charAt(0).toUpperCase() + this.slice(1);
   	generatePlayerSuper();
 
 
+socket.emit('list_shared', 1);
+socket.on('list_shared', function(e) {
+	$.each(e, function(k, v) {
+		if (this != '.gitignore') {
+			$('<option value="'+this+'">'+this+'</option>').appendTo('.staticchoice_data');
+		}
+	});
+});
+
+
   	function generateLocationBox() {
   		var html = '<div class="super">\
 				<h2>Lokasjonssuper</h2>\
@@ -243,6 +266,21 @@ return this.charAt(0).toUpperCase() + this.slice(1);
   	}
   	generateLocationBox();
 
+
+  	function generateStaticBox() {
+  		var html = '<div class="super">\
+						<input type="hidden" class="txt_infobox_id" value="staticbox">\
+	  					<h2>Statiske bilder</h2>\
+	  					<div class="chooser"><p><label class="staticchoice_label"> \
+	  					<select class="staticchoice_data"></select></label><input type="submit" class="staticchoice_select" value="Velg"></p></div>\
+	  					<p><label>Tittel</label><input type="text" class="staticchoice_title"></p>\
+					<input type="submit" class="staticsubmit in_btn" value="Inn statisk bilde">\
+					<input type="submit" class="staticsubmit out_btn" value="Ut statisk bilde">\
+  					</div>';
+  		$(html).appendTo("#staticBox");
+  	}
+  	generateStaticBox();
+
   	function generateSomeBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'somebox_position_1';
@@ -256,6 +294,8 @@ return this.charAt(0).toUpperCase() + this.slice(1);
 					<input type="url" class="txt_somebox_url" style="display: inline;"> <input type="submit" class="load_someurl" value="Last inn"></label></p>\
 				<p><label>Tittel\
 					<input type="text" class="txt_somebox_title"></label></p>\
+				<p><label>Brukernavn\
+					<input type="text" class="txt_somebox_username"></label></p>\
 				<p><label>Tekst\
 					<textarea class="txt_somebox_text"></textarea></p>\
 				<p><label><input type="checkbox" class="source-facebook some-source" value="facebook"> Facebook</label><br><label><input type="checkbox" class="source-twitter some-source" value="twitter"> Twitter</label></p>\
@@ -349,6 +389,32 @@ return this.charAt(0).toUpperCase() + this.slice(1);
   		socket.emit("playersuper", data);
   	});
 
+
+  	$("#staticBox").on('click', 'input.staticchoice_select', function(e) {
+  		console.log("HJe")
+  		var fp = $(".staticchoice_data").val();
+  		var title = fp.replaceAll('_', ' ');
+  		title = title.split('.')[0];
+  		$(".staticchoice_title").val(title);
+  	});
+
+  	$("#staticBox").on('click', 'input.staticsubmit', function(e) {
+		if ($(this).hasClass('in_btn')) {
+			action = 'in';
+		} else {
+			action = 'out';
+		}
+  		var container = $(this).parent();
+  		var data = {
+  			id: $(container).find('input[type="hidden"]').val(),
+  			src: $(container).find('.staticchoice_data').val(),
+  			title: $(container).find('.staticchoice_title').val(),
+  			action: action
+  		};
+  		socket.emit('static_image', data);
+  		console.log(data);
+	});
+
   	$("#playerBox").on('click', 'input.infotxts', function(e) {
   		console.log("Clicked");
   		socket.emit("playersuper_info", parseInt($(this).val()));
@@ -436,6 +502,7 @@ return this.charAt(0).toUpperCase() + this.slice(1);
   		var data = {
   			id: $(container).find('input[type="hidden"]').val(),
   			title: $(container).find('.txt_somebox_title').val(),
+  			username: $(container).find('.txt_somebox_username').val(),
   			text: $(container).find('.txt_somebox_text').val(),
   			position: $(container).find('input[type="radio"]:checked').val(),
   			source: $(container).find('input.some-source:checked').val(),
@@ -478,6 +545,7 @@ return this.charAt(0).toUpperCase() + this.slice(1);
   		$(container).find('.some-source').prop('checked', false);
   		$(container).find(".txt_somebox_text").val(data.text);
   		$(container).find(".txt_somebox_title").val(data.title);
+  		$(container).find(".txt_somebox_username").val(data.username);
   		$(container).find(".source-"+data.source).prop('checked', true);
   	});
 

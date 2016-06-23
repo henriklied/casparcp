@@ -113,7 +113,7 @@ function sombiGenerator(sombi_url) {
 }
 
 function pushCounty() {
-	url = 'http://185.62.39.154:8312/totokaka';
+	url = 'http://185.62.39.154:8312/nrkcam';
 	request.get({url: url}, function(error, response, body) {
 		body = JSON.parse(body);
 		if (body.error != undefined) {
@@ -231,6 +231,23 @@ io.on('connection', function(socket){
 		io.emit('all_out', 1);
 	});
 
+	socket.on('list_shared', function(e) {
+		fs.readdir('static/shared/', function(err, files) {
+			if (!err) {
+				io.emit('list_shared', files);
+				for (var f in files) {
+					f = files[f];
+					console.log(f);
+				}				
+			}
+		});
+	});
+
+	socket.on('static_image', function(s) {
+		console.log(s);
+		io.emit('static_image', s);
+	});
+
 	socket.on('get_some', function(s) {
 		if (s.url.indexOf('facebook.com') > -1) {
 			var oembed = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
@@ -249,9 +266,12 @@ io.on('connection', function(socket){
 			function(error, response, body) {
 				body = JSON.parse(body);
 				var b = cheerio.load(body.html);
+				var text = cheerio(b.html()).find('blockquote p').text();
+				var username = body.author_url.replace('https://facebook.com/', '').replace('https://www.facebook.com/', '').replace('https://twitter.com/', '').replace('/', '');
 				socket.emit('get_some', {
 					title: body.author_name,
-					text: cheerio(b.html()).find('blockquote p').text(),
+					text: text,
+					username: username,
 					source: source,
 					id: s.id
 				});

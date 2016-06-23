@@ -20,6 +20,7 @@ html {
 	color: white;
 	font-weight: 500;
 	font-size: 25px;
+	display: none;
 	letter-spacing: -1px;
 	top: 195px;
 	right: 85px;
@@ -28,6 +29,7 @@ html {
 
 .countyImage {
 	top: 250px;
+	display: none;
 	right: 85px;
 }
 
@@ -35,13 +37,13 @@ html {
 	position: absolute;
 }
 
-.infobox, .sombiSlider {
+.infobox, .sombiSlider, .somesuper {
 	width: 600px;
 	bottom: 40px;
 	padding-bottom: 5px;
 }
 
-.infobox .text {
+.infobox .text, .somesuper .text {
 	background: url(../gfx/minecraft/venstresuper_info.png) repeat-y bottom left;
 	padding: 10px;
 	padding-bottom: 20px;
@@ -56,7 +58,7 @@ html {
 	top: 323px;
 }
 
-.personsuper .name, .infobox .title, .somesuper .title, .sombiSlider .title {
+.personsuper .name, .infobox .title, .somesuper .title, .somesuper.facebook .title, .somesuper.twitter .title, .sombiSlider .title, .staticimg .title {
 	background: url(../gfx/minecraft/venstresuper_header.png) repeat-y top left;
 	padding: 10px;
 	font-size: 30px;
@@ -65,7 +67,7 @@ html {
 	color: white;
 }
 
-.personsuper .title, .infobox .who {
+.personsuper .title, .infobox .who, .somesuper .who {
 	background: url(../gfx/minecraft/venstresuper_info.png) repeat-y top left;
 	display: inline-block;
 	padding: 10px;
@@ -74,7 +76,25 @@ html {
 	text-transform: lowercase;
 }
 
-.infobox .who {
+div.icon {
+  background-size: 40px auto;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 60px;
+  top: 7px;
+}
+
+div.icon.facebook {
+  background-image: url(../gfx/white_facebook_logo.png);
+}
+div.icon.twitter {
+  background-image: url(../gfx/white_twitter_logo.png);
+  top: 10px;
+}
+
+.infobox .who, .somesuper .who {
 	text-transform: none;
 	display: block;
 	width: 100%;
@@ -90,6 +110,9 @@ html {
 	margin-top: -4px;
 }
 .personsuper .name span span {
+	letter-spacing: -1px;
+}
+.digassuper span span {
 	letter-spacing: -1px;
 }
 
@@ -109,7 +132,7 @@ html {
 .digassuper {}
 .digassuper div.digas_extra {}
 .digassuper div.digas_title {}
-.personsuper .name, .personsuper .title, .personsuper .name, .infobox .title, .somesuper .title, .infobox .text, .somesuper .text, .sombiSlider .desc, .sombiSlider .title, .infobox .who {
+.personsuper .name, .personsuper .title, .personsuper .name, .infobox .title, .somesuper.facebook .title, .somesuper.twitter .title, .infobox .text, .somesuper .text, .sombiSlider .desc, .sombiSlider .title, .somesuper .who,.infobox .who, .staticimg .shower, .staticimg .title {
 	padding-left: 96px;
 	padding-right: 20px;
 }
@@ -217,6 +240,8 @@ html {
 .sombiSlider img {
 }
 
+
+
 .sombiSlider {
 	bottom: 386px;
 	left: 0;
@@ -246,7 +271,7 @@ html {
 	top: -5px;
 	zoom: 1;
 }
-.sombiSlider h2 {
+.sombiSlider h2, .staticimg h2 {
 	font-size: 30px;
 }
 
@@ -265,7 +290,55 @@ html {
 	vertical-align: middle;
 }
 
+.staticimg {
+	width: 561px;
+	position: absolute;
+	top: 49px;
+	left: 0;
+	z-index: 2;
+	background: transparent url(../gfx/minecraft/instabg.png) no-repeat 0 50px;
+	border-bottom: 5px solid rgba(0, 0, 0, 0.3);
+}
+.staticimg .title {
 
+}
+.staticimg .shower {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.staticimg img {
+	width: 100%;
+	height: auto;
+}
+
+
+.digassuper {
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    right: 40px;
+    bottom: 400px;	
+}
+
+.digassuper .digas_title {
+    background: #3fc6ed;
+    color: white;
+    font-size: 30px;
+    height: 37px;
+    font-weight: bold;
+    padding: 10px;	
+}
+.digassuper .digas_performer {
+    background: rgba(255, 255, 255, 0.8);
+    height: 24px;
+    padding: 10px;
+    font-size: 20px;	
+}
+.digassuper .digas_extra {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    height: 24px;
+    font-style: italic;
+    font-size: 20px;	
+}
 
 .ghost {
 	text-indent: -9999px;

@@ -134,6 +134,10 @@ textarea {
 	height: 200px;
 }
 
+#playerBox textarea {
+	height: 50px;
+}
+
 .cube {
 	border: 1px solid #ccc;
 	padding: 5px;
