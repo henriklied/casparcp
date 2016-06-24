@@ -1,7 +1,7 @@
 {
 	"gps_id": 13,
 	"debug": false,
-	"digasPath": "digas.xml",
+	"digasPath": "Z:/Hele_Norge_bygger.xml",
 	"layout": "minecraft",
 	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=13zP-W0drVdidpvIoDaTK9pC2nq1g6DO1rzEhfQ61Qxg&exportFormat=csv",
 	"sombi_url": "http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=5760092bfd3cf1f96d07c306",
