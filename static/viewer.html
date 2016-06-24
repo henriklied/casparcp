@@ -139,7 +139,6 @@ socket.on('ws_msg', function(s) {
 	from_top_2 = convertToRange(from_top, [-1350, 1350], [0, 755]);
 	from_left_2 = convertToRange(from_left, [-1350, 1350], [752, 0]);
 	$(".reference_map .dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
-	$(".largemap .dot").animate({top: parseInt(from_top_2)+"px", left: parseInt(from_left_2)+"px"}, 1500);
 });
 
 socket.on('county', function(s) {
