@@ -136,7 +136,7 @@ socket.on('ws_msg', function(s) {
 	var from_left = s.camera.z;
 	from_top = convertToRange(from_top, [-1350, 1350], [0, 248]);
 	from_left = convertToRange(from_left, [-1350, 1350], [0, 248]);
-	$(".dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 200);
+	$(".dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
 });
 
 socket.on('county', function(s) {
