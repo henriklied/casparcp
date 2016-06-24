@@ -392,6 +392,23 @@ socket.on('list_shared', function(e) {
   		});
   	});
 
+  	$("#playerBox").on('click', '.playerz .pl', function(e) {
+  		userID = $(this).text();
+  		$.each(minecraftData, function(i, e) {
+  			if (this.username == userID) {
+  				$(".txt_playersuper_username").val(this.username);
+  				$(".txt_playersuper_name").val(this.name);
+  				$(".txt_playersuper_place").val(this.city.toProperCase());
+  				$(".txt_playersuper_age").val(this.age);
+  				$(".txt_playersuper_about").val('<h3>To setninger om meg</h3>'+this.infotext3);
+  				$(".txt_playersuper_about2").val('<h3>Hvor lenge har du spilt?</h3>'+this.infotext2);
+  				$(".txt_infobox_title").val(this.build);
+  				$(".txt_infobox_text").val(this.infotext1);
+  				$(".txt_infobox_who").val(this.group_type.capitalize()+' fra '+this.city.toProperCase());  				
+  			}
+  		});
+  	});
+
   	$("#playerBox").on('click', 'input.in_btn, input.out_btn', function(e) {
   		console.log(this);
   		if ($(this).hasClass('out_btn')) {
