@@ -141,9 +141,11 @@ function sombiGenerator(s) {
 function pushCounty() {
 	url = 'http://185.62.39.154:8312/nrkcam';
 	request.get({url: url}, function(error, response, body) {
-		body = JSON.parse(body);
-		if (body.error == "") {
-			io.emit('county', body.fylke);
+		if (error == undefined) {
+			body = JSON.parse(body);
+			if (body.error == "") {
+				io.emit('county', body.fylke);
+			}
 		}
 	});
 	setInterval(pushCounty, 3000);
