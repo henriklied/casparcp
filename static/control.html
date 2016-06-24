@@ -595,9 +595,9 @@ socket.on('list_shared', function(e) {
 		$("#digas").html(cmd.title);
 	});
 
-	socket.on('ws_msg', function(cmd) {
-		tmp = cmd;
-		console.log(tmp);
+	socket.on('ws_msg', function(s) {
+		tmp = s;
+		console.log(s);
 		var from_top = s.camera.x;
 		var from_left = s.camera.z;
 		from_top = convertToRange(from_top, [1350, -1350], [0, 248]);
