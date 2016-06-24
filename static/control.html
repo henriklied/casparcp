@@ -209,7 +209,7 @@ function convertToRange(value, srcRange, dstRange){
 		  		$.each(minecraftData, function(i, e) {
 					html += '<option value="'+this.id+'">'+this.build+'</option>';
 		  		});
-			html += '</select></label></p><p><label>Tittel\
+			html += '</select><input type="submit" value="Sett inn"></label></p><p><label>Tittel\
 					<input type="text" class="txt_infobox_title"></label></p>\
 				<p><label>Hvem\
 					<input type="text" class="txt_infobox_who"></label></p>\
@@ -400,6 +400,20 @@ socket.on('list_shared', function(e) {
   			}
   		});
   	});
+  	$("#infoBox").on('click', '.infosuper_label input[type="submit"]', function(e) {
+  		user_id = $(this).parent().find('select').val();
+  		$.each(minecraftData, function(i, e) {
+  			if (this.id == user_id) {
+  				$(".txt_infobox_title").val(this.build);
+  				$(".txt_infobox_text").val(this.infotext1);
+  				$(".txt_infobox_who").val(this.group_type.capitalize()+' fra '+this.city.toProperCase());
+  			}
+  		});
+  	});
+
+
+
+
 
   	$("#playerBox").on('click', '.playerz .pl', function(e) {
   		userID = $(this).text();
