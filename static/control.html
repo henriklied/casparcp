@@ -81,6 +81,19 @@
 	    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 	};
 
+function convertToRange(value, srcRange, dstRange){
+  // value is outside source range return
+  if (value < srcRange[0] || value > srcRange[1]){
+    return NaN; 
+  }
+
+  var srcMax = srcRange[1] - srcRange[0],
+      dstMax = dstRange[1] - dstRange[0],
+      adjValue = value - srcRange[0];
+
+  return (adjValue * dstMax / srcMax) + dstRange[0];
+
+}
 
   var randomNum = function() { return Math.floor(Math.random()*1000)};
 
@@ -585,6 +598,11 @@ socket.on('list_shared', function(e) {
 	socket.on('ws_msg', function(cmd) {
 		tmp = cmd;
 		console.log(tmp);
+		var from_top = s.camera.x;
+		var from_left = s.camera.z;
+		from_top = convertToRange(from_top, [1350, -1350], [0, 248]);
+		from_left = convertToRange(from_left, [-1350, 1350], [0, 248]);
+		console.log(from_top, from_left);
 	});
 
 
