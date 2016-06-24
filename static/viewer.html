@@ -136,7 +136,10 @@ socket.on('ws_msg', function(s) {
 	var from_left = s.camera.z;
 	from_top = convertToRange(from_top, [-1350, 1350], [0, 248]);
 	from_left = convertToRange(from_left, [-1350, 1350], [248, 0]);
-	$(".dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
+	from_top_2 = convertToRange(from_top, [-1350, 1350], [0, 755]);
+	from_left_2 = convertToRange(from_left, [-1350, 1350], [752, 0]);
+	$(".reference_map .dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
+	$(".largemap .dot").animate({top: parseInt(from_top_2)+"px", left: parseInt(from_left_2)+"px"}, 1500);
 });
 
 socket.on('county', function(s) {
@@ -158,7 +161,7 @@ socket.on('largemap', function(s) {
 	if (s.action == 'out') {
 		return true;
 	}
-	$('<div class="largemap"/>').appendTo('#container');
+	$('<div class="largemap"><div class="dot"></div></div>').appendTo('#container');
 	$('<iframe src="'+s.url+' border="0"/>').appendTo('.largemap');
 	setTimeout(function() {
 		$(".largemap").animate({opacity: 1}, 600);
