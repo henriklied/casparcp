@@ -77,6 +77,10 @@ html {
 	text-transform: lowercase;
 }
 
+.infobox .who {
+	text-transform: capitalize;
+}
+
 div.icon {
   background-size: 40px auto;
   background-repeat: no-repeat;
@@ -184,6 +188,7 @@ div.icon.twitter {
 }
 .spillersuper .metainfo span.place {
 	position: absolute;
+	text-transform: capitalize;
 	left: 70px;
 }
 .spillersuper .metainfo span.age {
