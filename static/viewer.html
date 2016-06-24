@@ -132,12 +132,10 @@ $(document).ready(function() {
 
 socket.on('ws_msg', function(s) {
 	s = JSON.parse(s);
-	var from_top = s.camera.x;
-	var from_left = s.camera.z;
+	var from_top = s.camera.z;
+	var from_left = s.camera.x;
 	from_top = convertToRange(from_top, [-1350, 1350], [0, 242]);
 	from_left = convertToRange(from_left, [-1350, 1350], [242, 0]);
-	from_top_2 = convertToRange(from_top, [-1350, 1350], [0, 755]);
-	from_left_2 = convertToRange(from_left, [-1350, 1350], [752, 0]);
 	$(".reference_map .dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
 });
 
