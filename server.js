@@ -8,12 +8,14 @@ var net = require('net');
 var io = require('socket.io')(http);
 var parseString = require('xml2js').parseString;
 const fs = require('fs');
+
+
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+  	io.emit('ws_msg', message);
   });
   console.log('Got connextion');
 });
