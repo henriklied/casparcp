@@ -601,7 +601,7 @@ socket.on('list_shared', function(e) {
 		console.log(s);
 		var from_top = s.camera.x;
 		var from_left = s.camera.z;
-		from_top = convertToRange(from_top, [1350, -1350], [0, 248]);
+		from_top = convertToRange(from_top, [-1350, 1350], [0, 248]);
 		from_left = convertToRange(from_left, [-1350, 1350], [0, 248]);
 		console.log(from_top, from_left);
 	});
