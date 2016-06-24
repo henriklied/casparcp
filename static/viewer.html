@@ -164,7 +164,7 @@ socket.on('largemap', function(s) {
 		return true;
 	}
 	$('<div class="largemap"></div>').appendTo('#container');
-	$('<iframe src="'+s.url+' border="0"/>').appendTo('.largemap');
+	$('<iframe src="'+s.url+'?cachebust='+new Date().getTime()+' border="0"/>').appendTo('.largemap');
 	setTimeout(function() {
 		$(".largemap").animate({opacity: 1}, 600);
 	}, 1500);
