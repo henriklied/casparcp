@@ -18,6 +18,10 @@
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
 				<input type="submit" class="out_btn instagram_out" value="UT Instagram"></p>
 				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
+
+				<input type="submit" class="in_btn byggere_start" value="INN byggere"></p>
+				<input type="submit" class="in_btn rulletekst_start" value="INN rulletekst"></p>
+				<p>
 			</div>
 		</div>
 
@@ -522,6 +526,10 @@ socket.on('list_shared', function(e) {
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
   		url = 'https://sombi.nrk.no/api/1.3/document?county='+$(".instagram_refresh_county").val()+'&moderation=1&projectId=5760092bfd3cf1f96d07c306';
   		socket.emit('instagram_refresh', url);
+  	});
+
+  	$("#superBox").on('click', '.byggere_start', function(e) {
+  		$('<img src="http://160.67.74.161/panel/rtx.php">').appendTo("body");
   	});
 
   	$("#superBox").on('change', 'input#activate_digas', function(e) {
