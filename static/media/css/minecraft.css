@@ -45,6 +45,7 @@ div.dot {
 }
 
 .countyImage {
+	display: block;
 }
 
 .super {
