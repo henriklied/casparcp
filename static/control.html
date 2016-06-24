@@ -235,6 +235,7 @@ function convertToRange(value, srcRange, dstRange){
 				html += '<option value="'+this.id+'">'+this.username+'</option>';
 			});
 			html += '</select> <input type="submit" value="Sett inn"></label></p>\
+					<div class="playerz"></div>
 					<p><label>Brukernavn\
 						<input type="text" class="txt_playersuper_username"></label></p>\
 					<p><label>Navn\
@@ -599,9 +600,10 @@ socket.on('list_shared', function(e) {
 		s = JSON.parse(s);
 		tmp = s;
 		console.log(s);
+		$(".playerz").html('');
 		for (var obj in s.players) {
-			player = s.players[obj];
-			console.log(player.name);
+			var player = s.players[obj];
+			$('<div class="pl">'+player.name+'</div>').appendTo(".playerz");
 		}
 	});
 

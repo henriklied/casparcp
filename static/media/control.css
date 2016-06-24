@@ -85,6 +85,14 @@ input[type="text"], input[type="url"] {
 	margin-top: 20px;
 }
 
+.pl {
+	padding: 10px;
+	margin-right: 10px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
 .in_btn, .out_btn, .settings_btn {
 	padding: 10px 15px;
 	border-radius: 10px;
