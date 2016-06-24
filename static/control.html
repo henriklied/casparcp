@@ -596,6 +596,7 @@ socket.on('list_shared', function(e) {
 	});
 
 	socket.on('ws_msg', function(s) {
+		s = JSON.parse(s);
 		tmp = s;
 		console.log(s);
 		var from_top = s.camera.x;
