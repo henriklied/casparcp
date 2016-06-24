@@ -144,7 +144,7 @@ function pushCounty() {
 		if (error == undefined) {
 			body = JSON.parse(body);
 			if (body.error == "") {
-				io.emit('county', body.fylke);
+				io.emit('county', {county: body.fylke});
 			}
 			setTimeout(pushCounty, 6000);
 		} else {
