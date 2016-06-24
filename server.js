@@ -146,9 +146,12 @@ function pushCounty() {
 			if (body.error == "") {
 				io.emit('county', body.fylke);
 			}
+			setInterval(pushCounty, 3000);
+		} else {
+			console.log("Error");
+			setInterval(pushCounty, 10000);
 		}
 	});
-	setInterval(pushCounty, 3000);
 }
 pushCounty();
 
