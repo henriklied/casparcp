@@ -148,7 +148,7 @@ function pushCounty() {
 	});
 	setInterval(pushCounty, 3000);
 }
-
+pushCounty();
 
 function parseDigas() {
 	if (!publishDigas) {
