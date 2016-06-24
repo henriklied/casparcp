@@ -390,7 +390,7 @@ socket.on('list_shared', function(e) {
   			if (this.id == user_id) {
   				$(".txt_playersuper_username").val(this.username);
   				$(".txt_playersuper_name").val(this.name);
-  				$(".txt_playersuper_place").val(this.city.toProperCase());
+  				$(".txt_playersuper_place").val(this.city);
   				$(".txt_playersuper_age").val(this.age);
   				$(".txt_playersuper_about").val('<h3>To setninger om meg</h3>'+this.infotext3);
   				$(".txt_playersuper_about2").val('<h3>Hvor lenge har du spilt?</h3>'+this.infotext2);
@@ -408,7 +408,7 @@ socket.on('list_shared', function(e) {
   			if (this.username == userID) {
   				$(".txt_playersuper_username").val(this.username);
   				$(".txt_playersuper_name").val(this.name);
-  				$(".txt_playersuper_place").val(this.city.toProperCase());
+  				$(".txt_playersuper_place").val(this.city);
   				$(".txt_playersuper_age").val(this.age);
   				$(".txt_playersuper_about").val('<h3>To setninger om meg</h3>'+this.infotext3);
   				$(".txt_playersuper_about2").val('<h3>Hvor lenge har du spilt?</h3>'+this.infotext2);
