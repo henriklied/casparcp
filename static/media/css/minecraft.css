@@ -28,6 +28,7 @@ div.dot {
 	width: 20px;
 	height: 20px;
 	border-radius: 40px;
+	z-index: 9999;
 	background: red;
 	top: 130px;
 	left: 130px;
