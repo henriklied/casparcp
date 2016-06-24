@@ -18,9 +18,6 @@
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
 				<input type="submit" class="out_btn instagram_out" value="UT Instagram"></p>
 				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
-
-				<input type="submit" class="in_btn byggere_start" value="INN byggere"></p>
-				<input type="submit" class="in_btn rulletekst_start" value="INN rulletekst"></p>
 				<p>
 			</div>
 		</div>
@@ -59,6 +56,13 @@
 		<div id="infoSuper" class="container">
 		</div>
 		<div id="staticBox" class="container">
+		</div>
+		<div id="rtx" class="container">
+			<div class="super">
+				<input type="submit" class="in_btn byggere_start" value="INN byggere"></p>
+				<input type="submit" class="in_btn rulletekst_start" value="INN rulletekst"></p>
+				<input type="submit" class="out_btn byggere_stop" value="UT rulletekster"></p>
+			</div>
 		</div>
 	</div>
 
@@ -528,7 +532,13 @@ socket.on('list_shared', function(e) {
   		socket.emit('instagram_refresh', url);
   	});
 
-  	$("#superBox").on('click', '.byggere_start', function(e) {
+  	$("#rtx").on('click', '.byggere_start', function(e) {
+  		$('<img src="http://160.67.74.161/panel/byggere.php">').appendTo("body");
+  	});
+  	$("#rtx").on('click', '.byggere_stop', function(e) {
+  		$('<img src="http://160.67.74.161/panel/rtx_clear.php">').appendTo("body");
+  	});
+  	$("#rtx").on('click', '.rulletekst_start', function(e) {
   		$('<img src="http://160.67.74.161/panel/rtx.php">').appendTo("body");
   	});
 
