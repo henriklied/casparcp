@@ -147,7 +147,12 @@ socket.on('county', function(s) {
 	$("<span/>").appendTo('.county');
 	$("div.county span").html(s.county);
 	$("div.county span").typeIt({ speed: 30, breakLines: false, cursor: false });
-	$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/'+county_graphics[s.county]+'.png');
+	if (s.county == null) {
+		$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/referansekart_clean.png');
+	} else {
+		$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/'+county_graphics[s.county]+'.png');
+	}
+
 	current_county = s.county;
 });
 
