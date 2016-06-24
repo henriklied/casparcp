@@ -138,6 +138,22 @@ function sombiGenerator(s) {
 
 // sombiGenerator("https://sombi.nrk.no/api/1.3/document?county=01,02&moderation=1&projectId=5760092bfd3cf1f96d07c306");
 
+function pushCounty() {
+	url = 'http://185.62.39.154:8312/nrkcam';
+	request.get({url: url}, function(error, response, body) {
+		if (error == undefined) {
+			body = JSON.parse(body);
+			if (body.error == "") {
+				io.emit('county', body.fylke);
+			}
+			setTimeout(pushCounty, 6000);
+		} else {
+			console.log("Error");
+			setTimeout(pushCounty, 15000);
+		}
+	});
+}
+pushCounty();
 
 function parseDigas() {
 	if (!publishDigas) {
