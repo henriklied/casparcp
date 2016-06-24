@@ -91,6 +91,8 @@ input[type="text"], input[type="url"] {
 	border: 1px solid #ddd;
 	border-radius: 10px;
 	cursor: pointer;
+	display: inline-block;
+	zoom: 0.7;
 }
 
 .in_btn, .out_btn, .settings_btn {
