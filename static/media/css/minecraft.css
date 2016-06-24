@@ -25,10 +25,10 @@ html {
 
 div.dot {
 	position: absolute;
-	width: 10px;
-	height: 10px;
-	border-radius: 30px;
-	background: yellow;
+	width: 20px;
+	height: 20px;
+	border-radius: 40px;
+	background: red;
 	top: 130px;
 	left: 130px;
 }
