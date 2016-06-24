@@ -15,6 +15,23 @@ html {
 	width: 242px;
 	text-align: center;
 }
+.reference_map {
+	width: 242px;
+	height: 242px;
+	top: 250px;
+	right: 85px;
+	display: none;
+}
+
+div.dot {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	border-radius: 30px;
+	background: yellow;
+	top: 130px;
+	left: 130px;
+}
 .county {
 	opacity: 0.67;
 	color: white;
@@ -28,9 +45,6 @@ html {
 }
 
 .countyImage {
-	top: 250px;
-	display: none;
-	right: 85px;
 }
 
 .super {

@@ -15,7 +15,10 @@
 
 	<div id="container">
 		<div class="county super"></div>
-		<img src="media/gfx/minecraft/counties/referansekart_1.png" class="super countyImage">
+		<div class="reference_map super">
+			<div class="dot"></div>
+			<img src="media/gfx/minecraft/counties/referansekart_1.png" class="super countyImage">
+		</div>
 	</div>
 
 </body>
@@ -25,9 +28,18 @@ var config;
 var socket = io();
 var timers = [];
 var infotexts = [];
-function toTitleCase(str)
-{
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+function convertToRange(value, srcRange, dstRange){
+  // value is outside source range return
+  if (value < srcRange[0] || value > srcRange[1]){
+    return NaN; 
+  }
+
+  var srcMax = srcRange[1] - srcRange[0],
+      dstMax = dstRange[1] - dstRange[0],
+      adjValue = value - srcRange[0];
+
+  return (adjValue * dstMax / srcMax) + dstRange[0];
+
 }
 
 var county_graphics = {
@@ -54,9 +66,6 @@ var county_graphics = {
 };
 
 var current_county;
-
-
-
 
 $(document).ready(function() {
 
@@ -120,6 +129,13 @@ $(document).ready(function() {
 
   	}
 	});
+
+socket.on('ws_msg', function(s) {
+	var from_top = s.camera.x;
+	var from_left = s.camera.z;
+	from_top = convertToRange(from_top, [-1350, 1350], [0, 248]);
+	from_left = convertToRange(from_left, [-1350, 1350], [0, 248]);
+});
 
 socket.on('county', function(s) {
 	if (s.county == current_county) {
@@ -263,9 +279,9 @@ socket.on('playersuper', function(s){
 	});
 	socket.on('smallmap', function(s) {
 		if (s.action == 'in') {
-			$(".countyImage").fadeIn();
+			$(".reference_map").fadeIn();
 		} else {
-			$(".countyImage").fadeOut();			
+			$(".reference_map").fadeOut();			
 		}
 	});
 
