@@ -394,6 +394,7 @@ socket.on('list_shared', function(e) {
 
   	$("#playerBox").on('click', '.playerz .pl', function(e) {
   		userID = $(this).text();
+  		console.log(userID);
   		$.each(minecraftData, function(i, e) {
   			if (this.username == userID) {
   				$(".txt_playersuper_username").val(this.username);
