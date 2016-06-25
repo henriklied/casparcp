@@ -668,8 +668,13 @@ socket.on('list_shared', function(e) {
 		s = JSON.parse(s);
 		tmp = s;
 		console.log(s);
+		var ii = 0;
 		$(".playerz").html('');
 		for (var obj in s.players) {
+			i++;
+			if (i > 5) {
+				break;
+			}
 			var player = s.players[obj];
 			$('<div class="pl">'+player.name+'</div>').appendTo(".playerz");
 		}
