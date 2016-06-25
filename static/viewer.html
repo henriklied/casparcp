@@ -17,7 +17,7 @@
 		<div class="county super"></div>
 		<div class="reference_map super">
 			<div class="dot"></div>
-			<img src="media/gfx/minecraft/counties/referansekart_1.png" class="super countyImage">
+			<img src="media/gfx/minecraft/counties/referansekart_clean.png" class="super countyImage">
 		</div>
 	</div>
 
@@ -136,6 +136,7 @@ socket.on('ws_msg', function(s) {
 	var from_left = s.camera.x;
 	from_top = convertToRange(from_top, [-1350, 1350], [0, 242]);
 	from_left = convertToRange(from_left, [-1350, 1350], [0, 242]);
+	$(".reference_map .dot").fadeIn();
 	$(".reference_map .dot").animate({top: parseInt(from_top)+"px", left: parseInt(from_left)+"px"}, 1500);
 });
 

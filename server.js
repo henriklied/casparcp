@@ -156,10 +156,6 @@ function pushCounty() {
 pushCounty();
 
 function parseDigas() {
-	if (!publishDigas) {
-		setTimeout(parseDigas, 1000);
-		return true;
-	}
 	try {
 		fs.readFile(digasPath, function(err, data) {
 			if (err) {
@@ -189,6 +185,9 @@ function parseDigas() {
 								clearTimeout(digasTimers.outTimer);
 							}, endTimer-15000);
 							setTimeout(function() {
+								if (!publishDigas) {
+									return true;
+								}								
 								io.emit("digassuper", currentDigas);
 								console.log("Fired digas", currentDigas);
 							}, 0);
