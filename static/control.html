@@ -277,7 +277,7 @@ function convertToRange(value, srcRange, dstRange){
 			$.each(data, function(i, e) {
 				html += '<option value="'+this.id+'">'+this.username+'</option>';
 			});
-			console.log("Done");
+			console.log("Oppdaterte spillere");
 			$("#playerBox select.playersuper_data").html(html);
 		});
   	}
@@ -653,6 +653,9 @@ socket.on('list_shared', function(e) {
 
   	socket.on('get_personsuper', function(data) {
   		updatePersonsuper(data);
+  		$(".staticchoice_data").html('');
+		socket.emit('list_shared', 1);
+  		updatePlayerSuper();
   	});
 
 
