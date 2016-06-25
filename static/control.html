@@ -557,7 +557,7 @@ socket.on('list_shared', function(e) {
   	});
 
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
-  		url = 'https://sombi.nrk.no/api/1.3/document?county='+$(".instagram_refresh_county").val()+'&moderation=1&projectId=5760092bfd3cf1f96d07c306';
+  		url = 'https://sombi.nrk.no/api/1.3/document?county='+$(".instagram_refresh_county").val()+'&starred=true&projectId=5760092bfd3cf1f96d07c306';
   		socket.emit('instagram_refresh', url);
   	});
 

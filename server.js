@@ -49,7 +49,7 @@ fs.readFile('./static/config.json', function(err, data) {
 	digasPath = data.digasPath;
 });
 
-var sombi = 'https://sombi.nrk.no/api/1.3/document?county=01,02&moderation=1&projectId=5760092bfd3cf1f96d07c306'; // 539e98bcafc807ae130000f1';
+var sombi = 'https://sombi.nrk.no/api/1.3/document?county=01,02&starred=true&projectId=5760092bfd3cf1f96d07c306'; // 539e98bcafc807ae130000f1';
 
 var publishDigas = true;
 
