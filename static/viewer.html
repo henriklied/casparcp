@@ -43,26 +43,26 @@ function convertToRange(value, srcRange, dstRange){
 }
 
 var county_graphics = {
-	"Finnmark": "referansekart_1",
-	"Troms": "referansekart_2",
-	"Nord-Trøndelag": "referansekart_3",
-	"Oppland": "referansekart_4",
-	"Hedmark": "referansekart_5",
-	"Oslo": "referansekart_6",
-	"Akershus": "referansekart_7",
-	"Østfold": "referansekart_8",
-	"Vestfold": "referansekart_9",
-	"Buskerud": "referansekart_10",
-	"Telemark": "referansekart_11",
-	"Aust-Agder": "referansekart_12",
-	"Vest-Agder": "referansekart_13",
-	"Rogaland": "referansekart_14",
-	"Hordaland": "referansekart_15",
-	"Sogn og Fjordane": "referansekart_16",
-	"Møre og Romsdal": "referansekart_17",
-	"Sør-Trøndelag": "referansekart_18",
-	"Nordland": "referansekart_19",
-	"Festival": "referansekart_senter"
+	"finnmark": ["Finnmark", "referansekart_1"],
+	"troms": ["Troms", "referansekart_2"],
+	"nord-trondelag": ["Nord-Trøndelag", "referansekart_3"],
+	"oppland": ["Oppland", "referansekart_4"],
+	"hedmark": ["Hedmark", "referansekart_5"],
+	"oslo": ["Oslo", "referansekart_6"],
+	"akershus": ["Akershus", "referansekart_7"],
+	"ostfold": ["Østfold", "referansekart_8"],
+	"vestfold": ["Vestfold", "referansekart_9"],
+	"buskerud": ["Buskerud", "referansekart_10"],
+	"telemark": ["Telemark", "referansekart_11"],
+	"aust-agder": ["Aust-Agder", "referansekart_12"],
+	"vest-agder": ["Vest-Agder", "referansekart_13"],
+	"rogaland": ["Rogaland", "referansekart_14"],
+	"hordaland": ["Hordaland", "referansekart_15"],
+	"sogn-og-fjordane": ["Sogn og Fjordane", "referansekart_16"],
+	"more-og-romsdal": ["Møre og Romsdal", "referansekart_17"],
+	"sor-trondelag": ["Sør-Trøndelag", "referansekart_18"],
+	"nordland": ["Nordland", "referansekart_19"],
+	"festival": ["Festival", "referansekart_senter"]
 };
 
 var current_county;
@@ -143,14 +143,15 @@ socket.on('county', function(s) {
 	if (s.county == current_county) {
 		return true;
 	}
+	var the_county = county_graphics[s.county.toLowerCase()][0];
 	$("div.county span").remove();
 	$("<span/>").appendTo('.county');
-	$("div.county span").html(s.county);
+	$("div.county span").html(the_county);
 	$("div.county span").typeIt({ speed: 30, breakLines: false, cursor: false });
 	if (s.county == null) {
 		$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/referansekart_clean.png');
 	} else {
-		$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/'+county_graphics[s.county]+'.png');
+		$("img.countyImage").attr('src', 'media/gfx/minecraft/counties/'+county_graphics[s.county.toLowerCase()][1]+'.png');
 	}
 
 	current_county = s.county;
