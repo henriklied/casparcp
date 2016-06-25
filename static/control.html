@@ -654,6 +654,7 @@ socket.on('list_shared', function(e) {
   	socket.on('get_personsuper', function(data) {
   		updatePersonsuper(data);
   		$(".staticchoice_data").html('');
+  		$(".infosuper_data").html('');
 		socket.emit('list_shared', 1);
   		updatePlayerSuper();
   	});
