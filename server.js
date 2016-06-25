@@ -319,7 +319,7 @@ io.on('connection', function(socket){
 					continue;
 				}
 				line = body[line].split(",");
-				data.push({name: line[0], title: line[1]});
+				data.push({name: line[0].replace('"', ''), title: line[1].replace('"', '')});
 			}
 			socket.emit('get_personsuper', data);
 		});
