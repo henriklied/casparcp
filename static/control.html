@@ -671,12 +671,10 @@ socket.on('list_shared', function(e) {
 		var ii = 0;
 		$(".playerz").html('');
 		for (var obj in s.players) {
-			var player = s.players[obj];
-			$('<div class="pl">'+player.name+'</div>').appendTo(".playerz");
-			if (ii > 5) {
-				break;
+			if (obj < 6) {
+				var player = s.players[obj];
+				$('<div class="pl">'+player.name+'</div>').appendTo(".playerz");
 			}
-			ii++;
 		}
 	});
 
