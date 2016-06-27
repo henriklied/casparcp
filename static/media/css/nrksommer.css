@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'LFTBook';
-  src: url('/media/fonts/LFT_Etica_BookItalic.svg') format('svg');
+  font-family: 'KarminaSB';
+  src: url('/media/fonts/KarminaSans_SB.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'LFTBold';
-  src: url('/media/fonts/LFT_Etica_ExtraboldItalic.svg') format('svg');
+  font-family: 'KarminaR';
+  src: url('/media/fonts/KarminaSans_Regular.woff') format('woff');
 }
 
 html {
@@ -15,7 +15,7 @@ html {
 
 
 body {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "KaminaR", Helvetica, Arial, sans-serif;
 	color: black;
 }
 
@@ -27,15 +27,19 @@ body {
 	content: "– ";
 }
 .sombiSlider .titles h2 {
-	font-size: 20px;
+	font-size: 25px;
+	font-family: "KarminaSB";
 	margin-top: 10px;
 }
 .sombiSlider .titles p {
   font-size: 30px;
+  font-family: "KarminaR";
+
 }
 
 .infosuper {
 	font-size: 30px;
+	font-family: "KarminaR";
 	text-align: center;
 	color: white;
 	text-shadow: 2px 2px 2px #000;
@@ -58,12 +62,13 @@ body {
 .top-to-bottom {
 }
 
-.personsuper, .infobox, .somesuper {
+.personsuper, .infobox, .somesuper, .digassuper {
 	min-width: 640px;
-	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
 }
 .personsuper.bottomleft::before, .personsuper.topleft::before,
 .infobox.bottomleft::before, .infobox.topleft::before,
+.digassuper::before,
 .somesuper.bottomleft::before, .somesuper.topleft::before
 {
 	content: " " ;
@@ -78,6 +83,7 @@ body {
 
 .personsuper.bottomleft::after, .personsuper.topleft::after,
 .infobox.bottomleft::after, .infobox.topleft::after,
+.digassuper::after,
 .somesuper.bottomleft::after, .somesuper.topleft::after
 {
 	content: " " ;
@@ -138,36 +144,44 @@ body {
 	display: none;
 }
 
-.personsuper div.name, .personsuper div.title {
-	font-size: 30px;
+.personsuper div.name, .digassuper div.title, .infobox div.title, .somesuper div.title {
+	font-family: "KarminaSB";
+}
+.personsuper div.title, .infobox div.text, .somesuper div.text, .digassuper .digas_extra {
+	font-family: "KarminaR";
+}
+.personsuper div.name, .personsuper div.title, .digassuper div.digas_title, .digassuper div.digas_extra {
+	font-size: 35px;
 	padding-bottom: 10px;
+	padding-right: 80px;
 }
 .padded div.name, .padded div.title {
 	padding-left: 140px;
 }
-.personsuper {
+.personsuper, .digassuper {
 	padding-bottom: 10px;
-	background: -webkit-radial-gradient(18% 50%, circle, transparent 10%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: -webkit-radial-gradient(18% 50%, circle, transparent 10%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0.8) 0%,rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
 }
 
-.personsuper .cogwheel {
+.personsuper .cogwheel, .digassuper .cogwheel {
 	position: absolute;
-	opacity: 0.5;
+	opacity: 0.65;
 	width: 100px;
 	margin-top:	-100px;
 	height: 100px;
+	zoom: 1.1;
 }
-.personsuper .cropper {
+.personsuper .cropper, .digassuper .cropper {
 	position: absolute;
 }
 
 
-.personsuper img, .personsuper .skovel {
+.personsuper img, .digassuper img, .personsuper .skovel, .digassuper .skovel {
 	width: 100px;
 	height: 100px;
 }
-.personsuper .cropper {
+.personsuper .cropper, .digassuper .cropper {
 	margin-top: -54px;
 	width: 100px;
 	height: 50px;
@@ -191,9 +205,9 @@ body {
 .somesuper.bottomright, .sombiSlider.topright {
 	text-align: right;
 	padding-top: 10px;
-	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 100%); /* Chrome10-25,Safari5.1-6 */
 }
-.personsuper.topleft, .personsuper.bottomleft {
+.personsuper.topleft, .personsuper.bottomleft, .digassuper {
 	padding-top: 20px;
 }
 
