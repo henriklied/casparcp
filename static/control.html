@@ -270,6 +270,12 @@
 	  		$(this).parent().remove();
 	  	});
   	});
+  	$("#mapBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+	  	$(generateMapSuper()).appendTo("#mapBox");
+	  	$("#mapBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+	  		$(this).parent().remove();
+	  	});
+  	});
 
   	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
   		if ($(this).hasClass('infobox_inn')) {
