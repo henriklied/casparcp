@@ -25,7 +25,6 @@ fs.readFile('./static/config.json', function(err, data) {
 	digasPath = data.digasPath;
 });
 
-var sombi = 'http://sombi.nrk.no/api/1.2/data/?limit=30&moderation=1&starred=true&metadataQuery=true&project_id=539e98bcafc807ae130000f1'; // 539e98bcafc807ae130000f1';
 
 var publishDigas = true;
 
@@ -60,11 +59,11 @@ String.prototype.hashCode = function(){
 	return hash;
 }
 
-function sombiGenerator(sombi_url) {
-	sombi_url = url.parse(sombi_url);
-	var project_id = sombi_url.search.split('project_id=')[1];
+function sombiGenerator(s) {
+	sombi_url = url.parse(s);
+	var project_id = sombi_url.search.split('projectId=')[1];
 	try {
-		request(sombi, function (error, response, body) {
+		request(s, function (error, response, body) {
 			if(error != null) {
 				console.log("Could not load sombi json");
 				console.log(error);
@@ -72,33 +71,35 @@ function sombiGenerator(sombi_url) {
 			}
 		var images = [];
 		body = JSON.parse(body);
-		for (obj in body.results) {
+		for (obj in body._embedded.document) {
 			(function(obj, body) {
-				obj = body.results[obj];
-				if (obj.project_metadata[0].starred) {
-					if ((obj.image.standard != null) && (obj.src != 'twitter')) {
-						var urlp = url.parse(obj.image.standard).pathname+'.jpg';
-						urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+				obj = body._embedded.document[obj];
 
-						var localfp = './static/images/'+urlp;
+				if ((obj.image.standard != null) && (obj.title != null) && (obj.src != "twitter")) {
+					var urlp = url.parse(obj.image.standard).pathname+'.jpg';
+					urlp = project_id+'_'+urlp.hashCode()+'.jpg';
 
-						fs.open(localfp, 'r', function(error, fd) {
-							if (error) {
-								request.get({url: obj.image.standard, encoding: 'binary'}, function(error, response, body) {
-									if (response.toJSON().headers['content-length'] < 10000) {
-										return false;
-									}
-									var urlp = url.parse(obj.image.standard).pathname+'.jpg';
-									urlp = project_id+'_'+urlp.hashCode()+'.jpg';
-									
-									var localfp = './static/images/'+urlp;
-									fs.writeFile(localfp, body, 'binary');
-								});
-							}
-						});
+					var localfp = './static/images/'+urlp;
+
+					fs.open(localfp, 'r', function(error, fd) {
+						if (error) {
+							request.get({url: obj.image.standard, encoding: 'binary'}, function(error, response, body) {
+								if (response.toJSON().headers['content-length'] < 10000) {
+									return false;
+								}
+								var urlp = url.parse(obj.image.standard).pathname+'.jpg';
+								urlp = project_id+'_'+urlp.hashCode()+'.jpg';
+								
+								var localfp = './static/images/'+urlp;
+								fs.writeFile(localfp, body, 'binary');
+								console.log("Wrote file", localfp);
+							});
+						} else {
+							console.log("File already exists", localfp);
+						}
+					});
 						images.push({url: 'images/'+urlp, title: obj.title, avatar: obj.user.avatar, user: obj.user});
-					} 
-				}
+					}
 				})(obj, body); 
 			}
 			fs.writeFile('./static/images.json', JSON.stringify(images));
@@ -108,6 +109,8 @@ function sombiGenerator(sombi_url) {
 	}
 	// setTimeout(sombiGenerator, 30000);
 }
+
+
 
 
 function parseDigas() {
@@ -267,9 +270,9 @@ io.on('connection', function(socket){
 
 });
 
-process.on('uncaughtException', function(err) {
-  console.log('Caught exception: ' + err);
-});
+// process.on('uncaughtException', function(err) {
+//   console.log('Caught exception: ' + err);
+// });
 
 
 // Lytt på localhost:3000

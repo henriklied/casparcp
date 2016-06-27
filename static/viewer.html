@@ -68,9 +68,9 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
-				$(this).remove();				
-			});
+  		$("#super_"+s.id).fadeIn('slow')//.delay(6000).fadeOut('slow', function() {
+		//		$(this).remove();				
+		//	});
   	}
 	});
 
@@ -88,8 +88,8 @@ $(document).ready(function() {
    		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
   			$("#super_"+s.id).find('div.text').removeClass('ghost');
-	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
   		}, 1000);
  	}
 	});
@@ -101,7 +101,7 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('infosuper', s);
   		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).find('div.text').typeIt({ speed: 30, breakLines: true, cursor: false });
+  		$("#super_"+s.id).find('div.text').typeIt({ speed: 60, breakLines: true, cursor: false });
   	}
 	});
 
@@ -130,8 +130,8 @@ $(document).ready(function() {
   		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
   			$("#super_"+s.id).find('div.text').removeClass('ghost');
-	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
   		}, 1000);
   	}
 	});
