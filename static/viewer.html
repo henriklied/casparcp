@@ -6,8 +6,10 @@
 	<script src="media/js/jquery.min.js"></script>
 	<script src="media/js/sombiSlider.js"></script>
 	<script src="media/js/typeit.min.js"></script>
+	<script src="media/js/leaflet-min.js"></script>
 	<script src="media/js/smoothslide.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="media/css/common.css">
+	<link rel="stylesheet" type="text/css" href="media/css/leaflet.css">
 </head>
 <body>
 
@@ -21,7 +23,7 @@ var socket = io();
 var timers = [];
 
 $(document).ready(function() {
-
+	$(document).trigger("loaded", 1);
 	$.get('config.json', function(data) {
 		config = data;
 		if (config.debug) {
@@ -46,6 +48,24 @@ $(document).ready(function() {
 		return false;
 	}
 
+	socket.on('map', function(s) {
+	  	if (!clearSuper(s)) {
+	  		var html = '<div class="super mapsuper" id="super_'+s.id+'"></div>';
+	  		$(html).appendTo("#container");
+			var mymap = L.map('super_'+s.id, {zoomControl: false}).setView([s.latitude, s.longitude], s.zoom);
+			L.tileLayer('http://localhost:8000/kart/{z}/{x}/{y}.png', {
+			    attribution: '',
+			    maxZoom: 16,
+			    id: 'nrksommer'
+			}).addTo(mymap);
+			var pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'#df0909',heartbeat: 3});
+			var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);
+			setTimeout(function() {
+				$("#super_"+s.id).animate({opacity: 1});
+			}, 1000);
+		}
+	});
+
 	socket.on('all_out', function(e) {
 		$(".super").fadeOut('slow', function() {			
 			$(".super").remove();
@@ -69,8 +89,8 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
   		$("#super_"+s.id).fadeIn('slow')//.delay(6000).fadeOut('slow', function() {
-		//		$(this).remove();				
-		//	});
+				//$(this).remove();				
+			//});
   	}
 	});
 

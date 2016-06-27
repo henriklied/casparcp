@@ -203,6 +203,10 @@ io.on('connection', function(socket){
 		io.emit('all_out', 1);
 	});
 
+	socket.on('map', function(s) {
+		io.emit('map', s);
+	});
+
 	socket.on('get_some', function(s) {
 		if (s.url.indexOf('facebook.com') > -1) {
 			var oembed = 'https://www.facebook.com/plugins/post/oembed.json/?url=';

@@ -46,6 +46,8 @@
 		</div>
 		<div id="infoSuper" class="container">
 		</div>
+		<div id="mapBox" class="container">
+		</div>
 		<div id="infoBox" class="container">
 		</div>
 		<div id="someBox" class="container">
@@ -89,6 +91,26 @@
 		setTimeout(digas_status, 5000);
 	}
 	digas_status();
+
+
+	function generateMapSuper() {
+  		var html = '<div class="super">\
+				<h2>Kartsuper</h2>\
+				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
+				<p><label>Zoomnivå\
+					<select class="mapsuper_zoom">\
+						<option value="10">Nært</option>\
+						<option value="10">Nært</option>\
+					</select></label></p>\
+				<p><label>Navn\
+					<input type="text" class="txt_personsuper_name"></label></p>\
+				<div class="submitters">\
+					<input type="submit" class="map_in in_btn" value="INN">\
+					<input type="submit" class="map_out in_btn" value="UT">\
+				</div>\
+			</div>';
+		return html;		
+	}
 
   	function generatePersonSuper(radio_name) {
 		if (!radio_name) {
@@ -215,6 +237,7 @@
   	$(generateInfoSuper()).appendTo("#infoSuper");
   	$(generateInfoBox()).appendTo("#infoBox");
   	$(generateSomeBox()).appendTo("#someBox");
+  	$(generateMapSuper()).appendTo("#mapBox");
 
 
   	$("#superBox").on('click', 'input.all_out', function(e) {
@@ -263,6 +286,7 @@
   		};
   		socket.emit('infobox', data);
   	});
+
 
   	$("#infoSuper").on('click', 'input[type="submit"]', function(e) {
   		if ($(this).hasClass('infosuper_inn')) {
@@ -345,6 +369,29 @@
   		var container = $(this).parent().parent().parent();
   		socket.emit('get_some', {url: $(container).find(".txt_somebox_url").val(), id: $(container).find('input[type="hidden"]').val()});
   	});
+
+
+  	$("#mapBox").on('click', 'input[type="submit"]', function(e) {
+  		if ($(this).hasClass("map_in")) {
+  			var action = 'in';
+  		} else {
+  			var action = 'out';
+  		}
+  		var container = $(this).parent().parent();
+  		$.getJSON("https://nrk.cartodb.com/api/v2/sql?q=SELECT%20latitude,%20longitude,%20gps_id%20FROM%20nrk.saltstraumen_gps%20WHERE%20gps_id='NRKBeta08'%20ORDER%20BY%20dt%20ASC", function(json) {
+  			last = json.rows.pop();
+	  		var data = {
+	  			id: $(container).find('input[type="hidden"]').val(),
+	  			zoom: $(container).find('.mapsuper_zoom').val(),
+	  			latitude: parseFloat(last.latitude),
+	  			longitude: parseFloat(last.longitude),
+	  			action: action
+	  		};
+	  		socket.emit('map', data);
+  		});
+
+  	});
+	//60.980676, 10.617256
 
   	socket.on('get_some', function(data) {
   		container = $('input[value="'+data.id+'"]').parent();

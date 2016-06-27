@@ -59,7 +59,7 @@ body {
 }
 
 .personsuper, .infobox, .somesuper {
-	min-width: 1100px;
+	min-width: 640px;
 	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
 }
 .personsuper.bottomleft::before, .personsuper.topleft::before,
@@ -68,11 +68,11 @@ body {
 {
 	content: " " ;
 	display: block;
-	background: url(../gfx/nrksommer/nrksommer_border_bottom.png) no-repeat top left;
+	background: -webkit-linear-gradient(left, rgba(249,209,29,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
 	position: absolute;
 	left: 0;
-	top: -5px;
-	height: 30px;
+	top: -15px;
+	height: 10px;
 	width: 100%;
 }
 
@@ -84,11 +84,12 @@ body {
 	display: block;
 	position: absolute;
 	left: 0;
-	bottom: -30px;
-	background: url(../gfx/nrksommer/nrksommer_border_bottom.png) no-repeat top left;
-	height: 30px;
+	bottom: -10px;
+	background: -webkit-linear-gradient(left, rgba(249,209,29,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	height: 10px;
 	width: 100%;
 }
+
 
 .personsuper.bottomright::before, .personsuper.topright::before,
 .infobox.bottomright::before, .infobox.topright::before,
@@ -96,11 +97,11 @@ body {
 {
 	content: " " ;
 	display: block;
-	background: url(../gfx/nrksommer/nrksommer_border_bottom_right.png) no-repeat top right;
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(249,209,29,1) 100%); /* Chrome10-25,Safari5.1-6 */
 	position: absolute;
 	left: 0;
 	top: -15px;
-	height: 30px;
+	height: 10px;
 	width: 100%;
 }
 
@@ -112,18 +113,78 @@ body {
 	display: block;
 	position: absolute;
 	left: 0;
-	bottom: -30px;
-	background: url(../gfx/nrksommer/nrksommer_border_bottom_right.png) no-repeat top right;
-	height: 30px;
+	bottom: -10px;
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(249,209,29,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	height: 10px;
 	width: 100%;
 }
 
+.mapsuper {
+	display: block!important;
+	opacity: 0;
+	width: 1200px;
+	height: 750px;
+	outline: 15px solid white;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -600px;
+	margin-top: -375px;
+	background: white;
+}
+
+
+.leaflet-control-attribution {
+	display: none;
+}
 
 .personsuper div.name, .personsuper div.title {
 	font-size: 30px;
 	padding-bottom: 10px;
 }
+.padded div.name, .padded div.title {
+	padding-left: 140px;
+}
+.personsuper {
+	padding-bottom: 10px;
+	background: -webkit-radial-gradient(18% 50%, circle, transparent 10%, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+}
 
+.personsuper .cogwheel {
+	position: absolute;
+	opacity: 0.5;
+	width: 100px;
+	margin-top:	-100px;
+	height: 100px;
+}
+.personsuper .cropper {
+	position: absolute;
+}
+
+
+.personsuper img, .personsuper .skovel {
+	width: 100px;
+	height: 100px;
+}
+.personsuper .cropper {
+	margin-top: -54px;
+	width: 100px;
+	height: 50px;
+	overflow: hidden;
+}
+
+.skovel {
+	margin-top: -50px;
+	width: 100px;
+	height: 100px;
+}
+@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
+.rotating {-webkit-animation: rotating 2s linear infinite;}
+
+
+@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
+.skovel {-webkit-animation: rotating 2s linear infinite;}
 
 .personsuper.bottomright, .personsuper.topright,
 .infobox.bottomright, .infobox.topright,
@@ -143,22 +204,6 @@ body {
     padding-right: 50px;
 }
 
-.infobox.bottomright::before, .infobox.topright::before,
-.somesuper.bottomright::before, .somesuper.topright::before,
-.infobox.bottomright::after, .infobox.topright::after,
-.somesuper.bottomright::after, .somesuper.topright::after
-{
-	background: url(../gfx/nrksommer/nrksommer_border_bottom_right_short.png) no-repeat top right;
-
-}
-
-.infobox.bottomleft::after, .infobox.topleft::after,
-.somesuper.bottomleft::after, .somesuper.topleft::after,
-.infobox.bottomleft::before, .infobox.topleft::before,
-.somesuper.bottomleft::before, .somesuper.topleft::before
-{
-	background: url(../gfx/nrksommer/nrksommer_border_bottom_left_short.png) no-repeat top right;
-}
 
 
 .ghost {
@@ -170,7 +215,7 @@ body {
 	padding-left: 80px;
 }
 .topright {
-	top: 100px;
+	top: 300px;
 	right: 0;
 	padding-right: 80px;
 }
