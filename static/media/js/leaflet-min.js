@@ -33,13 +33,13 @@ case"touchend":return this.addPointerListenerEnd(t,e,i,n);case"touchmove":return
 
                 'box-shadow: 0 0 6px 2px '+this.options.color,
 
-                'animation: pulsate ' + this.options.heartbeat + 's ease-out',
-                'animation-iteration-count: infinite',
-                'animation-delay: 0s',
+                '-webkit-animation: pulsate ' + this.options.heartbeat + 's ease-out',
+                '-webkit-animation-iteration-count: infinite',
+                '-webkit-animation-delay: 0s',
             ];
 
             if (!this.options.animate){
-                after.push('animation: none');
+                after.push('-webkit-animation: none');
             }
 
             var css = [
