@@ -4,6 +4,6 @@
 	"digasPath": "Z:/digas.xml",
 	"layout": "nrksommer",
 	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1VmDUXa4nNDjRfY7UY1HFLuzfleTfjS-M85kkAoA7m6Q&exportFormat=csv",
-	"sombi_url": "https://sombi.nrk.no/api/1.3/document?starred=true&projectId=539e98bcafc807ae130000f1",
+	"sombi_url": "https://sombi.nrk.no/api/1.3/document?starred=true&projectId=576a558afd3cf13b2ae0c649",
 	"extra_js": []
 }
