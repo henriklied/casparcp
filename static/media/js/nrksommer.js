@@ -15,14 +15,14 @@ $(document).on('run_programsuper', function(e) {
 	$(html).appendTo("#container");
 	$("#super_programsuper").fadeIn(1500);
 	setTimeout(function() {
-		$("#super_programsuper .program_title").html('minutt for minutt').letterfx({ fx: 'smear', fx_duration: '4s'});
+  		$("#super_programsuper .program_title").html('minutt for minutt').typeIt({ startDelay: 0, speed: 220, breakLines: false, cursor: false });
 
 	}, 1600);
 	setTimeout(function() {
 		$("#super_programsuper .skovel").addClass("skovel2");
 	}, 4700);
 	setTimeout(function() {
-		$("#super_programsuper").fadeOut('slow', function() {
+		$("#super_programsuper").fadeOut(1500, function() {
 			$(this).remove();
 		})
 	}, 8000);

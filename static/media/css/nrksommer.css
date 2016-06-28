@@ -206,17 +206,17 @@ body {
 	width: 100px;
 	height: 100px;
 }
-@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
 
 
-@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
-.skovel {-webkit-animation: rotating 5s ease-in infinite;}
-.skovel2 {-webkit-animation: rotating 5s linear infinite;}
+@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(1800deg);}}
+.skovel {-webkit-animation: rotating 15s ease-in infinite;}
 
 .programsuper {
+	opacity: 0.86;
+	zoom: 0.86;
 	width: 800px;
 	height: 779px;
-	margin: 100px auto 0 auto;
+	margin: 200px auto 0 auto;
 	position: static;
 }
 .programsuper .hjul {
