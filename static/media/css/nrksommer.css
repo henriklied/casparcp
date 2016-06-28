@@ -74,7 +74,12 @@ body {
 
 .top-to-bottom {
 }
-
+.personsuper.bottomleft, .personsuper.topleft, .digassuper {
+	padding-right: 100px;
+}
+.personsuper.topright, .personsuper.bottomright {
+	padding-left: 100px;
+}
 .personsuper, .infobox, .somesuper, .digassuper {
 	min-width: 640px;
 	background: -webkit-linear-gradient(left, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -166,7 +171,6 @@ body {
 .personsuper div.name, .personsuper div.title, .digassuper div.digas_title, .digassuper div.digas_extra {
 	font-size: 35px;
 	padding-bottom: 10px;
-	padding-right: 80px;
 }
 .padded div.name, .padded div.title {
 	padding-left: 140px;

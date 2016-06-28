@@ -89,9 +89,9 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow')//.delay(6000).fadeOut('slow', function() {
-				//$(this).remove();				
-			//});
+  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
+				$(this).remove();				
+			});
   	}
 	});
 
