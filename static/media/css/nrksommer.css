@@ -8,6 +8,19 @@
   src: url('/media/fonts/KarminaSans_Regular.woff') format('woff');
 }
 
+@font-face{ 
+  font-family: 'NRKEtica Bold';
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.eot');
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.eot?#iefix') format('embedded-opentype'),
+       url('/media/fonts/NRK_Etica_Slab_Bold.woff') format('woff');
+}
+@font-face{ 
+  font-family: 'NRKEtica Book';
+  src: url('/media/fonts/NRK_Etica_Slab_Book.eot');
+  src: url('/media/fonts/NRK_Etica_Slab_Book.eot?#iefix') format('embedded-opentype'),
+       url('/media/fonts/NRK_Etica_Slab_Book.woff') format('woff');
+}
+
 html {
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
@@ -144,7 +157,7 @@ body {
 	display: none;
 }
 
-.personsuper div.name, .digassuper div.title, .infobox div.title, .somesuper div.title {
+.personsuper div.name, .digassuper div.digas_title, .infobox div.title, .somesuper div.title {
 	font-family: "KarminaSB";
 }
 .personsuper div.title, .infobox div.text, .somesuper div.text, .digassuper .digas_extra {
@@ -188,17 +201,50 @@ body {
 	overflow: hidden;
 }
 
-.skovel {
+.personsuper .skovel {
 	margin-top: -50px;
 	width: 100px;
 	height: 100px;
 }
 @-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
-.rotating {-webkit-animation: rotating 2s linear infinite;}
 
 
 @-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(360deg);}}
-.skovel {-webkit-animation: rotating 2s linear infinite;}
+.skovel {-webkit-animation: rotating 5s ease-in infinite;}
+.skovel2 {-webkit-animation: rotating 5s linear infinite;}
+
+.programsuper {
+	width: 800px;
+	height: 779px;
+	margin: 100px auto 0 auto;
+	position: static;
+}
+.programsuper .hjul {
+	width: 800px;
+    height: 779px;
+    overflow: hidden;
+}
+.programsuper img {
+	width: 100%;
+	height: auto;
+}
+.programsuper .cropper {
+    margin-top: -404px;
+    overflow: hidden;
+    height: 500px;	
+}
+.programsuper .skovel {
+    margin-top: -406px;
+    height: 800px;
+    -webkit-animation-delay: 1s; /* Chrome, Safari, Opera */
+    animation-delay: 1s; /* Chrome, Safari, Opera */
+}
+.programsuper .program_title {
+	font-family: "NRKEtica Bold";
+	font-size: 80px;
+	color: white;
+	text-align: center;	
+}
 
 .personsuper.bottomright, .personsuper.topright,
 .infobox.bottomright, .infobox.topright,

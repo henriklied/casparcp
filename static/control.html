@@ -13,6 +13,7 @@
 				<h2>Overordnet</h2>
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
+				<p><input type="submit" class="in_btn run_progsuper" value="INN programsuper"></p>
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
 				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
@@ -107,7 +108,7 @@
 					<input type="text" class="txt_personsuper_name"></label></p>\
 				<div class="submitters">\
 					<input type="submit" class="map_in in_btn" value="INN">\
-					<input type="submit" class="map_out in_btn" value="UT">\
+					<input type="submit" class="map_out out_btn" value="UT">\
 				</div>\
 			</div>';
 		return html;		
@@ -334,7 +335,9 @@
   	$("#superBox").on('click', 'input.instagram_out', function(e) {
   		socket.emit('instagram_out', 1);
   	});
-
+  	$("#superBox").on('click', 'input.run_progsuper', function(e) {
+  		socket.emit('run_programsuper', 1);
+  	});
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
   		console.log("KLIKKA");
   		socket.emit('instagram_refresh', config.sombi_url);
