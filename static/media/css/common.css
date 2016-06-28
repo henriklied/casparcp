@@ -28,6 +28,9 @@ body.debug #container {
 /*  background: url(../gfx/1080_safe_chart.png) no-repeat top left;
 */  border-bottom: 1px solid white;
   border-right: 1px solid white;
+  background: url(../gfx/nrk_logo_start.png) no-repeat;
+  background-size: 85px auto;
+  background-position: top 66px right 120px;
 }
 
 /*.somesuper {

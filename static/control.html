@@ -143,6 +143,7 @@ String.prototype.replaceAll = function(search, replace) {
 
 	socket.emit('list_shared', 1);
 	socket.on('list_shared', function(e) {
+		$('.staticchoice_data').html('');
 		$.each(e, function(k, v) {
 			if (this != '.gitignore') {
 				$('<option value="'+this+'">'+this+'</option>').appendTo('.staticchoice_data');
@@ -179,6 +180,8 @@ String.prototype.replaceAll = function(search, replace) {
 		console.log(data);
 		socket.emit('static_image', data);
 	});
+
+
 	function generatePersonSuper(radio_name) {
 		if (!radio_name) {
 			radio_name = 'personsuper_position_1';

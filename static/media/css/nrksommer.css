@@ -44,6 +44,9 @@ font-size: 25px;
 .staticimg .credits {
   font-family: "KarminaR";	
 }
+.sombiSlider {
+	outline: 20px solid white;
+}
 .sombiSlider .titles h2:before {
 	content: "– ";
 }
@@ -62,10 +65,18 @@ font-size: 25px;
 	font-size: 30px;
 	font-family: "KarminaR";
 	text-align: center;
-	color: white;
-	text-shadow: 2px 2px 2px #000;
+	color: rgba(255, 255, 255, 0.8);
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
 }
-
+.infosuper.topright {
+  top: 133px;
+  padding-right: 0!important;
+  font-family: Helvetica!important;
+  font-size: 30px;
+  letter-spacing: -1px;
+  right: 120px;
+  text-align: right;
+}
 .infobox .title, .somesuper .title {
     font-size: 40px;
 }
