@@ -48,6 +48,20 @@ body.debug #container {
 */
 
 
+.nrklogo {
+  width: 210px;
+  height: 75px;
+  background: url(../gfx/nrk_logo_start.png) no-repeat top left;
+  position: static!important;
+  margin: 502px auto 0 auto;
+}
+.locationSuper {
+  top: 133px;
+  right: 100px;
+  text-align: right;
+  color: white;
+}
+
 .sombiSlider {
   width: 1200px;
   height: 750px;

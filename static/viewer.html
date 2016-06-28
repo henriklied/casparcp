@@ -115,15 +115,21 @@ $(document).ready(function() {
  	}
 	});
 
-  socket.on('infosuper', function(s) {
-  	if (!clearSuper(s)) {
-  		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
-  				<div class="text">'+s.text+'</div></div>';
-  		$(html).appendTo('#container');
-  		$(document).trigger('infosuper', s);
-  		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).find('div.text').typeIt({ speed: 60, breakLines: true, cursor: false });
-  	}
+	socket.on('infosuper', function(s) {
+	  	if (!clearSuper(s)) {
+	  		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
+	  				<div class="text">'+s.text+'</div></div>';
+	  		$(html).appendTo('#container');
+	  		$(document).trigger('infosuper', s);
+	  		$("#super_"+s.id).fadeIn('slow');
+	  		$("#super_"+s.id).find('div.text').typeIt({ speed: 60, breakLines: true, cursor: false });
+	  	}
+	});
+
+	socket.on('run_nrklogo', function(e) {
+		$('<div class="nrklogo super"/>').appendTo('#container').fadeIn(1000).delay(3000).fadeOut(1000, function(e) {
+			$(this).remove();
+		});
 	});
 
 	socket.on('digassuper', function(s) {
@@ -138,6 +144,8 @@ $(document).ready(function() {
 	});
 
 	socket.on('run_programsuper', function(e) {
+		console.log("Hei");
+		$(document).trigger('run_programsuper', 1);
 	});
 
   socket.on('infobox', function(s) {

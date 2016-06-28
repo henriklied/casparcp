@@ -177,6 +177,10 @@ io.on('connection', function(socket){
 	socket.on('run_programsuper', function(s) {
 		io.emit('run_programsuper', 1);
 	});
+	socket.on('run_nrklogo', function(s) {
+		io.emit('run_nrklogo', 1);
+	});
+
 	socket.on('activate_digas', function(b) {
 		console.log("Activate Digas", b);
 		publishDigas = b;

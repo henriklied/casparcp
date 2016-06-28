@@ -11,13 +11,21 @@ $(document).on('run_programsuper', function(e) {
 	<div class="hjul"><div class="logo"><img src="media/gfx/nrksommer/logo_white.png"></div>\
 	<div class="cropper"><div class="skovel"><img src="media/gfx/nrksommer/skovel_white.png"></div>\
 	</div></div>\
-	<div class="program_title">minutt for minutt</div></div>';
+	<div class="program_title"></div></div>';
 	$(html).appendTo("#container");
 	$("#super_programsuper").fadeIn(1500);
-	$("#super_programsuper .program_title").letterfx({ fx: 'smear', fx_duration: '5s'});
+	setTimeout(function() {
+		$("#super_programsuper .program_title").html('minutt for minutt').letterfx({ fx: 'smear', fx_duration: '4s'});
+
+	}, 1600);
 	setTimeout(function() {
 		$("#super_programsuper .skovel").addClass("skovel2");
 	}, 4700);
+	setTimeout(function() {
+		$("#super_programsuper").fadeOut('slow', function() {
+			$(this).remove();
+		})
+	}, 8000);
 });
 
 

@@ -13,7 +13,8 @@
 				<h2>Overordnet</h2>
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
-				<p><input type="submit" class="in_btn run_progsuper" value="INN programsuper"></p>
+				<p><input type="submit" class="in_btn run_nrklogo" value="INN NRK-logo"></p>
+				<p><input type="submit" class="in_btn run_progsuper" value="INN vignett"></p>
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
 				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
@@ -338,8 +339,10 @@
   	$("#superBox").on('click', 'input.run_progsuper', function(e) {
   		socket.emit('run_programsuper', 1);
   	});
+  	$("#superBox").on('click', 'input.run_nrklogo', function(e) {
+  		socket.emit('run_nrklogo', 1);
+  	});
   	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
-  		console.log("KLIKKA");
   		socket.emit('instagram_refresh', config.sombi_url);
   	});
 
