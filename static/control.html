@@ -31,11 +31,11 @@
 
 				<p><label>GPS-ID</label>
 					<select id="config_gps_id">
-					  <option value="8">8</option>
-					  <option value="9">9</option>
-					  <option value="10">10</option>
-					  <option value="11">11</option>
-					  <option value="12">12</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
 					</select></p>
 
 				<input type="submit" value="Lagre" id="config_save">
@@ -52,41 +52,52 @@
 		</div>
 		<div id="infoBox" class="container">
 		</div>
+		<div id="staticBox" class="container">
+		</div>
 		<div id="someBox" class="container">
 		</div>
 	</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
-  var config;
+	var socket = io();
+	var config;
+String.prototype.replaceAll = function(search, replace) {
+	//if replace is not sent, return original string otherwise it will
+	//replace search string with 'undefined'.
+	if (replace === undefined) {
+		return this.toString();
+	}
 
-  var randomNum = function() { return Math.floor(Math.random()*1000)};
+	return this.replace(new RegExp('[' + search + ']', 'g'), replace);
+};
 
-  $(document).ready(function() {
+	var randomNum = function() { return Math.floor(Math.random()*1000)};
 
-  	function loadConfig() {
+	$(document).ready(function() {
+
+	function loadConfig() {
 		$.get('config.json', function(data) {
 			config = data;
 			socket.emit('get_personsuper', config.personsuper_csv);
 		});
-  	}
+	}
 
-  	loadConfig();
+	loadConfig();
 
-  	function updatePersonsuper(data) {
-  		config.personsuper = data;
-  		$(".personsuper_csv").html('');
-  		$.each(data, function(k,v) {
-  			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.personsuper_csv');
-  		});
-  	}
+	function updatePersonsuper(data) {
+		config.personsuper = data;
+		$(".personsuper_csv").html('');
+		$.each(data, function(k,v) {
+			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.personsuper_csv');
+		});
+	}
 
 
-  	$('#config input[type="submit"]').click(function(e) {
-  		socket.emit('config_save', {sombi_url: $("#config_sombi_url").val(), gps_id: $("#config_gps_id").val()})
-  		setTimeout(loadConfig, 1500);
-  	});
+	$('#config input[type="submit"]').click(function(e) {
+		socket.emit('config_save', {sombi_url: $("#config_sombi_url").val(), gps_id: $("#config_gps_id").val()})
+		setTimeout(loadConfig, 1500);
+	});
 
 	function digas_status() {
 		socket.emit("digasstatus", 1);
@@ -96,7 +107,7 @@
 
 
 	function generateMapSuper() {
-  		var html = '<div class="super">\
+		var html = '<div class="super">\
 				<h2>Kartsuper</h2>\
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
 				<p><label>Zoomnivå\
@@ -114,14 +125,67 @@
 			</div>';
 		return html;		
 	}
+	function generateStaticBox() {
+		var html = '<div class="super">\
+						<input type="hidden" class="txt_infobox_id" value="staticbox">\
+						<h2>Statiske bilder</h2>\
+						<div class="chooser"><p><label class="staticchoice_label"> \
+						<select class="staticchoice_data"></select></label><input type="submit" class="staticchoice_select" value="Velg"></p></div>\
+						<p><label>Tittel</label><input type="text" class="staticchoice_title"></p>\
+						<p><label>Fotocredits</label><input type="text" class="staticchoice_credits"></p>\
+					<input type="submit" class="staticsubmit in_btn" value="Inn statisk bilde">\
+					<input type="submit" class="staticsubmit out_btn" value="Ut statisk bilde">\
+					</div>';
+		$(html).appendTo("#staticBox");
+	}
+	generateStaticBox();
 
-  	function generatePersonSuper(radio_name) {
+
+	socket.emit('list_shared', 1);
+	socket.on('list_shared', function(e) {
+		$.each(e, function(k, v) {
+			if (this != '.gitignore') {
+				$('<option value="'+this+'">'+this+'</option>').appendTo('.staticchoice_data');
+			}
+		});
+	});
+
+	$("#staticBox").on('click', 'input.staticchoice_select', function(e) {
+		var fp = $(".staticchoice_data").val();
+		var title = fp.replaceAll('_', ' ');
+		title = title.split('.');
+		var ext = title.pop();
+		title = title.join('.');
+		title = title.split(',');
+		var credits = title[1];
+		$(".staticchoice_title").val(title[0]);
+		$(".staticchoice_credits").val(credits);
+	});
+
+	$("#staticBox").on('click', 'input.staticsubmit', function(e) {
+		if ($(this).hasClass('in_btn')) {
+			action = 'in';
+		} else {
+			action = 'out';
+		}
+		var container = $(this).parent();
+		var data = {
+			id: $(container).find('input[type="hidden"]').val(),
+			src: $(container).find('.staticchoice_data').val(),
+			title: $(container).find('.staticchoice_title').val(),
+			credits: $(container).find('.staticchoice_credits').val(),
+			action: action
+		};
+		console.log(data);
+		socket.emit('static_image', data);
+	});
+	function generatePersonSuper(radio_name) {
 		if (!radio_name) {
 			radio_name = 'personsuper_position_1';
 		} else {
 			radio_name = 'personsuper_position_'+radio_name;
 		}
-  		var html = '<div class="super">\
+		var html = '<div class="super">\
 				<h2>Personsuper</h2>\
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
 				<p><label class="personsuper_csv_label">Personsupre\
@@ -132,10 +196,10 @@
 					<input type="text" class="txt_personsuper_title"></label></p>\
 				<p><label>\
 					<div class="cube">\
-					  <input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
-					  <input type="radio" name="'+radio_name+'" value="bottomleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="bottomright">\
+						<input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="bottomleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="bottomright">\
 					</div>\
 				</label></p>\
 				<div class="submitters">\
@@ -143,9 +207,9 @@
 				</div>\
 			</div>';
 		return html;
-  	}
+	}
 
-  	function generateInfoSuper(radio_name) {
+	function generateInfoSuper(radio_name) {
 		if (!radio_name) {
 			radio_name = 'infosuper_position_1';
 		} else {
@@ -158,12 +222,12 @@
 					<input type="text" class="txt_infosuper"></label></p>\
 				<p><label>\
 					<div class="cube">\
-					  <input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="topmiddle">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="topright" checked="checked"><br>\
-					  <input type="radio" name="'+radio_name+'" value="bottomleft">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="bottommiddle">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="bottomright">\
+						<input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topmiddle">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topright" checked="checked"><br>\
+						<input type="radio" name="'+radio_name+'" value="bottomleft">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="bottommiddle">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="bottomright">\
 					</div>\
 				</label></p>\
 				<div class="submitters">\
@@ -172,9 +236,9 @@
 				</div>\
 			</div>';
 		return html;
-  	}
+	}
 
-  	function generateInfoBox(radio_name) {
+	function generateInfoBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'infobox_position_1';
 		} else {
@@ -189,10 +253,10 @@
 					<textarea class="txt_infobox_text"></textarea></p>\
 				<p><label> \
 					<div class="cube">\
-					  <input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
-					  <input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
+						<input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
 				</label></p>\
 				<div class="submitters">\
@@ -201,9 +265,9 @@
 				</div>\
 			</div>';
 		return html;
-  	}
+	}
 
-  	function generateSomeBox(radio_name) {
+	function generateSomeBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'somebox_position_1';
 		} else {
@@ -221,10 +285,10 @@
 				<p><label><input type="checkbox" class="source-facebook some-source" value="facebook"> Facebook</label><br><label><input type="checkbox" class="source-twitter some-source" value="twitter"> Twitter</label></p>\
 				<p><label> \
 					<div class="cube">\
-					  <input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="topright"><br>\
-					  <input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
-					  <input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
+						<input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
 				</label></p>\
 				<div class="submitters">\
@@ -233,194 +297,194 @@
 				</div>\
 			</div>';
 		return html;
-  	}
+	}
 
 
-  	$(generatePersonSuper()).appendTo("#personSuper");
-  	$(generateInfoSuper()).appendTo("#infoSuper");
-  	$(generateInfoBox()).appendTo("#infoBox");
-  	$(generateSomeBox()).appendTo("#someBox");
-  	$(generateMapSuper()).appendTo("#mapBox");
+	$(generatePersonSuper()).appendTo("#personSuper");
+	$(generateInfoSuper()).appendTo("#infoSuper");
+	$(generateInfoBox()).appendTo("#infoBox");
+	$(generateSomeBox()).appendTo("#someBox");
+	$(generateMapSuper()).appendTo("#mapBox");
 
 
-  	$("#superBox").on('click', 'input.all_out', function(e) {
-  		socket.emit('all_out', 1);
-  	});
-
-  	$("#personSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
-	  	$(generatePersonSuper(randomNum())).appendTo("#personSuper");
-	  	updatePersonsuper(config.personsuper);
-	  	$("#personSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$(this).parent().remove();
-	  	});
-  	});
-  	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
-	  	$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
-	  	$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$(this).parent().remove();
-	  	});
-  	});
-  	$("#infoBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
-	  	$(generateInfoBox(randomNum())).appendTo("#infoBox");
-	  	$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$(this).parent().remove();
-	  	});
-  	});
-  	$("#someBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
-	  	$(generateSomeBox(randomNum())).appendTo("#someBox");
-	  	$("#someBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$(this).parent().remove();
-	  	});
-  	});
-  	$("#mapBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
-	  	$(generateMapSuper()).appendTo("#mapBox");
-	  	$("#mapBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
-	  		$(this).parent().remove();
-	  	});
-  	});
-
-  	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
-  		if ($(this).hasClass('infobox_inn')) {
-  			action = 'in';
-  		} else {
-  			action = 'out';
-  		}
-  		var container = $(this).parent().parent();
-  		var data = {
-  			id: $(container).find('input[type="hidden"]').val(),
-  			title: $(container).find('.txt_infobox_title').val(),
-  			text: $(container).find('.txt_infobox_text').val(),
-  			position: $(container).find('input[type="radio"]:checked').val(),
-  			action: action
-  		};
-  		socket.emit('infobox', data);
-  	});
-
-
-  	$("#infoSuper").on('click', 'input[type="submit"]', function(e) {
-  		if ($(this).hasClass('infosuper_inn')) {
-  			action = 'in';
-  		} else {
-  			action = 'out';
-  		}
-  		var container = $(this).parent().parent();
-  		var data = {
-  			id: $(container).find('input[type="hidden"]').val(),
-  			text: $(container).find('.txt_infosuper').val(),
-  			position: $(container).find('input[type="radio"]:checked').val(),
-  			action: action
-  		};
-  		socket.emit('infosuper', data);
-  	});
-  	$("#personSuper").on('click', '.personsuper_inn', function(e) {
-  		var container = $(this).parent().parent();
-  		var data = {
-  			id: $(container).find('input[type="hidden"]').val(),
-  			name: $(container).find('.txt_personsuper_name').val(),
-  			title: $(container).find('.txt_personsuper_title').val(),
-  			position: $(container).find('input[type="radio"]:checked').val(),
-  		};
-  		socket.emit('personsuper', data);
-  	});
-
-  	$("#personSuper").on('click', '.personsuper_csv_label input[type="submit"]', function(e) {
-  		var choice = $(this).parent().find('select').val();
-  		choice = config.personsuper[choice];
-  		$(this).parent().parent().parent().find('.txt_personsuper_name').val(choice.name);
-  		$(this).parent().parent().parent().find('.txt_personsuper_title').val(choice.title);
+	$("#superBox").on('click', 'input.all_out', function(e) {
+		socket.emit('all_out', 1);
 	});
 
-  	$("#superBox").on('click', 'input.instagram_start', function(e) {
-  		socket.emit('instagram', 1);
-  	});
-  	$("#superBox").on('click', 'input.instagram_out', function(e) {
-  		socket.emit('instagram_out', 1);
-  	});
-  	$("#superBox").on('click', 'input.run_progsuper', function(e) {
-  		socket.emit('run_programsuper', 1);
-  	});
-  	$("#superBox").on('click', 'input.run_nrklogo', function(e) {
-  		socket.emit('run_nrklogo', 1);
-  	});
-  	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
-  		socket.emit('instagram_refresh', config.sombi_url);
-  	});
+	$("#personSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generatePersonSuper(randomNum())).appendTo("#personSuper");
+		updatePersonsuper(config.personsuper);
+		$("#personSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
+	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
+		$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
+	$("#infoBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generateInfoBox(randomNum())).appendTo("#infoBox");
+		$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
+	$("#someBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generateSomeBox(randomNum())).appendTo("#someBox");
+		$("#someBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
+	$("#mapBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generateMapSuper()).appendTo("#mapBox");
+		$("#mapBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
 
-  	$("#superBox").on('change', 'input#activate_digas', function(e) {
-  		console.log(this.checked);
-  		socket.emit('activate_digas', this.checked);
-  	});
-
-  	$("#superBox").on('click', 'input.update_personsuper', function(e) {
-  		socket.emit('get_personsuper', config.personsuper_csv);
-  	});
-
-  	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
-  		if ($(this).hasClass('somebox_inn')) {
-  			action = 'in';
-  		} else {
-  			action = 'out';
-  		}
-  		var container = $(this).parent().parent();
-  		var data = {
-  			id: $(container).find('input[type="hidden"]').val(),
-  			title: $(container).find('.txt_somebox_title').val(),
-  			text: $(container).find('.txt_somebox_text').val(),
-  			position: $(container).find('input[type="radio"]:checked').val(),
-  			source: $(container).find('input.some-source:checked').val(),
-  			action: action
-  		};
-  		socket.emit('somesuper', data);
-  	});
-
-  	$(".restart_casparcg").click(function() {
-  		socket.emit('restart_casparcg', 1);
-  	});
-
-
-  	$("#someBox").on('click', 'input.load_someurl', function(e) {
-  		var container = $(this).parent().parent().parent();
-  		socket.emit('get_some', {url: $(container).find(".txt_somebox_url").val(), id: $(container).find('input[type="hidden"]').val()});
-  	});
+	$("#infoBox").on('click', 'input[type="submit"]', function(e) {
+		if ($(this).hasClass('infobox_inn')) {
+			action = 'in';
+		} else {
+			action = 'out';
+		}
+		var container = $(this).parent().parent();
+		var data = {
+			id: $(container).find('input[type="hidden"]').val(),
+			title: $(container).find('.txt_infobox_title').val(),
+			text: $(container).find('.txt_infobox_text').val(),
+			position: $(container).find('input[type="radio"]:checked').val(),
+			action: action
+		};
+		socket.emit('infobox', data);
+	});
 
 
-  	$("#mapBox").on('click', 'input[type="submit"]', function(e) {
-  		if ($(this).hasClass("map_in")) {
-  			var action = 'in';
-  		} else {
-  			var action = 'out';
-  		}
-  		var container = $(this).parent().parent();
-  		$.getJSON("https://nrk.cartodb.com/api/v2/sql?q=SELECT%20latitude,%20longitude,%20gps_id%20FROM%20nrk.saltstraumen_gps%20WHERE%20gps_id='NRKBeta08'%20ORDER%20BY%20dt%20ASC", function(json) {
-  			last = json.rows.pop();
-	  		var data = {
-	  			id: $(container).find('input[type="hidden"]').val(),
-	  			zoom: $(container).find('.mapsuper_zoom').val(),
-	  			latitude: parseFloat(last.latitude),
-	  			longitude: parseFloat(last.longitude),
-	  			action: action
-	  		};
-	  		socket.emit('map', data);
-  		});
+	$("#infoSuper").on('click', 'input[type="submit"]', function(e) {
+		if ($(this).hasClass('infosuper_inn')) {
+			action = 'in';
+		} else {
+			action = 'out';
+		}
+		var container = $(this).parent().parent();
+		var data = {
+			id: $(container).find('input[type="hidden"]').val(),
+			text: $(container).find('.txt_infosuper').val(),
+			position: $(container).find('input[type="radio"]:checked').val(),
+			action: action
+		};
+		socket.emit('infosuper', data);
+	});
+	$("#personSuper").on('click', '.personsuper_inn', function(e) {
+		var container = $(this).parent().parent();
+		var data = {
+			id: $(container).find('input[type="hidden"]').val(),
+			name: $(container).find('.txt_personsuper_name').val(),
+			title: $(container).find('.txt_personsuper_title').val(),
+			position: $(container).find('input[type="radio"]:checked').val(),
+		};
+		socket.emit('personsuper', data);
+	});
 
-  	});
+	$("#personSuper").on('click', '.personsuper_csv_label input[type="submit"]', function(e) {
+		var choice = $(this).parent().find('select').val();
+		choice = config.personsuper[choice];
+		$(this).parent().parent().parent().find('.txt_personsuper_name').val(choice.name);
+		$(this).parent().parent().parent().find('.txt_personsuper_title').val(choice.title);
+	});
+
+	$("#superBox").on('click', 'input.instagram_start', function(e) {
+		socket.emit('instagram', 1);
+	});
+	$("#superBox").on('click', 'input.instagram_out', function(e) {
+		socket.emit('instagram_out', 1);
+	});
+	$("#superBox").on('click', 'input.run_progsuper', function(e) {
+		socket.emit('run_programsuper', 1);
+	});
+	$("#superBox").on('click', 'input.run_nrklogo', function(e) {
+		socket.emit('run_nrklogo', 1);
+	});
+	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
+		socket.emit('instagram_refresh', config.sombi_url);
+	});
+
+	$("#superBox").on('change', 'input#activate_digas', function(e) {
+		console.log(this.checked);
+		socket.emit('activate_digas', this.checked);
+	});
+
+	$("#superBox").on('click', 'input.update_personsuper', function(e) {
+		socket.emit('get_personsuper', config.personsuper_csv);
+	});
+
+	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
+		if ($(this).hasClass('somebox_inn')) {
+			action = 'in';
+		} else {
+			action = 'out';
+		}
+		var container = $(this).parent().parent();
+		var data = {
+			id: $(container).find('input[type="hidden"]').val(),
+			title: $(container).find('.txt_somebox_title').val(),
+			text: $(container).find('.txt_somebox_text').val(),
+			position: $(container).find('input[type="radio"]:checked').val(),
+			source: $(container).find('input.some-source:checked').val(),
+			action: action
+		};
+		socket.emit('somesuper', data);
+	});
+
+	$(".restart_casparcg").click(function() {
+		socket.emit('restart_casparcg', 1);
+	});
+
+
+	$("#someBox").on('click', 'input.load_someurl', function(e) {
+		var container = $(this).parent().parent().parent();
+		socket.emit('get_some', {url: $(container).find(".txt_somebox_url").val(), id: $(container).find('input[type="hidden"]').val()});
+	});
+
+
+	$("#mapBox").on('click', 'input[type="submit"]', function(e) {
+		if ($(this).hasClass("map_in")) {
+			var action = 'in';
+		} else {
+			var action = 'out';
+		}
+		var container = $(this).parent().parent();
+		$.getJSON("https://nrk.cartodb.com/api/v2/sql?q=SELECT%20latitude,%20longitude,%20gps_id%20FROM%20nrk.saltstraumen_gps%20WHERE%20gps_id='NRKBeta08'%20ORDER%20BY%20dt%20ASC", function(json) {
+			last = json.rows.pop();
+			var data = {
+				id: $(container).find('input[type="hidden"]').val(),
+				zoom: $(container).find('.mapsuper_zoom').val(),
+				latitude: parseFloat(last.latitude),
+				longitude: parseFloat(last.longitude),
+				action: action
+			};
+			socket.emit('map', data);
+		});
+
+	});
 	//60.980676, 10.617256
 
-  	socket.on('get_some', function(data) {
-  		container = $('input[value="'+data.id+'"]').parent();
-  		$(container).find('.some-source').prop('checked', false);
-  		$(container).find(".txt_somebox_text").val(data.text);
-  		$(container).find(".txt_somebox_title").val(data.title);
-  		$(container).find(".source-"+data.source).prop('checked', true);
-  	});
+	socket.on('get_some', function(data) {
+		container = $('input[value="'+data.id+'"]').parent();
+		$(container).find('.some-source').prop('checked', false);
+		$(container).find(".txt_somebox_text").val(data.text);
+		$(container).find(".txt_somebox_title").val(data.title);
+		$(container).find(".source-"+data.source).prop('checked', true);
+	});
 
-  	socket.on('instagram_refresh', function(msg) {
-  		console.log("Insta refresh", msg);
-  	});
+	socket.on('instagram_refresh', function(msg) {
+		console.log("Insta refresh", msg);
+	});
 
-  	socket.on('get_personsuper', function(data) {
-  		updatePersonsuper(data);
-  	});
+	socket.on('get_personsuper', function(data) {
+		updatePersonsuper(data);
+	});
 
 
 	socket.on('digas_super', function(cmd) {
@@ -429,7 +493,7 @@
 	});
 
 
-  });
+	});
 </script>
 
 </body>

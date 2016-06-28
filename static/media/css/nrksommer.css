@@ -36,6 +36,14 @@ body {
 	position: absolute;
 }
 
+
+.staticimg .title {
+font-family: "KarminaSB";
+font-size: 25px;	
+}
+.staticimg .credits {
+  font-family: "KarminaR";	
+}
 .sombiSlider .titles h2:before {
 	content: "– ";
 }

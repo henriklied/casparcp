@@ -168,6 +168,23 @@ $(document).ready(function() {
   	}
 	});
 
+
+	socket.on('static_image', function(s) {
+		if (!clearSuper(s)) {
+			var html = '<div class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
+			$(html).appendTo('#container');
+			if (s.title != "") {
+				$('<div class="title"><h2>'+s.title+'</h2></div>').appendTo('.staticimg .inner');
+			}
+			$('<div class="shower"></div>').appendTo('.staticimg .inner');
+			$('<img src="shared/'+s.src+'">').appendTo('.staticimg .shower');
+			if (s.credits != "") {
+				$('<div class="credits">Foto: '+s.credits+'</div>').appendTo('.staticimg .inner');
+			}
+			$(".staticimg").fadeIn('slow');
+		}
+	});
+
 	socket.on('instagram', function(s) {
 		if (!clearSuper(s)) {
 			unloadSlider();

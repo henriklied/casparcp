@@ -62,6 +62,44 @@ body.debug #container {
   color: white;
 }
 
+.staticimg {
+
+}
+
+.staticimg {
+  text-align: center;
+  width: 1920px;
+  height: 1080px;
+}
+.staticimg .title {
+  margin-bottom: 20px;
+}
+.staticimg .credits {
+  margin-top: 10px;
+}
+.staticimg:before {
+  content: '\200B';
+/*   content: '';
+  margin-left: -0.25em; */
+  display: inline-block;
+  height: 100%; 
+  vertical-align: middle;
+ }
+ 
+.staticimg .inner {
+  display: inline-block;
+  padding: 20px;
+  background: white;
+  max-width: 1400px;
+  vertical-align: middle;
+  width: auto;
+}
+.staticimg img {
+  max-width: 1400px;
+  height: auto;
+  max-height: 800px;
+}
+
 .sombiSlider {
   width: 1200px;
   height: 750px;

@@ -256,6 +256,20 @@ io.on('connection', function(socket){
 		});
 	});
 
+	socket.on('list_shared', function(e) {
+		fs.readdir('static/shared/', function(err, files) {
+			if (!err) {
+				io.emit('list_shared', files);
+				for (var f in files) {
+					f = files[f];
+				}				
+			}
+		});
+	});
+
+	socket.on('static_image', function(s) {
+		io.emit('static_image', s);
+	});
 	socket.on('digasstatus', function(msg) {
 		var present;
 		fs.readFile(digasPath, function(err, data) {
