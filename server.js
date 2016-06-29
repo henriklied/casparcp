@@ -25,8 +25,14 @@ fs.readFile('./static/config.json', function(err, data) {
 	digasPath = data.digasPath;
 });
 
+fs.appendFile('logg.csv', 'datetime;tid fra programstart;supertype;innhold\r\n', function(err) {
+
+});
+
 
 var publishDigas = true;
+
+var nrkPlakatTime;
 
 var currentDigas;
 
@@ -111,6 +117,18 @@ function sombiGenerator(s) {
 }
 
 
+function logg(supertype, msg) {
+	if (nrkPlakatTime == undefined) {
+		plakatDiff = '0';
+	} else {
+		plakatDiff = parseInt((new Date() - nrkPlakatTime)/1000);
+	}
+	msg = new Date()+';'+plakatDiff+';'+supertype+';'+msg+'\r\n';
+	fs.appendFile('logg.csv', msg, function(err) {
+
+	});
+}
+
 
 
 function parseDigas() {
@@ -144,10 +162,12 @@ function parseDigas() {
 								}
 								io.emit("digassuper", currentDigas);
 								console.log("Fired out digas", currentDigas);
+								logg('digas out', currentDigas.title+';'+currentDigas.performer);
 								clearTimeout(digasTimers.outTimer);
 							}, endTimer-15000);
 							setTimeout(function() {
 								io.emit("digassuper", currentDigas);
+								logg('digas in', currentDigas.title+';'+currentDigas.performer);
 								console.log("Fired digas", currentDigas);
 							}, 0);
 						}
@@ -169,15 +189,20 @@ app.use(express.static('static'));
 io.on('connection', function(socket){
 
 	socket.on('personsuper', function(person) {
+		logg('personsuper '+person.action, person.name+";"+person.title);
 		io.emit('personsuper', person);
 	});
 	socket.on('infobox', function(person) {
+		logg('infoboks '+person.action, person.title+";"+person.text);
 		io.emit('infobox', person);
 	});
 	socket.on('run_programsuper', function(s) {
+		logg('vignett', 'vignett inn');
 		io.emit('run_programsuper', 1);
 	});
 	socket.on('run_nrklogo', function(s) {
+		nrkPlakatTime = new Date();
+		logg('nrkplakat', 'nrkplakat inn');
 		io.emit('run_nrklogo', 1);
 	});
 
@@ -193,17 +218,21 @@ io.on('connection', function(socket){
 		io.emit('instagram_refresh', 1);
 	});
 	socket.on('instagram', function(s) {
+		logg('instagram in', 'instagram inn');
 		fs.readFile('./static/images.json', function(err, data) {
 			io.emit("instagram", {action: 'in', id: 'lksad123', images: JSON.parse(data)});
 		});
 	});
 	socket.on('instagram_out', function(s) {
+		logg('instagram out', 'instagram ut');
 		io.emit("instagram_out", 1);
 	});
 	socket.on('infosuper', function(person) {
+		logg('infosuper '+person.action, person.text);
 		io.emit('infosuper', person);
 	});
 	socket.on('somesuper', function(s) {
+		logg('somesuper '+s.action, s.title+';'+s.text+';'+s.source);
 		io.emit('somesuper', s);
 	});
 	socket.on('all_out', function(e) {
@@ -211,6 +240,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('map', function(s) {
+		logg('kart '+s.action, 'kart');
 		io.emit('map', s);
 	});
 
@@ -268,6 +298,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('static_image', function(s) {
+		logg('statisk bilde '+s.action, 'statisk bilde: '+s.title);
 		io.emit('static_image', s);
 	});
 	socket.on('digasstatus', function(msg) {

@@ -87,7 +87,7 @@ String.prototype.replaceAll = function(search, replace) {
 
 	function updatePersonsuper(data) {
 		config.personsuper = data;
-		socket.emit('list_shared', 1);
+	3	socket.emit('list_shared', 1);
 		$(".personsuper_csv").html('');
 		$.each(data, function(k,v) {
 			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.personsuper_csv');
