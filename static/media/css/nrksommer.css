@@ -61,6 +61,11 @@ font-size: 25px;
 
 }
 
+div.notitle div.name {
+	padding-top: 25px;
+    padding-bottom: 41px;
+}
+
 .infosuper {
 	font-size: 30px;
 	font-family: "KarminaR";

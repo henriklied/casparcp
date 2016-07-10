@@ -81,7 +81,12 @@ $(document).ready(function() {
 
   socket.on('personsuper', function(s) {
   	if (!clearSuper(s)) {
-  		var html = '<div class="super personsuper '+s.position+'" id="super_'+s.id+'">\
+  		if (s.title == "") {
+  			nameclass = 'notitle ';
+  		} else {
+  			nameclass = '';
+  		}
+  		var html = '<div class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
   				<div class="name"><span>'+s.name+'</span></div>';
   		if (s.title != "") {
   			html += '<div class="title"><span>'+s.title+'</span></div>';
@@ -89,9 +94,7 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
-				$(this).remove();				
-			});
+  		$("#super_"+s.id).fadeIn('slow')
   	}
 	});
 
