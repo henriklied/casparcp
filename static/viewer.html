@@ -54,7 +54,7 @@ $(document).ready(function() {
 	  		var html = '<div class="super mapsuper" id="super_'+s.id+'"></div>';
 	  		$(html).appendTo("#container");
 			var mymap = L.map('super_'+s.id, {zoomControl: false}).setView([s.latitude, s.longitude], s.zoom);
-			L.tileLayer('http://localhost:8000/kart/{z}/{x}/{y}.png', {
+			L.tileLayer('http://localhost:8000/kart/{z}/{x}/{y}.jpeg', {
 			    attribution: '',
 			    maxZoom: 16,
 			    id: 'nrksommer'
