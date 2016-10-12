@@ -128,7 +128,9 @@ function startTimer(duration, display) {
   		$(document).trigger('personsuper', s);
   		$("#super_"+s.id).find('div.name').typeIt({ speed: 60, breakLines: true, cursor: false });
   		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
-  		$("#super_"+s.id).fadeIn('slow').delay(6000)
+  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function(e) {
+  			$(this).remove();
+  		});
   	}
 	});
 
