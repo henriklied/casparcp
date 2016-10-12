@@ -20,6 +20,7 @@
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
 				<p><input type="submit" class="in_btn run_nrklogo" value="INN NRK-logo"></p>
 				<p><input type="submit" class="in_btn run_progsuper" value="INN vignett"></p>
+				<p><input type="submit" class="settings_btn start_timer" value="START TIMER!"></p>
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
 				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
 				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
@@ -508,6 +509,11 @@ String.prototype.replaceAll = function(search, replace) {
 	$("#superBox").on('click', 'input.update_personsuper', function(e) {
 		socket.emit('get_personsuper', config.personsuper_csv);
 	});
+	$("#superBox").on('click', 'input.start_timer', function(e) {
+		socket.emit('start_timer', 1);
+	});
+
+
 
 	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
 		if ($(this).hasClass('somebox_inn')) {

@@ -241,6 +241,10 @@ io.on('connection', function(socket){
 		io.emit('all_out', 1);
 	});
 
+	socket.on('start_timer', function(e) {
+		io.emit('start_timer', 1);
+	})
+
 	socket.on('in_president', function(e) {
 		io.emit('president', {president_id: e, id: 213});
 	});

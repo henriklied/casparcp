@@ -45,6 +45,17 @@ body {
 	position: absolute;
 }
 
+#time {
+	position: absolute;
+	top: 150px;
+	right: 100px;
+	text-align: right;
+	display: none;
+	font-family: Helvetica;
+	font-size: 30px;
+	color: white;
+}
+
 
 .staticimg .title {
 font-size: 25px;	
