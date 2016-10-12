@@ -151,7 +151,7 @@ div.notitle div.name {
 	position: absolute;
 	content: " ";
 	width: 200px;
-	margin-left: -230px;
+	margin-left: -200px;
 	margin-top: -28px;
 	height: 156px;
 	background: url(../gfx/227/SuperLogo.png) no-repeat center left;
