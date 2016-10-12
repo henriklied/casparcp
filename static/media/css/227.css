@@ -128,6 +128,7 @@ div.notitle div.name {
 	min-width: 640px;
 	text-transform: uppercase;
 	height: 156px;
+	font-weight: bold;
 	background: url(../gfx/227/SuperBack.png) no-repeat top right;
 	padding-top: 50px;
 	padding-bottom: 50px;
