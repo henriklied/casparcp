@@ -87,8 +87,8 @@ div.notitle div.name {
 	height: 1080px;
 	top: 0;
 	left: 0;
-	display: none;
-	opacity: 0.9;
+	display: block;
+	opacity: 0;
 	overflow: hidden;
 	position: absolute;
 }

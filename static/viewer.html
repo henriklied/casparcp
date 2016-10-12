@@ -136,8 +136,8 @@ function startTimer(duration, display) {
 
   socket.on('president', function(s) {
   		var presidentID = s.president_id;
-  		if ($(".president").css('display') == "none") {
-	  		$(".president").fadeIn('slow', function() {
+  		if ($(".president").css('opacity') == 0) {
+	  		$(".president").animate({opacity: 0.9}, 1000, function() {
 				offset = (1080*parseInt(presidentID));
 				TweenLite.to("#presimg", 3.12, {css:{top:-offset+"px"}, ease:Quart.easeInOut});
 	  		});  			
@@ -148,7 +148,7 @@ function startTimer(duration, display) {
   });
 
   socket.on('out_president', function(s) {
-  	$(".president").fadeOut('slow');
+  	$(".president").animate({opacity: 0});
   });
 
 	socket.on('somesuper', function(s) {
