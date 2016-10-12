@@ -146,6 +146,12 @@ div.notitle div.name {
 	color: #2e273c;
 }
 
+.personsuper.notitle .name {
+	padding-top: 30px;
+}
+.personsuper.notitle .name::before {
+	margin-top: -48px;
+}
 .personsuper .title {
 	font-size: 30px;
 	margin-top: -10px;
@@ -155,14 +161,14 @@ div.notitle div.name {
 }
 
 .personsuper .name, .personsuper .title {
-	padding-left: 150px;
+	padding-left: 180px;
 }
 .personsuper .name::before {
 	display: block;
 	position: absolute;
 	content: " ";
 	width: 200px;
-	margin-left: -200px;
+	margin-left: -230px;
 	margin-top: -28px;
 	height: 156px;
 	background: url(../gfx/227/SuperLogo.png) no-repeat center left;
