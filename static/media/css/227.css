@@ -1,12 +1,20 @@
 @font-face {
-  font-family: 'KarminaSB';
-  src: url('/media/fonts/KarminaSans_SB.woff') format('woff');
+  font-family: 'Bookman Old Style';
+  src: url('/media/fonts/BookmanOldStyle.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Bold';
+  src: url('/media/fonts/BookmanOldStyleBold.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Bold Italic';
+  src: url('/media/fonts/BookmanOldStyleBoldItalic.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Italic';
+  src: url('/media/fonts/BookmanOldStyleItalic.svg') format('svg');
 }
 
-@font-face {
-  font-family: 'KarminaR';
-  src: url('/media/fonts/KarminaSans_Regular.woff') format('woff');
-}
 
 @font-face{ 
   font-family: 'NRKEtica Bold';
@@ -28,8 +36,9 @@ html {
 
 
 body {
-	font-family: "KaminaR", Helvetica, Arial, sans-serif;
-	color: black;
+	font-family: "Bookman Old Style", Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	color: #2e273c;
 }
 
 .super {
@@ -38,11 +47,9 @@ body {
 
 
 .staticimg .title {
-font-family: "KarminaSB";
 font-size: 25px;	
 }
 .staticimg .credits {
-  font-family: "KarminaR";	
 }
 .sombiSlider {
 	outline: 20px solid white;
@@ -52,12 +59,10 @@ font-size: 25px;
 }
 .sombiSlider .titles h2 {
 	font-size: 25px;
-	font-family: "KarminaSB";
 	margin-top: 10px;
 }
 .sombiSlider .titles p {
   font-size: 30px;
-  font-family: "KarminaR";
 
 }
 
@@ -83,7 +88,6 @@ div.notitle div.name {
 
 .infosuper {
 	font-size: 30px;
-	font-family: "KarminaR";
 	text-align: center;
 	color: rgba(255, 255, 255, 0.8);
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
@@ -98,10 +102,11 @@ div.notitle div.name {
   text-align: right;
 }
 .infobox .title, .somesuper .title {
-    font-size: 40px;
+    font-size: 30px;
+    color: black;
 }
 .infobox .text, .somesuper .text {
-	font-size: 30px;
+	font-size: 27px;
 }
 .infobox video, .somesuper video {
 	position: absolute;
@@ -114,73 +119,46 @@ div.notitle div.name {
 .top-to-bottom {
 }
 .personsuper.bottomleft, .personsuper.topleft, .digassuper {
-	padding-right: 100px;
+	padding-right: 250px;
 }
 .personsuper.topright, .personsuper.bottomright {
 	padding-left: 100px;
 }
-.personsuper, .infobox, .somesuper, .digassuper {
+.personsuper {
 	min-width: 640px;
-	background: -webkit-linear-gradient(left, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-}
-.personsuper.bottomleft::before, .personsuper.topleft::before,
-.infobox.bottomleft::before, .infobox.topleft::before,
-.digassuper::before,
-.somesuper.bottomleft::before, .somesuper.topleft::before
-{
-	content: " " ;
-	display: block;
-	background: -webkit-linear-gradient(left, rgba(249,209,29,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-	position: absolute;
-	left: 0;
-	top: -15px;
-	height: 10px;
-	width: 100%;
+	text-transform: uppercase;
+	height: 156px;
+	background: url(../gfx/227/SuperBack.png) no-repeat top right;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	color: #2e273c;
 }
 
-.personsuper.bottomleft::after, .personsuper.topleft::after,
-.infobox.bottomleft::after, .infobox.topleft::after,
-.digassuper::after,
-.somesuper.bottomleft::after, .somesuper.topleft::after
-{
-	content: " " ;
+.personsuper .title {
+	font-size: 30px;
+	margin-top: -10px;
+}
+.personsuper .name {
+	padding-top: 10px;
+}
+
+.personsuper .name, .personsuper .title {
+	padding-left: 150px;
+}
+.personsuper .name::before {
 	display: block;
 	position: absolute;
-	left: 0;
-	bottom: -10px;
-	background: -webkit-linear-gradient(left, rgba(249,209,29,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-	height: 10px;
-	width: 100%;
+	content: " ";
+	width: 200px;
+	margin-left: -230px;
+	margin-top: -28px;
+	height: 156px;
+	background: url(../gfx/227/SuperLogo.png) no-repeat center left;
 }
 
 
-.personsuper.bottomright::before, .personsuper.topright::before,
-.infobox.bottomright::before, .infobox.topright::before,
-.somesuper.bottomright::before, .somesuper.topright::before
-{
-	content: " " ;
-	display: block;
-	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(249,209,29,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	position: absolute;
-	left: 0;
-	top: -15px;
-	height: 10px;
-	width: 100%;
-}
 
-.personsuper.bottomright::after, .personsuper.topright::after,
-.infobox.bottomright::after, .infobox.topright::after,
-.somesuper.bottomright::after, .somesuper.topright::after
-{
-	content: " " ;
-	display: block;
-	position: absolute;
-	left: 0;
-	bottom: -10px;
-	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(249,209,29,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	height: 10px;
-	width: 100%;
-}
+
 
 .mapsuper {
 	display: block!important;
@@ -202,22 +180,19 @@ div.notitle div.name {
 }
 
 .personsuper div.name, .digassuper div.digas_title, .infobox div.title, .somesuper div.title {
-	font-family: "KarminaSB";
 }
 .personsuper div.title, .infobox div.text, .somesuper div.text, .digassuper .digas_extra {
-	font-family: "KarminaR";
 }
 .personsuper div.name, .personsuper div.title, .digassuper div.digas_title, .digassuper div.digas_extra {
-	font-size: 35px;
 	padding-bottom: 10px;
+}.personsuper div.name, .digassuper div.digas_title, .digassuper div.digas_extra {
+	font-size: 45px;
 }
 .padded div.name, .padded div.title {
 	padding-left: 140px;
 }
 .personsuper, .digassuper {
 	padding-bottom: 10px;
-	background: -webkit-radial-gradient(18% 50%, circle, transparent 10%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
-	background: -webkit-linear-gradient(left, rgba(255,255,255,0.8) 0%,rgba(255, 255, 255, 0) 100%); /* Chrome10-25,Safari5.1-6 */
 }
 
 .personsuper .cogwheel, .digassuper .cogwheel {
@@ -302,11 +277,41 @@ div.notitle div.name {
 
 .infobox, .somesuper {
 	width: 430px;
+	top: 40px!important;
+	left: 40px;
+	background: url(../gfx/227/TwitterBak.jpg) no-repeat;
 	min-width: 0;
     padding: 20px;
     padding-right: 50px;
+    text-transform: uppercase;
+}
+.somesuper::before, .somesuper::after {
+	display: block;
+	content: " ";
+	width: 560px;
+	height: 83px;
+	position: absolute;
+	left: 0;
 }
 
+.somesuper::before {
+	background: url(../gfx/227/TwitterTopp.png) no-repeat;
+	top: 0;
+}
+
+.somesuper::after {
+	background: url(../gfx/227/TwitterBunn.png) no-repeat;
+	bottom: 0;
+	height: 70px;
+}
+
+.somesuper .title {
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+.somesuper .text {
+	padding-bottom: 90px;
+}
 
 
 .ghost {
