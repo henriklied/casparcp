@@ -102,7 +102,7 @@ function startTimer(duration, display) {
 		$(".super").fadeOut('slow', function() {			
 			$(".super").remove();
 		});
-		$(".president").fadeOut('slow')
+		$(".president").animate({opacity: 0}, 1000);
 		for (var timer in timers) {
 			clearTimeout(timers[timer]);
 		}
