@@ -6,6 +6,7 @@ var app = express();
 var http = require('http').Server(app);
 var net = require('net');
 var io = require('socket.io')(http);
+var config;
 var parseString = require('xml2js').parseString;
 const fs = require('fs');
 var WebSocketServer = require('ws').Server
@@ -22,6 +23,7 @@ var digasPath;
 
 fs.readFile('./static/config.json', function(err, data) {
 	data = JSON.parse(data);
+	config = data;
 	digasPath = data.digasPath;
 });
 
@@ -132,7 +134,7 @@ function logg(supertype, msg) {
 
 
 function parseDigas() {
-	if (!publishDigas) {
+	if (!publishDigas || (config.usingDigas == false)) {
 		setTimeout(parseDigas, 1000);
 		return true;
 	}
@@ -238,6 +240,14 @@ io.on('connection', function(socket){
 	socket.on('all_out', function(e) {
 		io.emit('all_out', 1);
 	});
+
+	socket.on('in_president', function(e) {
+		io.emit('president', {president_id: e, id: 213});
+	});
+
+	socket.on('out_president', function(e) {
+		io.emit('out_president', 1);
+	})
 
 	socket.on('map', function(s) {
 		logg('kart '+s.action, 'kart');
