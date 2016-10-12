@@ -53,13 +53,13 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-            timer = duration;
+            display.textContent = "00:00";
         }
     }, 1000);
 }
 
 	socket.on('start_timer', function(s){
-	    var fiveMinutes = 60 * 227;
+	    var fiveMinutes = 60*227;
 	    $("#time").remove();
 	    $('<div id="time"></div>').appendTo("#container").delay(1000).fadeIn('slow');
 		display = document.querySelector('#time');
