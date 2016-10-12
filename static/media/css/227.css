@@ -277,8 +277,8 @@ div.notitle div.name {
 
 .infobox, .somesuper {
 	width: 430px;
-	top: 40px!important;
-	left: 40px;
+	left: 100px;
+	opacity: 0.9;
 	background: url(../gfx/227/TwitterBak.jpg) no-repeat;
 	min-width: 0;
     padding: 20px;
