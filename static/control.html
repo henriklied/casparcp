@@ -19,6 +19,7 @@
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
 				<p><input type="submit" class="settings_btn start_timer" value="START TIMER!"></p>
+				<p><input type="submit" class="out_btn send_rtx" value="Kjør rulletekst"></p>
 				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
 			</div>
 		</div>
@@ -494,6 +495,10 @@ String.prototype.replaceAll = function(search, replace) {
 	$("#superBox").on('click', 'input.instagram_refresh', function(e) {
 		socket.emit('instagram_refresh', config.sombi_url);
 	});
+	$("#superBox").on('click', 'input.send_rtx', function(e) {
+		socket.emit('rtx', 1);
+	});
+
 
 	$("#superBox").on('change', 'input#activate_digas', function(e) {
 		console.log(this.checked);

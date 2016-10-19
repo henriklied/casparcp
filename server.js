@@ -258,6 +258,16 @@ io.on('connection', function(socket){
 		io.emit('map', s);
 	});
 
+	socket.on('rtx', function() {
+		var client = new net.Socket();
+		client.connect(5250, '127.0.0.1', function() {
+			client.write('PLAY 1-10 "RTX" SPEED 10 PREMULTIPLY BLUR 0\r\n');
+		});
+		client.on('error', function(err) {
+			console.log("Could not play rulletekst");
+		});
+	});
+
 	socket.on('get_some', function(s) {
 		if (s.url.indexOf('facebook.com') > -1) {
 			var oembed = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
