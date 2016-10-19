@@ -259,13 +259,16 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('rtx', function() {
-		var client = new net.Socket();
-		client.connect(5250, '127.0.0.1', function() {
-			client.write('PLAY 1-10 "RTX" SPEED 10 PREMULTIPLY BLUR 0\r\n');
-		});
-		client.on('error', function(err) {
-			console.log("Could not play rulletekst");
-		});
+		io.emit('rulletekst', 1);
+		setTimeout(function() {
+			var client = new net.Socket();
+			client.connect(5250, '127.0.0.1', function() {
+				client.write('PLAY 1-10 "RTX" SPEED 10 PREMULTIPLY BLUR 0\r\n');
+			});
+			client.on('error', function(err) {
+				console.log("Could not play rulletekst");
+			});
+		}, 1500);
 	});
 
 	socket.on('get_some', function(s) {
