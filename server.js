@@ -263,7 +263,7 @@ io.on('connection', function(socket){
 		setTimeout(function() {
 			var client = new net.Socket();
 			client.connect(5250, '127.0.0.1', function() {
-				client.write('PLAY 1-10 "C:/dev/casparcp/static/media/gfx/227/rtx_tekst" SPEED 10 PREMULTIPLY BLUR 0\r\n');
+				client.write('PLAY 1-10 "RTX_FRANK" SPEED 10 PREMULTIPLY BLUR 0\r\n');
 			});
 			client.on('error', function(err) {
 				console.log("Could not play rulletekst");
