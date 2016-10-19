@@ -28,7 +28,7 @@
 var config;
 var socket = io();
 var timers = [];
-
+var topTimer;
 $(document).ready(function() {
 	$(document).trigger("loaded", 1);
 	$.get('config.json', function(data) {
@@ -43,7 +43,8 @@ $(document).ready(function() {
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
-    setInterval(function () {
+    clearInterval(topTimer);
+    topTimer = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -65,6 +66,21 @@ function startTimer(duration, display) {
 		display = document.querySelector('#time');
 	    startTimer(fiveMinutes, display);
 	});
+	socket.on('in_timer', function(s) {
+		$("#time").fadeIn('slow');
+	})
+	socket.on('stop_timer', function(s) {
+		$("#time").fadeOut();
+	});
+	socket.on('set_timer', function(s) {
+		console.log("Setting timer");
+		var t = 60*parseInt(s);
+		$("#time").fadeOut('slow', function() {
+			display = document.querySelector('#time');
+		    startTimer(t, display);
+		    $("#time").delay(1000).fadeIn('slow');
+		});
+	})
 	socket.on('rulletekst', function(s) {
 		var html = '<div id="rulletekst"></div>';
 		$(html).appendTo("#container");

@@ -243,7 +243,16 @@ io.on('connection', function(socket){
 
 	socket.on('start_timer', function(e) {
 		io.emit('start_timer', 1);
-	})
+	});
+	socket.on('in_timer', function(e) {
+		io.emit('in_timer', 1);
+	});
+	socket.on('out_timer', function(e) {
+		io.emit('stop_timer', 1);
+	});
+	socket.on('set_timer', function(e) {
+		io.emit('set_timer', e);
+	});
 
 	socket.on('in_president', function(e) {
 		io.emit('president', {president_id: e, id: 213});

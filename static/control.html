@@ -49,6 +49,8 @@
 		</div>
 		<div id="deadPresidents" class="container">
 		</div>
+		<div id="timerBox" class="container">
+		</div>
 		<div id="infoSuper" style="display: none;" class="container">
 		</div>
 		<div id="mapBox" class="container">
@@ -335,6 +337,21 @@ String.prototype.replaceAll = function(search, replace) {
 		return html;
 	}
 
+
+	function generateTimerBox() {
+		var html = '<div class="super">\
+				<h2>Nedtelling</h2>\
+				<p><label>Manuell tid (minutter)\
+					<input type="text" class="txt_manual_timestamp"></label></p>\
+				<div class="submitters">\
+					<input type="submit" class="timer_inn in_btn" value="Timer INN">\
+					<input type="submit" class="timer_out out_btn" value="Timer UT">\
+					<input type="submit" class="timer_newtime out_btn" value="Timer START MANUELL TID">\
+				</div>\
+			</div>';
+		return html;
+	}
+
 	function generateSomeBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'somebox_position_1';
@@ -374,7 +391,7 @@ String.prototype.replaceAll = function(search, replace) {
 	$(generateInfoBox()).appendTo("#infoBox");
 	$(generateSomeBox()).appendTo("#someBox");
 	$(generateMapSuper()).appendTo("#mapBox");
-
+	$(generateTimerBox()).appendTo("#timerBox");
 
 	$("#superBox").on('click', 'input.all_out', function(e) {
 		socket.emit('all_out', 1);
@@ -463,6 +480,15 @@ String.prototype.replaceAll = function(search, replace) {
 		$(this).parent().parent().parent().find('.txt_personsuper_title').val(choice.title);
 	});
 
+	$("#timerBox").on('click', '.timer_inn', function(e) {
+		socket.emit('in_timer', 1);
+	});
+	$("#timerBox").on('click', '.timer_out', function(e) {
+		socket.emit('out_timer', 1);
+	});
+	$("#timerBox").on('click', '.timer_newtime', function(e) {
+		socket.emit('set_timer', $(this).parent().parent().find('.txt_manual_timestamp').val());
+	});
 	$("#deadPresidents").on('click', 'input.pres_in_current', function(e) {
 		socket.emit('in_president', parseInt($(".president_number").val()));
 	});
@@ -498,6 +524,9 @@ String.prototype.replaceAll = function(search, replace) {
 	$("#superBox").on('click', 'input.send_rtx', function(e) {
 		socket.emit('rtx', 1);
 	});
+	$("#superBox").on('click', 'input.start_timer', function(e) {
+		socket.emit('start_timer', 1);
+	});
 
 
 	$("#superBox").on('change', 'input#activate_digas', function(e) {
@@ -508,10 +537,6 @@ String.prototype.replaceAll = function(search, replace) {
 	$("#superBox").on('click', 'input.update_personsuper', function(e) {
 		socket.emit('get_personsuper', config.personsuper_csv);
 	});
-	$("#superBox").on('click', 'input.start_timer', function(e) {
-		socket.emit('start_timer', 1);
-	});
-
 
 
 	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
