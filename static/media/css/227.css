@@ -147,7 +147,7 @@ div.notitle div.name {
 	padding-left: 100px;
 }
 .personsuper {
-	min-width: 1300px;
+	min-width: 50px;
 	text-transform: uppercase;
 	height: 156px;
 	font-weight: bold;

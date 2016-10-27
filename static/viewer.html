@@ -142,18 +142,25 @@ function startTimer(duration, display) {
   			nameclass = '';
   		}
   		var html = '<div class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
-  				<div class="name"><span>'+s.name+'</span></div>';
+  				<div class="name ghost"><span>'+s.name+'</span></div>';
   		if (s.title != "") {
-  			html += '<div class="title"><span>'+s.title+'</span></div>';
+  			html += '<div class="title ghost"><span>'+s.title+'</span></div>';
   		}
   		html += '</div>';
   		$(html).appendTo('#container');
+
+  		$("#super_"+s.id).fadeIn('slow').css('width', $("#super_"+s.id).width()+100);
+
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id).find('div.name').typeIt({ speed: 60, breakLines: true, cursor: false });
-  		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
-  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function(e) {
-  			$(this).remove();
-  		});
+  		setTimeout(function() {
+  			$("#super_"+s.id).find('div.name').removeClass('ghost');
+  			$("#super_"+s.id).find('div.title').removeClass('ghost');
+	  		$("#super_"+s.id).find('div.name').typeIt({ speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).delay(6000).fadeOut('slow', function(e) {
+	  			$(this).remove();
+	  		});
+  		}, 600);
   	}
 	});
 
