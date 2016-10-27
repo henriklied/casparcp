@@ -266,10 +266,10 @@ String.prototype.replaceAll = function(search, replace) {
 					<input type="text" class="txt_personsuper_title"></label></p>\
 				<p><label>\
 					<div class="cube">\
-						<input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
-						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="topleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topright" disabled="disabled"><br>\
 						<input type="radio" name="'+radio_name+'" value="bottomleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-						<input type="radio" name="'+radio_name+'" value="bottomright">\
+						<input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
 				</label></p>\
 				<div class="submitters">\
@@ -293,7 +293,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<p><label>\
 					<div class="cube">\
 						<input type="radio" name="'+radio_name+'" value="topleft">&nbsp;&nbsp;&nbsp;\
-						<input type="radio" name="'+radio_name+'" value="topmiddle">&nbsp;&nbsp;&nbsp;\
+						<input type="radio" name="'+radio_name+'" value="topmiddle" disabled="disabled">&nbsp;&nbsp;&nbsp;\
 						<input type="radio" name="'+radio_name+'" value="topright" checked="checked"><br>\
 						<input type="radio" name="'+radio_name+'" value="bottomleft">&nbsp;&nbsp;&nbsp;\
 						<input type="radio" name="'+radio_name+'" value="bottommiddle">&nbsp;&nbsp;&nbsp;\
@@ -324,7 +324,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<p><label> \
 					<div class="cube">\
 						<input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="topright" disabled="disabled"><br>\
 						<input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
 						<input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\
@@ -342,10 +342,10 @@ String.prototype.replaceAll = function(search, replace) {
 		var html = '<div class="super">\
 				<h2>Nedtelling</h2>\
 				<p><label>Manuell tid (minutter)\
-					<input type="text" class="txt_manual_timestamp"></label></p>\
+					<input type="text" class="txt_manual_timestamp" style="max-width: 100px;"></label></p>\
 				<div class="submitters">\
 					<input type="submit" class="timer_inn in_btn" value="Timer INN">\
-					<input type="submit" class="timer_out out_btn" value="Timer UT">\
+					<input type="submit" class="timer_out out_btn" value="Timer UT"><br><br>\
 					<input type="submit" class="timer_newtime out_btn" value="Timer START MANUELL TID">\
 				</div>\
 			</div>';
@@ -371,7 +371,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<p><label> \
 					<div class="cube">\
 						<input type="radio" name="'+radio_name+'" value="topleft" checked="checked">&nbsp;&nbsp;&nbsp;\
-						<input type="radio" name="'+radio_name+'" value="topright"><br>\
+						<input type="radio" name="'+radio_name+'" value="topright" disabled="disabled"><br>\
 						<input type="radio" name="'+radio_name+'" value="bottomleft" disabled="disabled">&nbsp;&nbsp;&nbsp;\
 						<input type="radio" name="'+radio_name+'" value="bottomright" disabled="disabled">\
 					</div>\

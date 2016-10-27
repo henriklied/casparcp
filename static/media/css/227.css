@@ -323,8 +323,12 @@ div.notitle div.name {
 	left: 0;
 }
 
-.somesuper::before {
+.somesuper.twitter::before {
 	background: url(../gfx/227/TwitterTopp.png) no-repeat;
+	top: 0;
+}
+.somesuper.facebook::before {
+	background: url(../gfx/227/TwitterTopp-nologo.png) no-repeat;
 	top: 0;
 }
 
