@@ -84,7 +84,7 @@ function startTimer(duration, display) {
 	socket.on('rulletekst', function(s) {
 		var html = '<div id="rulletekst"></div>';
 		$(html).appendTo("#container");
-		$("#rulletekst").fadeIn('slow').delay(11000).fadeOut('slow', function() {
+		$("#rulletekst").fadeIn('slow').delay(18000).fadeOut('slow', function() {
 			$(this).remove();
 		});
 	});
