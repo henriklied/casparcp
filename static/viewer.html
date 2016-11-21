@@ -207,8 +207,8 @@ function startTimer(duration, display) {
   		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
   			$("#super_"+s.id).find('div.text').removeClass('ghost');
-	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 120, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1500, speed: 120, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1500, speed: 30, breakLines: true, cursor: false });
   		}, 1000);
   	}
 	});
