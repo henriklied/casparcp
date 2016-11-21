@@ -1,19 +1,8 @@
 @font-face {
-  font-family: 'Bookman Old Style';
-  src: url('/media/fonts/BookmanOldStyle.svg') format('svg');
+  font-family: 'American Typewriter';
+  src: url('/media/fonts/american_typewriter.svg') format('svg');
 }
-@font-face {
-  font-family: 'Bookman Old Style Bold';
-  src: url('/media/fonts/BookmanOldStyleBold.svg') format('svg');
-}
-@font-face {
-  font-family: 'Bookman Old Style Bold Italic';
-  src: url('/media/fonts/BookmanOldStyleBoldItalic.svg') format('svg');
-}
-@font-face {
-  font-family: 'Bookman Old Style Italic';
-  src: url('/media/fonts/BookmanOldStyleItalic.svg') format('svg');
-}
+
 
 
 @font-face{ 
