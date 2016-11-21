@@ -149,8 +149,8 @@ function startTimer(duration, display) {
   		setTimeout(function() {
   			$("#super_"+s.id).find('div.name').removeClass('ghost');
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
-	  		$("#super_"+s.id).find('div.name').typeIt({ speed: 60, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.name').typeIt({ speed: 30, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 30, breakLines: true, cursor: false });
 	  		$("#super_"+s.id).delay(delayTime).fadeOut('slow', function(e) {
 	  			$(this).remove();
 	  		});

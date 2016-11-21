@@ -88,6 +88,11 @@ String.prototype.hashCode = function(){
 	}
 	return hash;
 }
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 
 function logg(supertype, msg) {
 	if (nrkPlakatTime == undefined) {
@@ -160,7 +165,9 @@ io.on('connection', function(socket){
 					continue;
 				}
 				line = body[line].split(",");
-				data.push({name: line[0], title: line[1]});
+				firstline = line.shift()
+				secondline = line.join(',');
+				data.push({name: firstline.replaceAll('"', ''), title: secondline.replaceAll('"', '')});
 			}
 			socket.emit('get_personsuper', data);
 		});
