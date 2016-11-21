@@ -1,0 +1,424 @@
+@font-face {
+  font-family: 'Bookman Old Style';
+  src: url('/media/fonts/BookmanOldStyle.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Bold';
+  src: url('/media/fonts/BookmanOldStyleBold.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Bold Italic';
+  src: url('/media/fonts/BookmanOldStyleBoldItalic.svg') format('svg');
+}
+@font-face {
+  font-family: 'Bookman Old Style Italic';
+  src: url('/media/fonts/BookmanOldStyleItalic.svg') format('svg');
+}
+
+
+@font-face{ 
+  font-family: 'NRKEtica Bold';
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.eot');
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.eot?#iefix') format('embedded-opentype'),
+       url('/media/fonts/NRK_Etica_Slab_Bold.woff') format('woff');
+}
+@font-face{ 
+  font-family: 'NRKEtica Book';
+  src: url('/media/fonts/NRK_Etica_Slab_Book.eot');
+  src: url('/media/fonts/NRK_Etica_Slab_Book.eot?#iefix') format('embedded-opentype'),
+       url('/media/fonts/NRK_Etica_Slab_Book.woff') format('woff');
+}
+
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes swinging {
+  0% {
+	margin-left: -155px;
+  }
+  50% {
+	margin-left: -150px;
+  }
+  100% {
+	margin-left: -155px;
+  }
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+
+body {
+	font-family: "American Typewriter", Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.super {
+	position: absolute;
+}
+
+#time {
+	position: absolute;
+	top: 150px;
+	right: 100px;
+	text-align: right;
+	display: none;
+	font-family: "Helvetica Neue", Arial, Helvetica;
+	font-weight: normal;
+	font-size: 35px;
+	color: white;
+}
+
+
+
+.staticimg .title {
+font-size: 25px;	
+}
+.staticimg .credits {
+}
+.sombiSlider {
+	outline: 20px solid white;
+}
+.sombiSlider .titles h2:before {
+	content: "– ";
+}
+.sombiSlider .titles h2 {
+	font-size: 25px;
+	margin-top: 10px;
+}
+.sombiSlider .titles p {
+  font-size: 30px;
+
+}
+
+div.notitle div.name {
+	padding-top: 25px;
+    padding-bottom: 41px;
+}
+
+.president {
+	width: 439px;
+	height: 1080px;
+	top: 0;
+	left: 0;
+	display: block;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+}
+.president img {
+	position: absolute;
+}
+
+
+.infosuper {
+	font-size: 30px;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.8);
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
+}
+.infosuper.topright {
+  top: 133px;
+  padding-right: 0!important;
+  font-family: Helvetica!important;
+  font-size: 30px;
+  letter-spacing: -1px;
+  right: 120px;
+  text-align: right;
+}
+.infobox .title, .somesuper .title {
+    font-size: 30px;
+    color: black;
+}
+.infobox .text, .somesuper .text {
+	font-size: 27px;
+}
+.infobox video, .somesuper video {
+	position: absolute;
+}
+
+/*.topright.infobox {
+	text-align: right;
+}*/
+
+.top-to-bottom {
+}
+.personsuper.bottomleft, .personsuper.topleft, .digassuper {
+	padding-right: 250px;
+}
+.personsuper.topright, .personsuper.bottomright {
+	padding-left: 100px;
+}
+.personsuper {
+	min-width: 50px;
+	height: 156px;
+	font-weight: bold;
+	background: url(../gfx/ribbe/Super_back.png) no-repeat top right;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.personsuper.notitle .name {
+	padding-top: 30px;
+}
+.personsuper.notitle .name::before {
+	margin-top: -48px;
+}
+.personsuper .title {
+	font-size: 30px;
+	margin-top: -10px;
+}
+.personsuper .name {
+	padding-top: 10px;
+}
+
+.personsuper .name, .personsuper .title {
+	padding-left: 210px;
+}
+.personsuper .name::before {
+	display: block;
+	position: absolute;
+	content: " ";
+	width: 125px;
+	margin-left: -155px;
+	-webkit-animation: rotating 40s linear infinite;
+	animation: rotating 20s linear infinite;
+	margin-top: -15px;
+	height: 125px;
+	background: url(../gfx/ribbe/ball.png) no-repeat center left;
+}
+.personsuper .star {
+	width: 40px;
+	height: 43px;
+	background: url(../gfx/ribbe/Star.png) no-repeat top left;
+	position: absolute;
+	top: 30px;
+	-webkit-animation: rotating 120s linear infinite;
+	animation: rotating 120s linear infinite;
+	opacity: 0.8;
+}
+.personsuper .star2 {
+	top: 78px;
+	margin-left: -16px;
+}
+
+.ribbesuper {
+	width: 1920px;
+	height: 1080px;
+	position: absolute;
+}
+
+#ovenTemp {
+	position: absolute;
+	bottom: 30px;
+	right: 250px;
+	width: 146px;
+	box-sizing: border-box;
+	height: 241px;
+	background: url(../gfx/ribbe/ovn_temp_back.png) no-repeat;
+	padding-left: 39px;
+	padding-top: 30px;
+	color: #af1f24;
+	font-size: 41px;
+}
+#ribTemp {
+	position: absolute;
+	bottom: 30px;
+	right: 60px;
+	width: 159px;
+	box-sizing: border-box;
+	height: 265px;
+	background: url(../gfx/ribbe/ribbe_temp_back.png) no-repeat;
+	padding-left: 46px;
+	padding-top: 47px;
+	color: #af1f24;
+	font-size: 41px;
+}
+
+
+
+
+.mapsuper {
+	display: block!important;
+	opacity: 0;
+	width: 1200px;
+	height: 750px;
+	outline: 15px solid white;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -600px;
+	margin-top: -375px;
+	background: white;
+}
+
+
+.leaflet-control-attribution {
+	display: none;
+}
+
+.personsuper div.name, .digassuper div.digas_title, .infobox div.title, .somesuper div.title {
+}
+.personsuper div.title, .infobox div.text, .somesuper div.text, .digassuper .digas_extra {
+}
+.personsuper div.name, .personsuper div.title, .digassuper div.digas_title, .digassuper div.digas_extra {
+	padding-bottom: 10px;
+}.personsuper div.name, .digassuper div.digas_title, .digassuper div.digas_extra {
+	font-size: 45px;
+}
+.padded div.name, .padded div.title {
+	padding-left: 140px;
+}
+.personsuper, .digassuper {
+	padding-bottom: 10px;
+}
+
+.personsuper .cogwheel, .digassuper .cogwheel {
+	position: absolute;
+	opacity: 0.65;
+	width: 100px;
+	margin-top:	-100px;
+	height: 100px;
+	zoom: 1.1;
+}
+.personsuper .cropper, .digassuper .cropper {
+	position: absolute;
+}
+
+
+.personsuper img, .digassuper img, .personsuper .skovel, .digassuper .skovel {
+	width: 100px;
+	height: 100px;
+}
+.personsuper .cropper, .digassuper .cropper {
+	margin-top: -54px;
+	width: 100px;
+	height: 50px;
+	overflow: hidden;
+}
+
+.personsuper .skovel {
+	margin-top: -50px;
+	width: 100px;
+	height: 100px;
+}
+
+
+@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(1800deg);}}
+.skovel {-webkit-animation: rotating 15s ease-in infinite;}
+
+.programsuper {
+	opacity: 0.86;
+	zoom: 0.86;
+	width: 800px;
+	height: 779px;
+	margin: 200px auto 0 auto;
+	position: static;
+}
+.programsuper .hjul {
+	width: 800px;
+    height: 779px;
+    overflow: hidden;
+}
+.programsuper img {
+	width: 100%;
+	height: auto;
+}
+.programsuper .cropper {
+    margin-top: -404px;
+    overflow: hidden;
+    height: 500px;	
+}
+.programsuper .skovel {
+    margin-top: -406px;
+    height: 800px;
+    -webkit-animation-delay: 1s; /* Chrome, Safari, Opera */
+    animation-delay: 1s; /* Chrome, Safari, Opera */
+}
+.programsuper .program_title {
+	font-family: "NRKEtica Bold";
+	font-size: 80px;
+	color: white;
+	text-align: center;	
+}
+
+.personsuper.bottomright, .personsuper.topright,
+.infobox.bottomright, .infobox.topright,
+.somesuper.bottomright, .sombiSlider.topright {
+	text-align: right;
+	padding-top: 10px;
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 100%); /* Chrome10-25,Safari5.1-6 */
+}
+.personsuper.topleft, .personsuper.bottomleft, .digassuper {
+	padding-top: 20px;
+}
+
+.infobox, .somesuper {
+	width: 510px;
+	opacity: 0.9;
+	background: url(../gfx/ribbe/infobox_bg.png) no-repeat top left;
+	min-width: 0;
+	color: rgba(255, 255, 255, 0.8);
+    padding: 50px;
+    text-align: right;
+    border-bottom: 12px solid #0e6100;
+    padding-bottom: 20px;
+}
+
+.infobox .title, .infobox .text {
+	margin-left: 60px;
+}
+.infobox .title {
+    text-transform: uppercase;	
+	color: rgba(255, 255, 255, 0.8);
+}
+.infobox .text {
+	padding-bottom: 20px;
+}
+
+.ghost {
+	opacity: 0;
+}
+
+.topleft {
+	top: 100px;
+	padding-left: 80px;
+}
+.topright {
+	top: 300px;
+	right: 0;
+	padding-right: 80px;
+}
+.bottomleft {
+	bottom: 100px;
+	padding-left: 80px;
+}
+
+.bottomright {
+	bottom: 100px;
+	right: 0;
+	padding-right: 80px;
+}
+
+.topmiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	top: 100px;
+}
+.bottommiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	bottom: 100px;
+}
