@@ -135,6 +135,9 @@ function startTimer(duration, display) {
   		} else {
   			nameclass = '';
   		}
+  		if (s.name.length > 48) {
+  			s.name = s.name.substring(0,48)+'…';
+  		}
   		var html = '<div class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
   				<div class="star"></div><div class="star star2"></div><div class="name ghost"><span>'+s.name+'</span></div>';
   		if (s.title != "") {

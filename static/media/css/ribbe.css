@@ -58,7 +58,7 @@ body {
 #time {
 	position: absolute;
 	top: 150px;
-	right: 100px;
+	right: 80px;
 	text-align: right;
 	display: none;
 	font-family: "Helvetica Neue", Arial, Helvetica;
@@ -168,6 +168,7 @@ div.notitle div.name {
 }
 .personsuper .name {
 	padding-top: 10px;
+	font-size: 40px;
 }
 
 .personsuper .name, .personsuper .title {
@@ -179,8 +180,8 @@ div.notitle div.name {
 	content: " ";
 	width: 125px;
 	margin-left: -155px;
-	-webkit-animation: rotating2 200s linear infinite;
-	animation: rotating2 200s linear infinite;
+	-webkit-animation: rotating2 20s linear infinite;
+	animation: rotating2 20s linear infinite;
 	margin-top: -15px;
 	height: 125px;
 	background: url(../gfx/ribbe/ball.png) no-repeat center left;
@@ -191,8 +192,8 @@ div.notitle div.name {
 	background: url(../gfx/ribbe/Star.png) no-repeat top left;
 	position: absolute;
 	top: 30px;
-	-webkit-animation: rotating 120s linear infinite;
-	animation: rotating 120s linear infinite;
+	-webkit-animation: rotating 10s linear infinite;
+	animation: rotating 10s linear infinite;
 	opacity: 0.8;
 }
 .personsuper .star2 {
