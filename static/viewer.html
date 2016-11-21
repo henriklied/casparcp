@@ -204,8 +204,8 @@ function startTimer(duration, display) {
   		$(document).trigger('infobox', s);
   		$("#super_"+s.id).fadeIn('slow');
   		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
-		$("#super_"+s.id).find('div.title').animate({opacity: 1}, 1000);
-		$("#super_"+s.id).find('div.text').animate({opacity: 1}, 1000);
+		$("#super_"+s.id).find('div.title').delay(1000).animate({opacity: 1}, 1000);
+		$("#super_"+s.id).find('div.text').delay(2000).animate({opacity: 1}, 1000);
   	}
 	});
 
