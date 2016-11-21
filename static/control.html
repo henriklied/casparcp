@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="media/control.css">
 	<script src="media/js/jquery.min.js"></script>
 	<style type="text/css">
-		#mapBox, #staticBox, #infoBox {
+		#mapBox, #staticBox, #someBox, .send_rtx {
 			display: none;
 		}
 	</style>
@@ -20,7 +20,7 @@
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
 				<p><input type="submit" class="settings_btn start_timer" value="START TIMER!"></p>
 				<p><input type="submit" class="out_btn send_rtx" value="Kjør rulletekst"></p>
-				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
+				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte musikksupre"></p>
 			</div>
 		</div>
 
@@ -47,9 +47,10 @@
 	<div id="control">
 		<div id="personSuper" class="container">
 		</div>
-		<div id="deadPresidents" class="container">
-		</div>
+
 		<div id="timerBox" class="container">
+		</div>
+		<div id="thermoBox" class="container">
 		</div>
 		<div id="infoSuper" style="display: none;" class="container">
 		</div>
@@ -132,66 +133,7 @@ String.prototype.replaceAll = function(search, replace) {
 			</div>';
 		return html;		
 	}
-	function generatePresidentSuper() {
-		var html = '<div class="super">\
-				<h2>Presidentsuper</h2>\
-				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
-				<p><label>President nummer\
-					<select class="president_number">\
-						<option value="1">1</option>\
-						<option value="2">2</option>\
-						<option value="3">3</option>\
-						<option value="4">4</option>\
-						<option value="5">5</option>\
-						<option value="6">6</option>\
-						<option value="7">7</option>\
-						<option value="8">8</option>\
-						<option value="9">9</option>\
-						<option value="10">10</option>\
-						<option value="11">11</option>\
-						<option value="12">12</option>\
-						<option value="13">13</option>\
-						<option value="14">14</option>\
-						<option value="15">15</option>\
-						<option value="16">16</option>\
-						<option value="17">17</option>\
-						<option value="18">18</option>\
-						<option value="19">19</option>\
-						<option value="20">20</option>\
-						<option value="21">21</option>\
-						<option value="22">22</option>\
-						<option value="23">23</option>\
-						<option value="24">24</option>\
-						<option value="25">25</option>\
-						<option value="26">26</option>\
-						<option value="27">27</option>\
-						<option value="28">28</option>\
-						<option value="29">29</option>\
-						<option value="30">30</option>\
-						<option value="31">31</option>\
-						<option value="32">32</option>\
-						<option value="33">33</option>\
-						<option value="34">34</option>\
-						<option value="35">35</option>\
-						<option value="36">36</option>\
-						<option value="37">37</option>\
-						<option value="38">38</option>\
-						<option value="39">39</option>\
-						<option value="40">40</option>\
-						<option value="41">41</option>\
-						<option value="42">42</option>\
-						<option value="43">43</option>\
-						<option value="44">44</option>\
-					</select></label></p>\
-				<div class="submitters">\
-					<input type="submit" class="pres_in_current in_btn" value="INN valgt president">\
-					<input type="submit" class="pres_in_next in_btn" value="NESTE president"><br><br>\
-					<input type="submit" class="pres_in_prev in_btn" value="FORRIGE president">\
-					<input type="submit" class="pres_out out_btn" value="UT president">\
-				</div>\
-			</div>';
-		return html;		
-	}
+
 	function generateStaticBox() {
 		var html = '<div class="super">\
 						<input type="hidden" class="txt_infobox_id" value="staticbox">\
@@ -256,9 +198,9 @@ String.prototype.replaceAll = function(search, replace) {
 			radio_name = 'personsuper_position_'+radio_name;
 		}
 		var html = '<div class="super">\
-				<h2>Personsuper</h2>\
+				<h2>Musikksuper</h2>\
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
-				<p><label class="personsuper_csv_label">Personsupre\
+				<p><label class="personsuper_csv_label">Musikksupre\
 					<select class="personsuper_csv"></select> <input type="submit" value="Sett inn"></label></p>\
 				<p><label>Navn\
 					<input type="text" class="txt_personsuper_name"></label></p>\
@@ -352,6 +294,21 @@ String.prototype.replaceAll = function(search, replace) {
 		return html;
 	}
 
+	function generateThermoBox() {
+		var html = '<div class="super">\
+				<h2>Temperaturer</h2>\
+				<p><label>Termometer 1\
+					<input type="text" class="txt_termo1" style="max-width: 100px;"></label></p>\
+				<p><label>Termometer 2\
+					<input type="text" class="txt_termo2" style="max-width: 100px;"></label></p>\
+				<div class="submitters">\
+					<input type="submit" class="termo_inn in_btn" value="Termometer INN">\
+					<input type="submit" class="termo_out out_btn" value="Termometer UT"><br><br>\
+				</div>\
+			</div>';
+		return html;
+	}
+
 	function generateSomeBox(radio_name) {
 		if (!radio_name) {
 			radio_name = 'somebox_position_1';
@@ -386,12 +343,12 @@ String.prototype.replaceAll = function(search, replace) {
 
 
 	$(generatePersonSuper()).appendTo("#personSuper");
-	$(generatePresidentSuper()).appendTo("#deadPresidents");
 	$(generateInfoSuper()).appendTo("#infoSuper");
 	$(generateInfoBox()).appendTo("#infoBox");
 	$(generateSomeBox()).appendTo("#someBox");
 	$(generateMapSuper()).appendTo("#mapBox");
 	$(generateTimerBox()).appendTo("#timerBox");
+	$(generateThermoBox()).appendTo("#thermoBox");
 
 	$("#superBox").on('click', 'input.all_out', function(e) {
 		socket.emit('all_out', 1);
@@ -489,22 +446,23 @@ String.prototype.replaceAll = function(search, replace) {
 	$("#timerBox").on('click', '.timer_newtime', function(e) {
 		socket.emit('set_timer', $(this).parent().parent().find('.txt_manual_timestamp').val());
 	});
-	$("#deadPresidents").on('click', 'input.pres_in_current', function(e) {
-		socket.emit('in_president', parseInt($(".president_number").val()));
+
+	$("#thermoBox").on('click', '.termo_inn', function(e) {
+		console.log("Sent");
+		var data = {
+			action: 'in'
+		};
+		socket.emit('thermo_inn', data);		
 	});
-	$("#deadPresidents").on('click', 'input.pres_in_next', function(e) {
-		valu = parseInt($(".president_number").val())+1;
-		socket.emit('in_president', valu);
-		nextVisible = $(".president_number").val(valu);
+	$("#thermoBox").on('click', '.termo_out', function(e) {
+		var data = {
+			action: 'out'
+		};
+		socket.emit('thermo_inn', data);
 	});
-	$("#deadPresidents").on('click', 'input.pres_in_prev', function(e) {
-		valu = parseInt($(".president_number").val())-1;
-		socket.emit('in_president', valu);
-		nextVisible = $(".president_number").val(valu);
-	});
-	$("#deadPresidents").on('click', 'input.pres_out', function(e) {
-		socket.emit('out_president', 1);
-	});
+
+
+
 	
 	$("#superBox").on('click', 'input.instagram_start', function(e) {
 		socket.emit('instagram', 1);
@@ -610,6 +568,12 @@ String.prototype.replaceAll = function(search, replace) {
 	socket.on('digas_super', function(cmd) {
 		console.log(cmd);
 		$("#digas").html(cmd.title);
+	});
+
+	socket.on('temperatures', function(cmd) {
+		$(".txt_termo1").val(cmd[0]);
+		$(".txt_termo2").val(cmd[1]);
+		console.log(cmd);
 	});
 
 

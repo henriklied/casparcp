@@ -17,9 +17,6 @@
 <body>
 
 	<div id="container">
-		<div class="president" id="super_12398">
-			<img id="presimg" src="media/gfx/227/presidentrekken.jpg">
-		</div>
 	</div>
 
 </body>
@@ -45,22 +42,26 @@ function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     clearInterval(topTimer);
     topTimer = setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+	    var hoursLeft   = Math.floor((timer));
+	    var hours       = Math.floor(hoursLeft/3600);
+	    var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+	    var minutes     = Math.floor(minutesLeft/60);
+	    var remainingSeconds = timer % 60;
 
+        hours = hours < 10 ? "0" + hours : hours;
         minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+        remainingSeconds = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
 
-        display.textContent = minutes + ":" + seconds;
+        display.textContent = hours + ":" + minutes + ":" + remainingSeconds	;
 
         if (--timer < 0) {
-            display.textContent = "00:00";
+            display.textContent = "00:00:00";
         }
     }, 1000);
 }
 
 	socket.on('start_timer', function(s){
-	    var fiveMinutes = 60*227;
+	    var fiveMinutes = 60*60*7;
 	    $("#time").remove();
 	    $('<div id="time"></div>').appendTo("#container").delay(1000).fadeIn('slow');
 		display = document.querySelector('#time');
@@ -81,14 +82,6 @@ function startTimer(duration, display) {
 		    $("#time").delay(1000).fadeIn('slow');
 		});
 	})
-	socket.on('rulletekst', function(s) {
-		var html = '<div id="rulletekst"></div>';
-		$(html).appendTo("#container");
-		$("#rulletekst").fadeIn('slow').delay(18000).fadeOut('slow', function() {
-			$(this).remove();
-		});
-	});
-
 
 	function clearSuper(s) {
 		if (s.action == 'out') {
@@ -103,29 +96,29 @@ function startTimer(duration, display) {
 		return false;
 	}
 
-	socket.on('map', function(s) {
+
+	socket.on('temperatures', function(s) {
+		$("#ovenTemp").html(s[0]);
+		$("#ribTemp").html(s[1]);
+	});
+
+	socket.on('temps_in', function(s) {
+		s.id = 'ribbetemperatur';
 	  	if (!clearSuper(s)) {
-	  		var html = '<div class="super mapsuper" id="super_'+s.id+'"></div>';
-	  		$(html).appendTo("#container");
-			var mymap = L.map('super_'+s.id, {zoomControl: false}).setView([s.latitude, s.longitude], s.zoom);
-			L.tileLayer('http://localhost:8000/kart/{z}/{x}/{y}.jpeg', {
-			    attribution: '',
-			    maxZoom: 16,
-			    id: 'nrksommer'
-			}).addTo(mymap);
-			var pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'#df0909',heartbeat: 3});
-			var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);
-			setTimeout(function() {
-				$("#super_"+s.id).animate({opacity: 1});
-			}, 1000);
-		}
+	  		var html = '<div class="super ribbesuper" id="super_'+s.id+'">\
+	  		<div id="ovenTemp">'+s.temps[0]+'</div>\
+	  		<div id="ribTemp">'+s.temps[1]+'</div>\
+	  		</div>';
+	  		$(html).appendTo('#container');
+
+	  		$("#super_"+s.id).fadeIn('slow');
+	  	}
 	});
 
 	socket.on('all_out', function(e) {
 		$(".super").fadeOut('slow', function() {			
 			$(".super").remove();
 		});
-		$(".president").animate({opacity: 0}, 1000);
 		for (var timer in timers) {
 			clearTimeout(timers[timer]);
 		}
@@ -136,13 +129,14 @@ function startTimer(duration, display) {
 
   socket.on('personsuper', function(s) {
   	if (!clearSuper(s)) {
+  		var delayTime = 10000;
   		if (s.title == "") {
   			nameclass = 'notitle ';
   		} else {
   			nameclass = '';
   		}
   		var html = '<div class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
-  				<div class="name ghost"><span>'+s.name+'</span></div>';
+  				<div class="star"></div><div class="star star2"></div><div class="name ghost"><span>'+s.name+'</span></div>';
   		if (s.title != "") {
   			html += '<div class="title ghost"><span>'+s.title+'</span></div>';
   		}
@@ -157,49 +151,14 @@ function startTimer(duration, display) {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
 	  		$("#super_"+s.id).find('div.name').typeIt({ speed: 60, breakLines: true, cursor: false });
 	  		$("#super_"+s.id).find('div.title').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).delay(6000).fadeOut('slow', function(e) {
+	  		$("#super_"+s.id).delay(delayTime).fadeOut('slow', function(e) {
 	  			$(this).remove();
 	  		});
   		}, 600);
   	}
 	});
 
-  socket.on('president', function(s) {
-  		var presidentID = s.president_id;
-  		if ($(".president").css('opacity') == 0) {
-	  		$(".president").animate({opacity: 0.9}, 1000, function() {
-				offset = (1080*parseInt(presidentID));
-				TweenLite.to("#presimg", 3.12, {css:{top:-offset+"px"}, ease:Quart.easeInOut});
-	  		});  			
-  		} else {
-			offset = (1080*parseInt(presidentID));
-			TweenLite.to("#presimg", 3.12, {css:{top:-offset+"px"}, ease:Quart.easeInOut});  			
-  		}
-  });
 
-  socket.on('out_president', function(s) {
-  	$(".president").animate({opacity: 0});
-  });
-
-	socket.on('somesuper', function(s) {
-		if (!clearSuper(s)) {
-  		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
-  		if (s.title != "") {
-  			html += '<div class="title ghost">'+s.title+'</div>';
-  		}
-  		html += '<div class="text ghost">'+s.text+'</div></div>';
-  		$(html).appendTo('#container');
-  		$(document).trigger('superbox', s);
-  		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
-   		setTimeout(function() {
-  			$("#super_"+s.id).find('div.title').removeClass('ghost');
-  			$("#super_"+s.id).find('div.text').removeClass('ghost');
-	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 60, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
-  		}, 1000);
- 	}
-	});
 
 	socket.on('infosuper', function(s) {
 	  	if (!clearSuper(s)) {

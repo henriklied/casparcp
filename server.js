@@ -33,12 +33,37 @@ fs.appendFile('logg.csv', 'datetime;tid fra programstart;supertype;innhold\r\n',
 
 
 var publishDigas = true;
-
 var nrkPlakatTime;
 
-var currentDigas;
+var tempTime;
+var temps = {};
+var tempsArray;
+changeTemps = false; // Change template output
 
-var digasTimers = {outTimer: null};
+function mapTemps() {
+	tempsArray = Object.keys(temps).map(function (key) { return temps[key]; });
+	io.emit('temperatures', tempsArray);
+	setTimeout(mapTemps, 1500);
+}
+mapTemps();
+
+function logTemps() {
+	if (!tempTime) {
+		tempTime = new Date();
+	}
+	curTime = new Date();
+	diff = parseInt((new Date() - tempTime)/1000);
+	if (tempsArray[0]) {
+		fs.appendFile('static/temps.csv', ''+diff+','+tempsArray[0]+"\n", function(err) {
+
+		});
+	} else {
+		console.log("SHIT, no temp info! Not adding to csv.")
+	}
+	setTimeout(logTemps, 60000);
+}
+
+
 
 function loadCaspar() {
 	var client = new net.Socket();
@@ -52,9 +77,6 @@ function loadCaspar() {
 
 setTimeout(loadCaspar, 8000);
 
-function clearDigas() {
-	clearTimeout(digasTimers.outTimer);
-}
 
 String.prototype.hashCode = function(){
 	var hash = 0;
@@ -66,58 +88,6 @@ String.prototype.hashCode = function(){
 	}
 	return hash;
 }
-
-function sombiGenerator(s) {
-	sombi_url = url.parse(s);
-	var project_id = sombi_url.search.split('projectId=')[1];
-	try {
-		request(s, function (error, response, body) {
-			if(error != null) {
-				console.log("Could not load sombi json");
-				console.log(error);
-				return true;
-			}
-		var images = [];
-		body = JSON.parse(body);
-		for (obj in body._embedded.document) {
-			(function(obj, body) {
-				obj = body._embedded.document[obj];
-
-				if ((obj.image.standard != null) && (obj.title != null) && (obj.src != "twitter")) {
-					var urlp = url.parse(obj.image.standard).pathname+'.jpg';
-					urlp = project_id+'_'+urlp.hashCode()+'.jpg';
-
-					var localfp = './static/images/'+urlp;
-
-					fs.open(localfp, 'r', function(error, fd) {
-						if (error) {
-							request.get({url: obj.image.standard, encoding: 'binary'}, function(error, response, body) {
-								if (response.toJSON().headers['content-length'] < 10000) {
-									return false;
-								}
-								var urlp = url.parse(obj.image.standard).pathname+'.jpg';
-								urlp = project_id+'_'+urlp.hashCode()+'.jpg';
-								
-								var localfp = './static/images/'+urlp;
-								fs.writeFile(localfp, body, 'binary');
-								console.log("Wrote file", localfp);
-							});
-						} else {
-							console.log("File already exists", localfp);
-						}
-					});
-						images.push({url: 'images/'+urlp, title: obj.title, avatar: obj.user.avatar, user: obj.user});
-					}
-				})(obj, body); 
-			}
-			fs.writeFile('./static/images.json', JSON.stringify(images));
-		});
-	} catch (e) {
-		console.log("Error in Sombi");
-	}
-	// setTimeout(sombiGenerator, 30000);
-}
-
 
 function logg(supertype, msg) {
 	if (nrkPlakatTime == undefined) {
@@ -133,56 +103,7 @@ function logg(supertype, msg) {
 
 
 
-function parseDigas() {
-	if (!publishDigas || (config.usingDigas == false)) {
-		setTimeout(parseDigas, 1000);
-		return true;
-	}
-	try {
-		fs.readFile(digasPath, function(err, data) {
-			if (err) {
-				console.log("Error reading Digas");
-				return true;
-			} else {
-				parseString(data, function(err, result) {
-					for (obj in result.easy_xml.item) {
-						item = result.easy_xml.item[obj];
-						seq = item['$'].sequence;
-						if (seq == "present" && item.Class == "Music") {
-							startTime = new Date(item.Time_RealStart[0]);
-							endTime = new Date(item.Time_RealStop[0]);
-							endTimer = endTime - startTime;
-							currentDigas_tmp = {title: item.Title[0], performer: item.Music_Performer[0], composer: item.Music_Composer[0], start: startTime, stop: endTime, recordcc: item['NRK.PLNUMMER'][0].split(';')[0], release_year: item['NRK.RELEASE_YEAR']};
-							if (currentDigas && (currentDigas.title == currentDigas_tmp.title)) {
-								continue;
-							}
-							clearTimeout(digasTimers.outTimer);
-							currentDigas = currentDigas_tmp;
-							digasTimers.outTimer = setTimeout(function() {
-								if (!publishDigas) {
-									return true;
-								}
-								io.emit("digassuper", currentDigas);
-								console.log("Fired out digas", currentDigas);
-								logg('digas out', currentDigas.title+';'+currentDigas.performer);
-								clearTimeout(digasTimers.outTimer);
-							}, endTimer-15000);
-							setTimeout(function() {
-								io.emit("digassuper", currentDigas);
-								logg('digas in', currentDigas.title+';'+currentDigas.performer);
-								console.log("Fired digas", currentDigas);
-							}, 0);
-						}
-					}
-				});
-			}
-	});
-	} catch (e) {
-		console.log("Caught E");
-	}
-	setTimeout(parseDigas, 1000);
-}
-setTimeout(function() {console.log("Connecting to DIGAS"); parseDigas();}, 15000);
+
 
 app.use(express.static('static'));
 
@@ -198,50 +119,22 @@ io.on('connection', function(socket){
 		logg('infoboks '+person.action, person.title+";"+person.text);
 		io.emit('infobox', person);
 	});
-	socket.on('run_programsuper', function(s) {
-		logg('vignett', 'vignett inn');
-		io.emit('run_programsuper', 1);
-	});
 	socket.on('run_nrklogo', function(s) {
 		nrkPlakatTime = new Date();
 		logg('nrkplakat', 'nrkplakat inn');
 		io.emit('run_nrklogo', 1);
 	});
 
-	socket.on('activate_digas', function(b) {
-		console.log("Activate Digas", b);
-		publishDigas = b;
-	});
 	socket.on('restart_casparcg', function() {
 		loadCaspar();
 	});
-	socket.on('instagram_refresh', function(s) {
-		sombiGenerator(s);
-		io.emit('instagram_refresh', 1);
-	});
-	socket.on('instagram', function(s) {
-		logg('instagram in', 'instagram inn');
-		fs.readFile('./static/images.json', function(err, data) {
-			io.emit("instagram", {action: 'in', id: 'lksad123', images: JSON.parse(data)});
-		});
-	});
-	socket.on('instagram_out', function(s) {
-		logg('instagram out', 'instagram ut');
-		io.emit("instagram_out", 1);
-	});
-	socket.on('infosuper', function(person) {
-		logg('infosuper '+person.action, person.text);
-		io.emit('infosuper', person);
-	});
-	socket.on('somesuper', function(s) {
-		logg('somesuper '+s.action, s.title+';'+s.text+';'+s.source);
-		io.emit('somesuper', s);
-	});
+
 	socket.on('all_out', function(e) {
 		io.emit('all_out', 1);
 	});
 
 	socket.on('start_timer', function(e) {
+		logTemps();
 		io.emit('start_timer', 1);
 	});
 	socket.on('in_timer', function(e) {
@@ -253,58 +146,9 @@ io.on('connection', function(socket){
 	socket.on('set_timer', function(e) {
 		io.emit('set_timer', e);
 	});
-
-	socket.on('in_president', function(e) {
-		io.emit('president', {president_id: e, id: 213});
-	});
-
-	socket.on('out_president', function(e) {
-		io.emit('out_president', 1);
-	})
-
-	socket.on('map', function(s) {
-		logg('kart '+s.action, 'kart');
-		io.emit('map', s);
-	});
-
-	socket.on('rtx', function() {
-		io.emit('rulletekst', 1);
-		setTimeout(function() {
-			var client = new net.Socket();
-			client.connect(5250, '127.0.0.1', function() {
-				client.write('PLAY 1-12 "RTX_FRANK" SPEED 7.5 PREMULTIPLY BLUR 0\r\n');
-			});
-			client.on('error', function(err) {
-				console.log("Could not play rulletekst");
-			});
-		}, 1500);
-	});
-
-	socket.on('get_some', function(s) {
-		if (s.url.indexOf('facebook.com') > -1) {
-			var oembed = 'https://www.facebook.com/plugins/post/oembed.json/?url=';
-			var source = 'facebook';
-		}
-		if (s.url.indexOf('twitter.com') > -1) {
-			var oembed = 'https://api.twitter.com/1/statuses/oembed.json?url=';
-			var source = 'twitter';
-		}
-		if (oembed == null) {
-			return false;
-		}
-		request.get({
-			url: oembed+s.url,
-			headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}}, 
-			function(error, response, body) {
-				body = JSON.parse(body);
-				var b = cheerio.load(body.html);
-				socket.emit('get_some', {
-					title: body.author_name,
-					text: cheerio(b.html()).find('blockquote p').text(),
-					source: source,
-					id: s.id
-				});
-			});
+	socket.on('thermo_inn', function(e) {
+		e.temps = tempsArray;
+		io.emit('temps_in', e);
 	});
 
 	socket.on('get_personsuper', function(url) {
@@ -333,31 +177,8 @@ io.on('connection', function(socket){
 		});
 	});
 
-	socket.on('static_image', function(s) {
-		logg('statisk bilde '+s.action, 'statisk bilde: '+s.title);
-		io.emit('static_image', s);
-	});
-	socket.on('digasstatus', function(msg) {
-		var present;
-		fs.readFile(digasPath, function(err, data) {
-			if (err) {
-				return true;
-			}
-			parseString(data, function(err, result) {
-				for (var obj in result.easy_xml.item) {
-					item = result.easy_xml.item[obj];
-					seq = item['$'].sequence;
-					if (seq == "present" && item.Class == "Music") {
-						present = {title: item.Title[0]};
-					}
-				}
-				if (!present) {
-					io.emit('digas_super', {title: 'Ingenting spiller'});
-				} else {
-					io.emit('digas_super', present);
-				}
-			});
-		});
+	socket.on('tempsens', function(s) {
+		temps[s.session_id] = s.temp;
 	});
 
 });

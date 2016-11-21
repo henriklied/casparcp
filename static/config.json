@@ -1,10 +1,10 @@
 {
 	"gps_id": 13,
-	"debug": false,
+	"debug": true,
 	"usingDigas": false,
 	"digasPath": "Z:/skibladner.xml",
-	"layout": "227",
-	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1VmDUXa4nNDjRfY7UY1HFLuzfleTfjS-M85kkAoA7m6Q&exportFormat=csv",
+	"layout": "ribbe",
+	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1tKAlEQXIOT8nxW_sqKcWioEHhec8Rq7t0tA_JPadLzU&exportFormat=csv",
 	"sombi_url": "https://sombi.nrk.no/api/1.3/document?starred=true&projectId=576a558afd3cf13b2ae0c649",
 	"extra_js": []
 }
