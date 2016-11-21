@@ -28,15 +28,14 @@
     transform: rotate(360deg);
   }
 }
-@-webkit-keyframes swinging {
-  0% {
-	margin-left: -155px;
+@-webkit-keyframes rotating2 {
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-  50% {
-	margin-left: -150px;
-  }
-  100% {
-	margin-left: -155px;
+  to {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 }
 
@@ -180,8 +179,8 @@ div.notitle div.name {
 	content: " ";
 	width: 125px;
 	margin-left: -155px;
-	-webkit-animation: rotating 40s linear infinite;
-	animation: rotating 20s linear infinite;
+	-webkit-animation: rotating2 200s linear infinite;
+	animation: rotating2 200s linear infinite;
 	margin-top: -15px;
 	height: 125px;
 	background: url(../gfx/ribbe/ball.png) no-repeat center left;
@@ -303,8 +302,6 @@ div.notitle div.name {
 }
 
 
-@-webkit-keyframes rotating{from {-webkit-transform: rotate(0deg);}to{-webkit-transform: rotate(1800deg);}}
-.skovel {-webkit-animation: rotating 15s ease-in infinite;}
 
 .programsuper {
 	opacity: 0.86;
