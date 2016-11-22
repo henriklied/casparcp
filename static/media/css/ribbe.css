@@ -208,32 +208,33 @@ div.notitle div.name {
 }
 
 #ovenTemp {
-	position: absolute;
-	bottom: 30px;
-	right: 250px;
-	width: 146px;
-	box-sizing: border-box;
-	height: 241px;
-	background: url(../gfx/ribbe/ovn_temp_back.png) no-repeat;
-	padding-left: 39px;
-	padding-top: 30px;
-	color: #af1f24;
-	font-size: 41px;
-}
+    position: absolute;
+    bottom: 30px;
+    text-align: center;
+    right: 250px;
+    width: 146px;
+    box-sizing: border-box;
+    height: 241px;
+    background: url(../gfx/ribbe/ovn_temp_back.png) no-repeat;
+    padding-left: 9px;
+    padding-top: 30px;
+    color: #902639;
+    font-size: 55px;
+ }
 #ribTemp {
-	position: absolute;
-	bottom: 30px;
-	right: 60px;
-	width: 159px;
-	box-sizing: border-box;
-	height: 265px;
-	background: url(../gfx/ribbe/ribbe_temp_back.png) no-repeat;
-	padding-left: 46px;
-	padding-top: 47px;
-	color: #af1f24;
-	font-size: 41px;
+    position: absolute;
+    bottom: 30px;
+    right: 60px;
+    text-align: center;
+    width: 159px;
+    box-sizing: border-box;
+    height: 265px;
+    background: url(../gfx/ribbe/ribbe_temp_back.png) no-repeat;
+    padding-left: 24px;
+    padding-top: 47px;
+    color: #902639;
+    font-size: 55px;
 }
-
 
 
 

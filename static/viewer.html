@@ -98,16 +98,16 @@ function startTimer(duration, display) {
 
 
 	socket.on('temperatures', function(s) {
-		$("#ovenTemp").html(s[0]);
-		$("#ribTemp").html(s[1]);
+		$("#ovenTemp").html(s[0]+'°');
+		$("#ribTemp").html(s[1]+'°');
 	});
 
 	socket.on('temps_in', function(s) {
 		s.id = 'ribbetemperatur';
 	  	if (!clearSuper(s)) {
 	  		var html = '<div class="super ribbesuper" id="super_'+s.id+'">\
-	  		<div id="ovenTemp">'+s.temps[0]+'</div>\
-	  		<div id="ribTemp">'+s.temps[1]+'</div>\
+	  		<div id="ovenTemp">'+s.temps[0]+'°</div>\
+	  		<div id="ribTemp">'+s.temps[1]+'°</div>\
 	  		</div>';
 	  		$(html).appendTo('#container');
 
