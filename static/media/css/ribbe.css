@@ -358,6 +358,8 @@ div.notitle div.name {
 	min-width: 0;
 	color: rgba(255, 255, 255, 0.8);
     padding: 50px;
+    top: 101px;
+    left: 111px;
     text-align: right;
     border-bottom: 12px solid #0e6100;
     padding-bottom: 20px;
