@@ -1,6 +1,6 @@
 {
 	"gps_id": 13,
-	"debug": true,
+	"debug": false,
 	"usingDigas": false,
 	"digasPath": "Z:/skibladner.xml",
 	"layout": "ribbe",
