@@ -142,7 +142,7 @@ div.notitle div.name {
 .top-to-bottom {
 }
 .personsuper.bottomleft, .personsuper.topleft, .digassuper {
-	padding-right: 100px;
+	padding-right: 50px;
 }
 .personsuper.topright, .personsuper.bottomright {
 	padding-left: 100px;
