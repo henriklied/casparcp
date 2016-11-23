@@ -164,7 +164,7 @@ io.on('connection', function(socket){
 				if (line == 0) {
 					continue;
 				}
-				line = body[line].split(",");
+				line = body[line].split("\t");
 				firstline = line.shift()
 				secondline = line.join(',');
 				data.push({name: firstline.replaceAll('"', ''), title: secondline.replaceAll('"', '')});
