@@ -5,20 +5,42 @@
 	<title>Caspar control panel</title>
 	<link rel="stylesheet" type="text/css" href="media/control.css">
 	<script src="media/js/jquery.min.js"></script>
+	<script src="media/js/jquery.masonry.js"></script>
+	<style>
+		.noshow {
+			display: none;
+		}
+		#viewer {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 320px;
+			height:100px;
+		}
+		#frame body { zoom: 0.3; -moz-transform: scale(0.3); -moz-transform-origin: 0 0; }
+	</style>
 </head>
 <body>
 
-		<div id="superBox">
+	<div id="statusbox">
+		<div>
+		</div>
+	</div>
+
+<!-- 	<div id="viewer">
+		<iframe id="frame" src="/viewer.html"></iframe>
+	</div>
+
+ -->		<div id="superBox">
 			<div class="super">
-				<h2>Overordnet</h2>
 				<p><input type="submit" class="out_btn all_out" value="ALT UT">
 				<input type="submit" class="out_btn restart_casparcg" value="Restart uttegning"></p>
 				<p><input type="submit" class="in_btn run_nrklogo" value="INN NRK-logo"></p>
-				<p><input type="submit" class="in_btn run_progsuper" value="INN vignett"></p>
-				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte personsupre"></p>
-				<p><input type="submit" class="settings_btn instagram_refresh" value="Oppdater Instagram-bilder"></p>
-				<input type="submit" class="in_btn instagram_start" value="INN Instagram"></p>
-				<input type="submit" class="out_btn instagram_out" value="UT Instagram"></p>
+				<p><input type="submit" class="in_btn run_progsuper noshow" value="INN vignett"></p>
+				<p><input type="submit" class="settings_btn update_personsuper" value="Hent oppdaterte supre fra Google Docs"></p>
+				<p><input type="submit" class="settings_btn instagram_refresh noshow" value="Oppdater Instagram-bilder"></p>
+				<input type="submit" class="in_btn instagram_start noshow" value="INN Instagram"></p>
+				<input type="submit" class="out_btn instagram_out noshow" value="UT Instagram"></p>
 				<p><label>Aktiver DIGAS</label><input type="checkbox" id="activate_digas" checked></p>
 			</div>
 		</div>
@@ -50,11 +72,11 @@
 		</div>
 		<div id="mapBox" class="container">
 		</div>
-		<div id="infoBox" class="container">
-		</div>
 		<div id="staticBox" class="container">
 		</div>
-		<div id="someBox" class="container">
+		<div id="infoBox" class="container">
+		</div>
+		<div id="someBox" class="container noshow">
 		</div>
 	</div>
 
@@ -79,7 +101,8 @@ String.prototype.replaceAll = function(search, replace) {
 	function loadConfig() {
 		$.get('config.json', function(data) {
 			config = data;
-			socket.emit('get_personsuper', config.personsuper_csv);
+			socket.emit('get_googlesuper', 'person', config.personsuper_csv);
+			socket.emit('get_googlesuper', 'info', config.infosuper_csv);
 		});
 	}
 
@@ -91,6 +114,15 @@ String.prototype.replaceAll = function(search, replace) {
 		$(".personsuper_csv").html('');
 		$.each(data, function(k,v) {
 			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.personsuper_csv');
+		});
+	}
+
+	function updateInfosuper(data) {
+		config.infosuper = data;
+		socket.emit('list_shared', 1);
+		$(".infosuper_csv").html('');
+		$.each(data, function(k,v) {
+			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.infosuper_csv');
 		});
 	}
 
@@ -117,12 +149,13 @@ String.prototype.replaceAll = function(search, replace) {
 						<option value="13">Nearer</option>\
 						<option value="15">Nearest</option>\
 					</select></label></p>\
-				<p><label>Navn\
-					<input type="text" class="txt_personsuper_name"></label></p>\
 				<div class="submitters">\
-					<input type="submit" class="map_in in_btn" value="INN">\
+					<input type="submit" class="map_in in_btn" data-polyline="true" value="INN ruta så langt">\
+					<input type="submit" class="map_in in_btn" data-24h="true" value="INN ruta siste 24t"><br><br>\
+					<input type="submit" class="map_in in_btn" value="INN prikk">\
 					<input type="submit" class="map_out out_btn" value="UT">\
 				</div>\
+				<div class="clearer"></div>\
 			</div>';
 		return html;		
 	}
@@ -134,8 +167,8 @@ String.prototype.replaceAll = function(search, replace) {
 						<select class="staticchoice_data"></select></label><input type="submit" class="staticchoice_select" value="Velg"></p></div>\
 						<p><label>Tittel</label><input type="text" class="staticchoice_title"></p>\
 						<p><label>Fotocredits</label><input type="text" class="staticchoice_credits"></p>\
-					<input type="submit" class="staticsubmit in_btn" value="Inn statisk bilde">\
-					<input type="submit" class="staticsubmit out_btn" value="Ut statisk bilde">\
+					<input type="submit" class="staticsubmit in_btn" value="INN">\
+					<input type="submit" class="staticsubmit out_btn" value="UT">\
 					</div>';
 		$(html).appendTo("#staticBox");
 	}
@@ -209,6 +242,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<div class="submitters">\
 					<input type="submit" class="personsuper_inn in_btn" value="INN">\
 				</div>\
+				<div class="clearer"></div>\
 			</div>';
 		return html;
 	}
@@ -236,8 +270,9 @@ String.prototype.replaceAll = function(search, replace) {
 				</label></p>\
 				<div class="submitters">\
 					<input type="submit" class="infosuper_inn in_btn" value="INN">\
-					<input type="submit" class="infosuper_out out_btn" value="OUT">\
+					<input type="submit" class="infosuper_out out_btn" value="UT">\
 				</div>\
+				<div class="clearer"></div>\
 			</div>';
 		return html;
 	}
@@ -251,6 +286,8 @@ String.prototype.replaceAll = function(search, replace) {
 		var html = '<div class="super">\
 				<h2>Infoboks</h2>\
 				<input type="hidden" class="txt_infobox_id" value="'+randomNum()+'">\
+				<p><label class="infosuper_csv_label">Infosupre\
+					<select class="infosuper_csv"></select> <input type="submit" value="Sett inn"></label></p>\
 				<p><label>Tittel\
 					<input type="text" class="txt_infobox_title"></label></p>\
 				<p><label>Tekst\
@@ -265,8 +302,9 @@ String.prototype.replaceAll = function(search, replace) {
 				</label></p>\
 				<div class="submitters">\
 					<input type="submit" class="infobox_inn in_btn" value="INN">\
-					<input type="submit" class="infobox_out out_btn" value="OUT">\
+					<input type="submit" class="infobox_out out_btn" value="UT">\
 				</div>\
+				<div class="clearer"></div>\
 			</div>';
 		return html;
 	}
@@ -398,6 +436,14 @@ String.prototype.replaceAll = function(search, replace) {
 		$(this).parent().parent().parent().find('.txt_personsuper_title').val(choice.title);
 	});
 
+	$("#infoBox").on('click', '.infosuper_csv_label input[type="submit"]', function(e) {
+		var choice = $(this).parent().find('select').val();
+		choice = config.infosuper[choice];
+		$(this).parent().parent().parent().find('.txt_infobox_title').val(choice.name);
+		$(this).parent().parent().parent().find('.txt_infobox_text').val(choice.title);
+	});
+
+
 	$("#superBox").on('click', 'input.instagram_start', function(e) {
 		socket.emit('instagram', 1);
 	});
@@ -420,7 +466,8 @@ String.prototype.replaceAll = function(search, replace) {
 	});
 
 	$("#superBox").on('click', 'input.update_personsuper', function(e) {
-		socket.emit('get_personsuper', config.personsuper_csv);
+		socket.emit('get_googlesuper', 'person', config.personsuper_csv);
+		socket.emit('get_googlesuper', 'info', config.infosuper_csv);
 	});
 
 	$("#someBox").on('click', 'input.somebox_inn, input.somebox_out', function(e) {
@@ -453,26 +500,61 @@ String.prototype.replaceAll = function(search, replace) {
 
 
 	$("#mapBox").on('click', 'input[type="submit"]', function(e) {
+		var container = $(this).parent().parent();
+		var isPolyline = false;
 		if ($(this).hasClass("map_in")) {
 			var action = 'in';
 		} else {
 			var action = 'out';
-		}
-		var container = $(this).parent().parent();
-		$.getJSON("https://nrk.cartodb.com/api/v2/sql?q=SELECT%20latitude,%20longitude,%20gps_id%20FROM%20nrk.saltstraumen_gps%20WHERE%20gps_id='NRKBeta08'%20ORDER%20BY%20dt%20ASC", function(json) {
-			last = json.rows.pop();
-			var data = {
+			socket.emit('map', {
 				id: $(container).find('input[type="hidden"]').val(),
-				zoom: $(container).find('.mapsuper_zoom').val(),
-				latitude: parseFloat(last.latitude),
-				longitude: parseFloat(last.longitude),
 				action: action
-			};
-			socket.emit('map', data);
-		});
+			});
+			return true;
+		}
 
+		var polyline = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT ST_MakeLine(the_geom) the_geom FROM nrk.spot1 WHERE cartodb_id > 2464';
+		var polyline2 = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20EXTRACT(DAY%20FROM%20now()-time_updated)%20<%2030';
+		var currentPos = 'https://nrk.carto.com/api/v2/sql?q=select%20*%20from%20nrk.spot1%20order%20by%20cartodb_id%20desc%20limit%201';
+		
+		if ($(this).data('polyline')) {
+			isPolyline = polyline;
+		}
+		if ($(this).data('24h')) {
+			isPolyline = polyline2;
+		}
+
+		if (isPolyline) {
+			$.getJSON(isPolyline, function(json) {
+				latlng = json.features[0].geometry.coordinates[0];
+				var data = {
+					id: $(container).find('input[type="hidden"]').val(),
+					zoom: $(container).find('.mapsuper_zoom').val(),
+					latitude: parseFloat(latlng[1]),
+					longitude: parseFloat(latlng[0]),
+					mapMode: 'polyline',
+					mapData: json,
+					action: action
+				};
+				socket.emit('map', data);
+			});
+		} else {
+			$.getJSON(currentPos, function(json) {
+				last = json.rows[0];
+				console.log(last);
+				var data = {
+					id: $(container).find('input[type="hidden"]').val(),
+					zoom: $(container).find('.mapsuper_zoom').val(),
+					latitude: parseFloat(last.lat),
+					longitude: parseFloat(last.lng),
+					mapMode: 'currentPos',
+					action: action
+				};
+				socket.emit('map', data);
+			});
+
+		}
 	});
-	//60.980676, 10.617256
 
 	socket.on('get_some', function(data) {
 		container = $('input[value="'+data.id+'"]').parent();
@@ -489,12 +571,69 @@ String.prototype.replaceAll = function(search, replace) {
 	socket.on('get_personsuper', function(data) {
 		updatePersonsuper(data);
 	});
+	socket.on('get_infosuper', function(data) {
+		updateInfosuper(data);
+	});
 
 
 	socket.on('digas_super', function(cmd) {
 		console.log(cmd);
 		$("#digas").html(cmd.title);
 	});
+
+	socket.on('current_objects', function(elm) {
+		if (elm.length) {
+			$("#statusbox").fadeIn();
+		} else {
+			$("#statusbox").html('<div></div>').fadeOut();
+		}
+		var current_ids = [];
+		$(elm).each(function(i) {
+			current_ids.push('s_'+this.id);
+			if (!$(".s_"+this.id).length) {
+				$('<p data-id="'+this.id+'" class="s_'+this.id+'">'+this.name+' er inne <a>X</a></p>').appendTo('#statusbox div').fadeIn();			
+			}
+		});
+		$("#statusbox div").children().each(function(i) {
+			if ($.inArray(this.className, current_ids) == -1) {
+				this.remove();
+			}
+		});
+	});
+
+
+	$("#statusbox").on('click', 'a', function(e) {
+		id = $(this).parent().data('id');
+		socket.emit('force_remove', id);
+	});
+
+	// socket.on('status', function(what, direction, id) {
+	// 	if (direction == 'in') {
+	// 		$("#statusbox").fadeIn();
+	// 		if (!$(".s_"+id).length) {
+	// 			$('<p class="s_'+id+'">'+what+' er inne</p>').appendTo('#statusbox div').fadeIn();			
+	// 		}
+	// 	} else {
+	// 		if (id == "ALL") {
+	// 			$("#statusbox p").remove();
+	// 			return;
+	// 		}
+	// 		$(".s_"+id).fadeOut('slow', function() {
+	// 			$(this).remove();
+	// 			if (!$("#statusbox p").length) {
+	// 				$("#statusbox").fadeOut();
+	// 			}
+
+	// 		});
+	// 	}
+	// });
+
+	// setTimeout(function() {
+	// 	var body = $("#frame").contents().find('#container');
+	// 	$(body).parents('body').css('background', 'white');
+	// 	body.css('zoom', '0.14');
+	// 	body.css('background', 'black');
+	// }, 1000);
 
 
 	});

@@ -271,7 +271,7 @@ io.on('connection', function(socket){
 			});
 	});
 
-	socket.on('get_personsuper', function(url) {
+	socket.on('get_googlesuper', function(type, url) {
 		request.get({url: url}, function(error, response, body) {
 			body = body.split("\r\n");
 			var data = [];
@@ -279,10 +279,10 @@ io.on('connection', function(socket){
 				if (line == 0) {
 					continue;
 				}
-				line = body[line].split(",");
+				line = body[line].split("\t");
 				data.push({name: line[0], title: line[1]});
 			}
-			socket.emit('get_personsuper', data);
+			socket.emit('get_'+type+'super', data);
 		});
 	});
 
@@ -295,6 +295,18 @@ io.on('connection', function(socket){
 				}				
 			}
 		});
+	});
+
+	socket.on('status', function(what, direction, id) {
+		io.emit('status', what, direction, id);
+	});
+
+	socket.on('current_objects', function(elm) {
+		io.emit('current_objects', elm);
+	});
+
+	socket.on('force_remove', function(id) {
+		io.emit('force_remove', id);
 	});
 
 	socket.on('static_image', function(s) {

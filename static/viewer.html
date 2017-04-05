@@ -7,6 +7,7 @@
 	<script src="media/js/sombiSlider.js"></script>
 	<script src="media/js/typeit.min.js"></script>
 	<script src="media/js/leaflet-min.js"></script>
+	<script src="media/js/leaflet.pulse.js"></script>
 	<script src="media/js/smoothslide.min.js"></script>
 	<script src="media/js/letterfx.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="media/css/common.css">
@@ -38,7 +39,7 @@ $(document).ready(function() {
 
 	function clearSuper(s) {
 		if (s.action == 'out') {
-			$("#super_"+s.id).fadeOut('slow', function() {
+			$("#super_"+s.id).fadeOut(1500, function() {
 					$("#super_"+s.id).remove();
 			});
 			return true;
@@ -51,19 +52,27 @@ $(document).ready(function() {
 
 	socket.on('map', function(s) {
 	  	if (!clearSuper(s)) {
-	  		var html = '<div class="super mapsuper" id="super_'+s.id+'"></div>';
+	  		var html = '<div data-name="Kart" class="super mapsuper" id="super_'+s.id+'"></div>';
 	  		$(html).appendTo("#container");
 			var mymap = L.map('super_'+s.id, {zoomControl: false}).setView([s.latitude, s.longitude], s.zoom);
-			L.tileLayer('http://localhost:8000/kart/{z}/{x}/{y}.jpeg', {
+			var tileLayer = L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom={z}&x={x}&y={y}&format=image/jpeg', {
 			    attribution: '',
-			    maxZoom: 16,
-			    id: 'nrksommer'
-			}).addTo(mymap);
-			var pulsingIcon = L.icon.pulse({iconSize:[20,20],color:'#df0909',heartbeat: 3});
-			var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);
-			setTimeout(function() {
-				$("#super_"+s.id).animate({opacity: 1});
-			}, 1000);
+			    maxZoom: 18,
+			    id: 'reinflytting'
+			});
+	  		if (s.mapMode == 'polyline') {
+	  			// s.mapData = s.mapData.features[0].geometry.coordinates;
+	  			var polyline = L.geoJson(s.mapData).addTo(mymap);
+	  			mymap.fitBounds(polyline.getBounds());
+	  		} else {
+				var pulsingIcon = L.icon.pulse({iconSize:[30,30],color:'red', heartbeat: 3});
+				var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);	  			
+	  		}
+			tileLayer.addTo(mymap);
+			tileLayer.on('load', function() {
+				$("#super_"+s.id).animate({opacity: 1}, 1500, 'swing', function() {
+				});
+			});
 		}
 	});
 
@@ -80,13 +89,14 @@ $(document).ready(function() {
 	});
 
   socket.on('personsuper', function(s) {
+  	console.log("Got", s);
   	if (!clearSuper(s)) {
   		if (s.title == "") {
   			nameclass = 'notitle ';
   		} else {
   			nameclass = '';
   		}
-  		var html = '<div class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
+  		var html = '<div data-name="Personsuper" class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
   				<div class="name"><span>'+s.name+'</span></div>';
   		if (s.title != "") {
   			html += '<div class="title"><span>'+s.title+'</span></div>';
@@ -95,14 +105,14 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
   		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
-				$(this).remove();				
-			});
+			$(this).remove();
+		});
   	}
 	});
 
 	socket.on('somesuper', function(s) {
 		if (!clearSuper(s)) {
-  		var html = '<div class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
+  		var html = '<div data-name="Somesuper" class="super somesuper '+s.position+' '+s.source+'" id="super_'+s.id+'">';
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';
   		}
@@ -122,7 +132,7 @@ $(document).ready(function() {
 
 	socket.on('infosuper', function(s) {
 	  	if (!clearSuper(s)) {
-	  		var html = '<div class="super infosuper '+s.position+'" id="super_'+s.id+'">\
+	  		var html = '<div data-name="Infosuper" class="super infosuper '+s.position+'" id="super_'+s.id+'">\
 	  				<div class="text">'+s.text+'</div></div>';
 	  		$(html).appendTo('#container');
 	  		$(document).trigger('infosuper', s);
@@ -132,13 +142,14 @@ $(document).ready(function() {
 	});
 
 	socket.on('run_nrklogo', function(e) {
-		$('<div class="nrklogo super"/>').appendTo('#container').fadeIn(1000).delay(3000).fadeOut(1000, function(e) {
+		$('<div data-name="NRK-logo" id="nrklogosuper" class="nrklogo super"/>').appendTo('#container').fadeIn(1000, function() {
+		}).delay(3000).fadeOut(1000, function(e) {
 			$(this).remove();
 		});
 	});
 
 	socket.on('digassuper', function(s) {
-		var html = '<div class="super digassuper bottomleft">\
+		var html = '<div data-name="Digas" id="digassuper" class="super digassuper bottomleft">\
 		<div class="digas_title"><span>'+s.title+'</span></div>\
 		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
 		$(html).appendTo('#container');
@@ -149,21 +160,21 @@ $(document).ready(function() {
 	});
 
 	socket.on('run_programsuper', function(e) {
-		console.log("Hei");
 		$(document).trigger('run_programsuper', 1);
 	});
 
   socket.on('infobox', function(s) {
   	if (!clearSuper(s)) {
-  		var html = '<div class="super infobox '+s.position+'" id="super_'+s.id+'">';
+  		var html = '<div data-name="Infoboks" class="super infobox '+s.position+'" id="super_'+s.id+'">';
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';
   		}
   		html += '<div class="text ghost">'+s.text+'</div></div>';
   		$(html).appendTo('#container');
   		$(document).trigger('infobox', s);
-  		$("#super_"+s.id).fadeIn('slow');
-  		$("#super_"+s.id).css('height', $("#super_"+s.id).height());
+  		$("#super_"+s.id).fadeIn('slow', function() {
+	  		$("#super_"+s.id).css('height', ($("#super_"+s.id).height())); // QUICKFIX
+  		});
   		setTimeout(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
   			$("#super_"+s.id).find('div.text').removeClass('ghost');
@@ -176,7 +187,7 @@ $(document).ready(function() {
 
 	socket.on('static_image', function(s) {
 		if (!clearSuper(s)) {
-			var html = '<div class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
+			var html = '<div data-name="Statisk bilde" class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
 			$(html).appendTo('#container');
 			if (s.title != "") {
 				$('<div class="title"><h2>'+s.title+'</h2></div>').appendTo('.staticimg .inner');
@@ -193,7 +204,7 @@ $(document).ready(function() {
 	socket.on('instagram', function(s) {
 		if (!clearSuper(s)) {
 			unloadSlider();
-			var html = '<div class="sombiSlider super" id="super_'+s.id+'"></div>';
+			var html = '<div data-name="SombiSlider" class="sombiSlider super" id="super_'+s.id+'"></div>';
 			$(html).appendTo('#container');
 			$('<div class="shower"></div>').appendTo('.sombiSlider');
 			$('<div class="titles"><p></p><h2></h2></div>').appendTo('.sombiSlider');
@@ -205,11 +216,27 @@ $(document).ready(function() {
 		}
 	});
 
+	socket.on('force_remove', function(id) {
+		$("#"+id).fadeOut('slow', function(i) {
+			this.remove();
+		});
+	});
+
 	socket.on('instagram_out', function(s) {
 		$(".sombiSlider").fadeOut("slow", function() {
 			$(this).remove();
 		});		
-	})
+	});
+
+	function report_ins() {
+		var l = [];
+		$("#container").children().each(function(i) {
+			l.push({id: this.id, name: $(this).data('name')});
+		});
+		socket.emit('current_objects', l);
+		setTimeout(report_ins, 1000);
+	}
+	report_ins();
 
 });
 </script>

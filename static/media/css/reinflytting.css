@@ -1,0 +1,269 @@
+
+
+.whiteline {
+	height: 20px;
+	width: auto;
+	padding: 0 100px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+23,ffffff+50,ffffff+100&0.1+0,0.7+17,0.7+51,0.7+84,0.3+100 */
+	background: -moz-linear-gradient(left, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.7) 17%, rgba(255,255,255,0.7) 23%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.7) 51%, rgba(255,255,255,0.7) 84%, rgba(255,255,255,0.3) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.7) 17%,rgba(255,255,255,0.7) 23%,rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.7) 51%,rgba(255,255,255,0.7) 84%,rgba(255,255,255,0.3) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.7) 17%,rgba(255,255,255,0.7) 23%,rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.7) 51%,rgba(255,255,255,0.7) 84%,rgba(255,255,255,0.3) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#4dffffff',GradientType=1 ); /* IE6-9 */
+}
+
+
+
+@font-face {
+  font-family: 'LFTBook';
+  src: url('/media/fonts/NRK_Etica_Slab_Book.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'LFTBold';
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.woff2') format('woff2');
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+
+body {
+	font-family: "LFTBold";
+	color: white;
+}
+
+.super {
+	position: absolute;
+	text-shadow: rgb(71, 71, 71) 2px 2px 2px;
+}
+
+.super video {
+	position: absolute;
+}
+.sombiSlider .titles h2:before {
+	content: "– ";
+}
+.sombiSlider .titles h2 {
+	font-size: 20px;
+	margin-top: 10px;
+}
+.sombiSlider .titles p {
+  font-family: "LFTBook";
+  font-size: 30px;
+}
+
+.infosuper {
+	font-family: "LFTBook";
+	font-size: 30px;
+}
+
+.infobox::before {
+	background: url(../gfx/reinflytting/colorbar.png) no-repeat top left;
+	width: 224px;
+	content: " ";
+	height: 10px;
+	top: -20px;
+	left: 0;
+	position: absolute;
+}
+
+.infobox, .somesuper {
+	width: 550px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 10px solid transparent;
+    color: white;	
+}
+.infobox .title, .somesuper .title {
+    font-size: 40px;
+}
+.infobox .text, .somesuper .text {
+	font-size: 30px;
+	font-family: "LFTBook";
+}
+.infobox video, .somesuper video {
+	position: absolute;
+}
+
+/*.topright.infobox {
+	text-align: right;
+}*/
+
+.personsuper div.name, .personsuper div.title, .digassuper div.digas_title, .digassuper div.digas_extra {
+	left: 0;
+}
+.personsuper div.name span, .personsuper div.title span, .digassuper div.digas_title span, .digassuper div.digas_extra span {
+	opacity: 0;
+}
+
+.personsuper, .personsuper div.name, .personsuper div.title {
+	width: 900px;
+}
+.digassuper div.digas_title, .digassuper div.digas_extra {
+	width: 1750px;
+}
+.personsuper, .digassuper {
+	color: white;
+	min-height: 220px;
+	position: absolute;
+}
+
+
+.personsuper .colorbar, .digassuper .colorbar {
+	background: url(../gfx/reinflytting/colorbar.png) no-repeat top left;
+	width: 0;
+	height: 10px;
+	left: 200px;
+	position: absolute;
+}
+.personsuper.bottomright .colorbar, .personsuper.topright .colorbar, .digassuper.bottomright .colorbar, .digassuper.topright .colorbar {
+	left: auto;
+	right: 200px;
+}
+.personsuper .separator, .digassuper .separator {
+	margin-top: 80px;
+	position: relative;
+	display: block;
+	min-width: 600px;
+	margin-left: -200px;
+	height: 10px;
+	width: auto;
+	padding: 0 100px 0 300px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+23,ffffff+50,ffffff+100&0.1+0,0.7+17,0.7+51,0.7+84,0.3+100 */
+	background: -moz-linear-gradient(left, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.7) 17%, rgba(255,255,255,0.7) 23%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.7) 51%, rgba(255,255,255,0.7) 84%, rgba(255,255,255,0.0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.7) 17%,rgba(255,255,255,0.7) 23%,rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.7) 51%,rgba(255,255,255,0.7) 84%,rgba(255,255,255,0.0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.7) 17%,rgba(255,255,255,0.7) 23%,rgba(255,255,255,0.7) 50%,rgba(255,255,255,0.7) 51%,rgba(255,255,255,0.7) 84%,rgba(255,255,255,0.0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#4dffffff',GradientType=1 ); /* IE6-9 */
+}
+.personsuper.bottomright .separator, .personsuper.topright .separator, .digassuper.bottomright .separator, .digassuper.topright .separator {
+	margin-left: auto;
+	margin-right: -200px;
+}
+
+
+.personsuper div.name, .digassuper div.digas_title {
+	position: absolute;
+	overflow: hidden;
+	height: 80px;
+	font-size: 50px;
+	top: 0;
+}
+.personsuper div.name span, .digassuper div.digas_title span {
+	position: absolute;
+	display: block;
+	font-weight: 100;
+	bottom: -100px;
+	width: 100%;
+}
+.personsuper div.title, .digassuper div.digas_extra {
+	position: absolute;
+	top: 90px;
+	overflow: hidden;
+	height: 60px;
+	font-size: 45px;
+}
+.personsuper div.title span, .digassuper div.digas_extra span {
+	top: -100px;
+	position: absolute;
+	font-family: "LFTBook";
+	display: block;
+	width: 100%;
+}
+.digassuper div.digas_extra {
+	height: 120px;
+}
+
+.digassuper small {
+	font-size: 30px;
+	margin-top: -5px;
+	display: block;
+}
+
+.personsuper video, .digassuper video {
+	width: 200px;
+	height: auto;
+	position: absolute;
+	left: -60px;
+	top: -40px;
+}
+
+
+.mapsuper::after {
+    background: url(../gfx/reinflytting/colorbar.png) no-repeat top left;
+    width: 224px;
+    content: " ";
+    height: 10px;
+    z-index: 9999;
+    opacity: 1;
+    position: fixed;
+    top: 170px;
+    left: 320px;
+}
+.mapsuper {
+	width: 1280px;
+	height: 720px;
+	position: absolute;
+	box-sizing: border-box;
+	border: 10px solid rgba(255, 255, 255, 0.8);
+	left: 50%;
+	margin-left: -640px;
+	top: 50%;
+	margin-top: -360px;
+	display: block;
+	opacity: 0;
+}
+
+
+.staticimg .title, .staticimg .credits {
+	color: black;
+	text-shadow: none;
+}
+
+.ghost {
+	opacity: 0;
+}
+
+.topleft {
+	top: 100px;
+	left: 150px;
+}
+.topright {
+	top: 200px;
+	right: 120px;
+}
+.bottomleft {
+	bottom: 100px;
+	left: 150px;
+}
+
+.bottomright {
+	bottom: 100px;
+	right: 200px;
+}
+
+.topmiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	top: 100px;
+}
+.bottommiddle {
+	text-align: center;
+	left: 0;
+	right: 0;
+	bottom: 100px;
+}
+.personsuper.bottomright video, .personsuper.topright video {
+	right: -50px;
+	left: auto;
+}
+
+.personsuper.bottomright span, .personsuper.topright span {
+	right: 2px;
+	text-align: right;
+}
+.personsuper.bottomleft span, .personsuper.topleft span {
+	left: 2px;
+}
