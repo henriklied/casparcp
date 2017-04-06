@@ -1,6 +1,6 @@
 {
 	"gps_id": 13,
-	"debug": true,
+	"debug": false,
 	"digasPath": "digas.xml",
 	"layout": "reinflytting",
 	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1CMw-Whkm2zsQBMXrxIQyBeI4bBlqnRUKEuutl2TPf8E&exportFormat=tsv",
