@@ -16,7 +16,7 @@
 <body>
 
 	<div id="container"></div>
-
+	<div id="cradle" class="ghost"></div>
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -65,7 +65,7 @@ $(document).ready(function() {
 	  			var polyline = L.geoJson(s.mapData).addTo(mymap);
 	  			mymap.fitBounds(polyline.getBounds());
 	  		} else {
-				var pulsingIcon = L.icon.pulse({iconSize:[30,30],color:'red', heartbeat: 3});
+				var pulsingIcon = L.icon.pulse({iconSize:[18,18],shadowColor:'#FFD41A', color: '#333', heartbeat: 3});
 				var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);	  			
 	  		}
 			tileLayer.addTo(mymap);
@@ -91,12 +91,13 @@ $(document).ready(function() {
   socket.on('personsuper', function(s) {
   	console.log("Got", s);
   	if (!clearSuper(s)) {
+  		$("#cradle").html('<h2>'+s.name+'</h2><h3>'+s.title+'</h3>');
   		if (s.title == "") {
   			nameclass = 'notitle ';
   		} else {
   			nameclass = '';
   		}
-  		var html = '<div data-name="Personsuper" class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
+  		var html = '<div data-name="Personsuper: '+s.name+'" class="super personsuper '+nameclass+s.position+'" id="super_'+s.id+'">\
   				<div class="name"><span>'+s.name+'</span></div>';
   		if (s.title != "") {
   			html += '<div class="title"><span>'+s.title+'</span></div>';
@@ -104,8 +105,10 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
+  		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').css('width', $("#cradle").width());
   		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
 			$(this).remove();
+			$("#cradle").html('');
 		});
   	}
 	});
@@ -132,7 +135,7 @@ $(document).ready(function() {
 
 	socket.on('infosuper', function(s) {
 	  	if (!clearSuper(s)) {
-	  		var html = '<div data-name="Infosuper" class="super infosuper '+s.position+'" id="super_'+s.id+'">\
+	  		var html = '<div data-name="Infosuper: '+s.text+'" class="super infosuper '+s.position+'" id="super_'+s.id+'">\
 	  				<div class="text">'+s.text+'</div></div>';
 	  		$(html).appendTo('#container');
 	  		$(document).trigger('infosuper', s);
@@ -149,7 +152,7 @@ $(document).ready(function() {
 	});
 
 	socket.on('digassuper', function(s) {
-		var html = '<div data-name="Digas" id="digassuper" class="super digassuper bottomleft">\
+		var html = '<div data-name="Digas: '+s.title+'" id="digassuper" class="super digassuper bottomleft">\
 		<div class="digas_title"><span>'+s.title+'</span></div>\
 		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
 		$(html).appendTo('#container');
@@ -165,7 +168,7 @@ $(document).ready(function() {
 
   socket.on('infobox', function(s) {
   	if (!clearSuper(s)) {
-  		var html = '<div data-name="Infoboks" class="super infobox '+s.position+'" id="super_'+s.id+'">';
+  		var html = '<div data-name="Infoboks: '+s.title+'" class="super infobox '+s.position+'" id="super_'+s.id+'">';
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';
   		}
@@ -187,7 +190,7 @@ $(document).ready(function() {
 
 	socket.on('static_image', function(s) {
 		if (!clearSuper(s)) {
-			var html = '<div data-name="Statisk bilde" class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
+			var html = '<div data-name="Statisk bilde: '+s.src+'" class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
 			$(html).appendTo('#container');
 			if (s.title != "") {
 				$('<div class="title"><h2>'+s.title+'</h2></div>').appendTo('.staticimg .inner');

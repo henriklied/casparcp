@@ -6,6 +6,7 @@
             className: '',
             iconSize: [12,12],
             color: 'red',
+            shadowColor: 'red',
             animate: true,
             heartbeat: 1,
         },
@@ -20,7 +21,7 @@
             var before = ['background-color: '+this.options.color];
             var after = [
 
-                'box-shadow: 0 0 6px 2px '+this.options.color,
+                'box-shadow: 0 0 6px 2px '+this.options.shadowColor,
 
                 '-webkit-animation: pulsate ' + this.options.heartbeat + 's ease-out',
                 '-webkit-animation-iteration-count: infinite',

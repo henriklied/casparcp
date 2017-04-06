@@ -11,6 +11,15 @@
 	position: absolute;
 }
 
+
+#cradle {
+  display: inline;
+  opacity: 0!important;
+  font-size: 243%;
+  position: absolute;
+}
+
+
 body {
 	font-family: Helvetica, Arial, sans-serif;
   max-height: 1920px;

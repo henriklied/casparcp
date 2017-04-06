@@ -13,6 +13,8 @@
 
 
 
+
+
 @font-face {
   font-family: 'LFTBook';
   src: url('/media/fonts/NRK_Etica_Slab_Book.woff2') format('woff2');
@@ -99,7 +101,6 @@ body {
 }
 
 .personsuper, .personsuper div.name, .personsuper div.title {
-	width: 900px;
 }
 .digassuper div.digas_title, .digassuper div.digas_extra {
 	width: 1750px;
@@ -107,6 +108,7 @@ body {
 .personsuper, .digassuper {
 	color: white;
 	min-height: 220px;
+	width: auto;
 	position: absolute;
 }
 
@@ -126,7 +128,7 @@ body {
 	margin-top: 80px;
 	position: relative;
 	display: block;
-	min-width: 600px;
+	min-width: 400px;
 	margin-left: -200px;
 	height: 10px;
 	width: auto;

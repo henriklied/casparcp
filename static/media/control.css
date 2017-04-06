@@ -16,16 +16,14 @@ body {
 	right: 30px;
 	padding: 20px;
 	background: #ff8600;
-	border: 1px solid #ddd;
-	border-bottom: 5px solid #ff8600;
+	border: 5px solid orange;
 	width: 200px;
-	min-height: 20px;
 }
 #statusbox p {
 	font-size: 14px;
-	font-weight: bold;
 	color: white;
 	margin: 0;
+	line-height: 1.9;
 	padding: 0;	
 }
 
@@ -35,20 +33,25 @@ body {
 }
 
 #statusbox div {
-  -webkit-animation-name: blink;  
-  -webkit-animation-iteration-count: infinite;  
-  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-  -webkit-animation-duration: 2s; 
+	font-family: Courier, "Courier New", monospace;
+	-webkit-animation-name: blink;  
+	-webkit-animation-iteration-count: infinite;  
+	-webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+	-webkit-animation-duration: 2s;
 }
 
 #statusbox a {
-	padding: 2px 4px;
+	padding: 3px 6px;
 	border-radius: 5px;
 	cursor: pointer;
 	background: black;
-	margin-left: 5px;
+	font-size: 10px;
+	margin-right: 5px;
 }
-
+#statusbox a:hover {
+	background: white;
+	color: black;
+}
 
 #config {
 	display: block;

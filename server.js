@@ -1,3 +1,14 @@
+var winston = require('winston');
+winston.add(winston.transports.File, { filename: 'casparcp_server.log' });
+
+console.error=winston.error;
+console.log=winston.info;
+console.info=winston.info;
+console.debug=winston.debug;
+console.warn=winston.warn;
+module.exports = console;
+
+
 var request = require('request');
 var url = require('url');
 var cheerio = require('cheerio');
@@ -6,6 +17,7 @@ var app = express();
 var http = require('http').Server(app);
 var net = require('net');
 var io = require('socket.io')(http);
+var _ = require('underscore');
 var parseString = require('xml2js').parseString;
 const fs = require('fs');
 var WebSocketServer = require('ws').Server
@@ -19,6 +31,9 @@ wss.on('connection', function connection(ws) {
 });
 
 var digasPath;
+
+
+
 
 fs.readFile('./static/config.json', function(err, data) {
 	data = JSON.parse(data);
@@ -34,6 +49,8 @@ var publishDigas = true;
 
 var nrkPlakatTime;
 
+var currentObjects = [];
+
 var currentDigas;
 
 var digasTimers = {outTimer: null};
@@ -44,7 +61,7 @@ function loadCaspar() {
 		client.write('PLAY 1-10 [HTML] "http://127.0.0.1:8000/viewer.html" CUT 1 Linear RIGHT\r\n');
 	});
 	client.on('error', function(err) {
-		console.log("Could not connect to Caspar CG Server.");
+		console.warn("Could not connect to Caspar CG Server.");
 	});	
 }
 
@@ -71,8 +88,7 @@ function sombiGenerator(s) {
 	try {
 		request(s, function (error, response, body) {
 			if(error != null) {
-				console.log("Could not load sombi json");
-				console.log(error);
+				console.warn("Could not load sombi json", error);
 				return true;
 			}
 		var images = [];
@@ -101,7 +117,7 @@ function sombiGenerator(s) {
 								console.log("Wrote file", localfp);
 							});
 						} else {
-							console.log("File already exists", localfp);
+							console.warn("File already exists", localfp);
 						}
 					});
 						images.push({url: 'images/'+urlp, title: obj.title, avatar: obj.user.avatar, user: obj.user});
@@ -111,7 +127,7 @@ function sombiGenerator(s) {
 			fs.writeFile('./static/images.json', JSON.stringify(images));
 		});
 	} catch (e) {
-		console.log("Error in Sombi");
+		console.error("Error in Sombi");
 	}
 	// setTimeout(sombiGenerator, 30000);
 }
@@ -139,7 +155,7 @@ function parseDigas() {
 	try {
 		fs.readFile(digasPath, function(err, data) {
 			if (err) {
-				console.log("Error reading Digas");
+				console.error("Error reading Digas");
 				return true;
 			} else {
 				parseString(data, function(err, result) {
@@ -176,11 +192,11 @@ function parseDigas() {
 			}
 	});
 	} catch (e) {
-		console.log("Caught E");
+		console.error("Caught E", e);
 	}
 	setTimeout(parseDigas, 1000);
 }
-setTimeout(function() {console.log("Connecting to DIGAS"); parseDigas();}, 15000);
+setTimeout(function() {console.info("Connecting to DIGAS"); parseDigas();}, 15000);
 
 app.use(express.static('static'));
 
@@ -201,13 +217,15 @@ io.on('connection', function(socket){
 		io.emit('run_programsuper', 1);
 	});
 	socket.on('run_nrklogo', function(s) {
-		nrkPlakatTime = new Date();
+		if (nrkPlakatTime == undefined) {
+			nrkPlakatTime = new Date();
+		}
 		logg('nrkplakat', 'nrkplakat inn');
 		io.emit('run_nrklogo', 1);
 	});
 
 	socket.on('activate_digas', function(b) {
-		console.log("Activate Digas", b);
+		console.info("Activate Digas", b);
 		publishDigas = b;
 	});
 	socket.on('restart_casparcg', function() {
@@ -302,7 +320,17 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('current_objects', function(elm) {
-		io.emit('current_objects', elm);
+		var is_same = _.isEqual(elm, currentObjects);
+		if (is_same) {
+			return true;
+		} else {
+			currentObjects = elm;
+		}
+		io.emit('current_objects_update', currentObjects);
+	});
+
+	socket.on('get_current_objects', function() {
+		io.emit('current_objects_update', currentObjects);
 	});
 
 	socket.on('force_remove', function(id) {

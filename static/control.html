@@ -136,7 +136,7 @@ String.prototype.replaceAll = function(search, replace) {
 		socket.emit("digasstatus", 1);
 		setTimeout(digas_status, 5000);
 	}
-	digas_status();
+	// digas_status();
 
 
 	function generateMapSuper() {
@@ -576,12 +576,12 @@ String.prototype.replaceAll = function(search, replace) {
 	});
 
 
-	socket.on('digas_super', function(cmd) {
-		console.log(cmd);
-		$("#digas").html(cmd.title);
-	});
+	// socket.on('digas_super', function(cmd) {
+	// 	console.log(cmd);
+	// 	$("#digas").html(cmd.title);
+	// });
 
-	socket.on('current_objects', function(elm) {
+	socket.on('current_objects_update', function(elm) {
 		if (elm.length) {
 			$("#statusbox").fadeIn();
 		} else {
@@ -591,7 +591,7 @@ String.prototype.replaceAll = function(search, replace) {
 		$(elm).each(function(i) {
 			current_ids.push('s_'+this.id);
 			if (!$(".s_"+this.id).length) {
-				$('<p data-id="'+this.id+'" class="s_'+this.id+'">'+this.name+' er inne <a>X</a></p>').appendTo('#statusbox div').fadeIn();			
+				$('<p data-id="'+this.id+'" class="s_'+this.id+'"><a title="Fjern dette elementet">X</a> '+this.name+'</p>').appendTo('#statusbox div').fadeIn();			
 			}
 		});
 		$("#statusbox div").children().each(function(i) {
@@ -606,6 +606,8 @@ String.prototype.replaceAll = function(search, replace) {
 		id = $(this).parent().data('id');
 		socket.emit('force_remove', id);
 	});
+
+	socket.emit('get_current_objects', 1);
 
 	// socket.on('status', function(what, direction, id) {
 	// 	if (direction == 'in') {
