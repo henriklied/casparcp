@@ -368,6 +368,7 @@ String.prototype.replaceAll = function(search, replace) {
 	});
 	$("#infoBox h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 		$(generateInfoBox(randomNum())).appendTo("#infoBox");
+		updateInfosuper(config.infosuper);
 		$("#infoBox h2:last").append(' <a href="#">-</a>').on('click', function(e) {
 			$(this).parent().remove();
 		});
