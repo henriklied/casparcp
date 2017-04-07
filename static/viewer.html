@@ -28,7 +28,7 @@ $(document).ready(function() {
 	$(document).trigger("loaded", 1);
 	$.get('config.json', function(data) {
 		config = data;
-		if (config.debug) {
+		if (config.debug || (document.location.hash == "#debug")) {
 			$("body").addClass("debug");
 		}
 		$('<link rel="stylesheet" type="text/css" href="media/css/'+config.layout+'.css">').appendTo("head");
