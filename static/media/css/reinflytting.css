@@ -56,7 +56,7 @@ body {
   font-size: 30px;
 }
 
-.infosuper {
+.infosuper, .staticimg .credits {
 	font-family: "LFTBook";
 	font-size: 30px;
 }
@@ -230,13 +230,16 @@ body {
 	padding: 10px;
 }
 
+.staticimg .credits {
+
+}
+
 .staticimg img {
 	max-width: 1152px;
 	max-height: 848px;
 }
 
 .staticimg .inner {
-	background: rgba(0, 0, 0, 0.7);
 }
 
 .staticimg::before {

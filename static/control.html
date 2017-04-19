@@ -207,11 +207,10 @@ String.prototype.replaceAll = function(search, replace) {
 		var data = {
 			id: $(container).find('input[type="hidden"]').val(),
 			src: $(container).find('.staticchoice_data').val(),
-			title: $(container).find('.staticchoice_title').val(),
+			title: '', // $(container).find('.staticchoice_title').val(),
 			credits: $(container).find('.staticchoice_credits').val(),
 			action: action
 		};
-		console.log(data);
 		socket.emit('static_image', data);
 	});
 
