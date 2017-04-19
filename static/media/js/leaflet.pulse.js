@@ -21,14 +21,14 @@
             var before = ['background-color: '+this.options.color];
             var after = [
 
-                'box-shadow: 0 0 6px 2px '+this.options.shadowColor,
+                '-webkit-box-shadow: 0 0 6px 2px '+this.options.shadowColor,
 
                 '-webkit-animation: pulsate ' + this.options.heartbeat + 's ease-out',
                 '-webkit-animation-iteration-count: infinite',
             ];
 
             if (!this.options.animate){
-                after.push('animation: none');
+                after.push('-webkit-animation: none');
                 after.push('box-shadow:none');
             }
 

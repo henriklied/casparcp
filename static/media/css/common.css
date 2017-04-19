@@ -159,7 +159,7 @@ Letter FX
 
 .leaflet-pulsing-icon {
     border-radius: 100%;
-    box-shadow: 1px 1px 8px 0 rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 1px 8px 0 rgba(0,0,0,0.75);
 }
 
 .leaflet-pulsing-icon:after {
