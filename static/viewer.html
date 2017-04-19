@@ -170,6 +170,7 @@ $(document).ready(function() {
 
   socket.on('infobox', function(s) {
   	if (!clearSuper(s)) {
+		s.text = s.text.replace(/\n/g, '<p>');
   		var html = '<div data-name="Infoboks: '+s.title+'" class="super infobox '+s.position+'" id="super_'+s.id+'">';
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';
@@ -184,7 +185,7 @@ $(document).ready(function() {
   			$("#super_"+s.id).find('div.title').removeClass('ghost');
   			$("#super_"+s.id).find('div.text').removeClass('ghost');
 	  		$("#super_"+s.id).find('div.title').typeIt({ speed: 60, breakLines: true, cursor: false });
-	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 60, breakLines: true, cursor: false });
+	  		$("#super_"+s.id).find('div.text').typeIt({ startDelay: 1000, speed: 60, html: true, breakLines: true, cursor: false });
   		}, 1000);
   	}
 	});
