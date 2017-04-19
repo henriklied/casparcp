@@ -112,6 +112,7 @@ body {
 .personsuper, .digassuper {
 	color: white;
 	min-height: 220px;
+	z-index: 9999;
 	width: auto;
 	position: absolute;
 }
@@ -201,13 +202,14 @@ body {
     width: 224px;
     content: " ";
     height: 10px;
-    z-index: 9999;
+    z-index: 5555;
     opacity: 1;
     position: fixed;
     top: 170px;
     left: 320px;
 }
 .mapsuper {
+    z-index: 5554;
 	width: 1280px;
 	height: 720px;
 	position: absolute;
