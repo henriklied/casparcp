@@ -61,6 +61,10 @@ body {
 	font-size: 30px;
 }
 
+.infobox, .infobox::before {
+	z-index: 9999;
+}
+
 .infobox::before {
 	background: url(../gfx/reinflytting/colorbar.png) no-repeat top left;
 	width: 224px;
