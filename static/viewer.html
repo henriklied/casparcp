@@ -62,7 +62,15 @@ $(document).ready(function() {
 			});
 	  		if (s.mapMode == 'polyline') {
 	  			// s.mapData = s.mapData.features[0].geometry.coordinates;
-	  			var polyline = L.geoJson(s.mapData).addTo(mymap);
+	  			var polyline = L.geoJson(
+	  				s.mapData, 
+	  				{
+						color: 'red',
+						weight: 10,
+						opacity: .7,
+						dashArray: '20,15',
+						lineJoin: 'round'
+	  				}).addTo(mymap);
 	  			mymap.fitBounds(polyline.getBounds());
 	  		} else {
 				var pulsingIcon = L.icon.pulse({iconSize:[18,18],shadowColor:'#ff351a', color: '#ff351a', heartbeat: 3});
