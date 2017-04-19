@@ -65,7 +65,7 @@ $(document).ready(function() {
 	  			var polyline = L.geoJson(s.mapData).addTo(mymap);
 	  			mymap.fitBounds(polyline.getBounds());
 	  		} else {
-				var pulsingIcon = L.icon.pulse({iconSize:[18,18],shadowColor:'#FFD41A', color: '#333', heartbeat: 3});
+				var pulsingIcon = L.icon.pulse({iconSize:[18,18],shadowColor:'#ff351a', color: '#ff351a', heartbeat: 3});
 				var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);	  			
 	  		}
 			tileLayer.addTo(mymap);
