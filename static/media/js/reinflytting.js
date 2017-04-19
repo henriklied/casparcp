@@ -9,7 +9,7 @@ $(document).on('personsuper', function(e, s) {
 
 $(document).on('digassuper', function(e, s) {
 	$('.digassuper .digas_title').after('<div class="separator"><div class="colorbar"></div></div>');
-	$('.digassuper').find('.digas_extra span').delay(1000).animate({top: "0", opacity: 1}, 500).delay(4800).animate({top: "-150px"});
-	$(".digassuper").find('.colorbar').animate({width: "224px"}, 700, 'linear').delay(4800).animate({width: "0"}, 500);
-	$(".digassuper").find('.digas_title span').delay(1000).animate({bottom: "0", opacity: 1}, 500).delay(4800).animate({bottom: "-150px"});
+	$('.digassuper').find('.digas_extra span').delay(1000).animate({top: "0", opacity: 1}, 500).delay(6800).animate({top: "-150px"});
+	$(".digassuper").find('.colorbar').animate({width: "224px"}, 700, 'linear').delay(6800).animate({width: "0"}, 500);
+	$(".digassuper").find('.digas_title span').delay(1000).animate({bottom: "0", opacity: 1}, 500).delay(6800).animate({bottom: "-150px"});
 });
