@@ -525,7 +525,7 @@ String.prototype.replaceAll = function(search, replace) {
 		}
 
 		if (isPolyline) {
-			$.getJSON(isPolyline, function(json) {
+			$.getJSON(isPolyline+'&cachebust='+(new Date().getTime()), function(json) {
 				latlng = json.features[0].geometry.coordinates[0];
 				var data = {
 					id: $(container).find('input[type="hidden"]').val(),
