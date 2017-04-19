@@ -113,6 +113,7 @@ body {
 	min-height: 220px;
 	z-index: 9999;
 	position: absolute;
+	opacity: 0;
 }
 
 
