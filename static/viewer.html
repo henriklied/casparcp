@@ -106,7 +106,7 @@ $(document).ready(function() {
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
   		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').css('display', 'none').css('width', $("#cradle").width());
-  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
+  		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').fadeIn('slow').delay(6000).fadeOut('slow', function() {
 			$(this).remove();
 			$("#cradle").html('');
 		});
