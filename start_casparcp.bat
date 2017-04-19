@@ -1,2 +1,2 @@
-SLEEP 10
+TIMEOUT 10
 forever start -o out.log -e err.log server.js
