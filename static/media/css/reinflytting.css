@@ -107,11 +107,13 @@ body {
 .personsuper, .personsuper div.name, .personsuper div.title {
 }
 .digassuper div.digas_title, .digassuper div.digas_extra {
+	width: 1750px;
 }
 .personsuper, .digassuper {
 	color: white;
 	min-height: 220px;
 	z-index: 9999;
+	width: auto;
 	position: absolute;
 	opacity: 0;
 }

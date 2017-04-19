@@ -105,9 +105,9 @@ $(document).ready(function() {
   		html += '</div>';
   		$(html).appendTo('#container');
   		$(document).trigger('personsuper', s);
-  		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').css('display', 'none').css('width', $("#cradle").width());
+  		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').css('width', $("#cradle").width());
   		$("#super_"+s.id).delay(200).animate({opacity: 1}, 200);
-  		$("#super_"+s.id+', #super_'+s.id+' .name, #super_'+s.id+' .title').fadeIn('slow').delay(6000).fadeOut('slow', function() {
+  		$("#super_"+s.id).fadeIn('slow').delay(6000).fadeOut('slow', function() {
 			$(this).remove();
 			$("#cradle").html('');
 		});
@@ -158,7 +158,7 @@ $(document).ready(function() {
 		<div class="digas_extra"><span>'+s.performer+'<br><small>'+s.recordcc+'  ℗ '+s.release_year+'</small></span></div></div>';
 		$(html).appendTo('#container');
 		$(document).trigger('digassuper', s);
-  		$(".digassuper").delay(200).animate({opacity: 1}, 200);
+  		$('.digassuper').delay(200).animate({opacity: 1}, 200);
 		$('.digassuper').fadeIn('slow').delay(8000).fadeOut('slow', function() {
 			$(this).remove();
 		});
