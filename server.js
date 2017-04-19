@@ -53,7 +53,7 @@ var currentObjects = [];
 
 var currentDigas;
 
-var digasTimers = {outTimer: null};
+var digasTimers = {outTimer: null, func: null};
 
 function loadCaspar() {
 	var client = new net.Socket();
@@ -172,8 +172,9 @@ function parseDigas() {
 								continue;
 							}
 							clearTimeout(digasTimers.outTimer);
+							digasTimers.func = null;
 							currentDigas = currentDigas_tmp;
-							digasTimers.outTimer = setTimeout(function() {
+							digasTimers.func = function() {
 								if (!publishDigas) {
 									return true;
 								}
@@ -181,7 +182,9 @@ function parseDigas() {
 								console.log("Fired out digas", currentDigas);
 								logg('digas out', currentDigas.title+';'+currentDigas.performer);
 								clearTimeout(digasTimers.outTimer);
-							}, endTimer-15000);
+								digasTimers.func = null;
+							}
+							digasTimers.outTimer = setTimeout(digasTimers.func, endTimer-15000);
 							setTimeout(function() {
 								io.emit("digassuper", currentDigas);
 								logg('digas in', currentDigas.title+';'+currentDigas.performer);
