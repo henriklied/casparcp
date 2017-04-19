@@ -226,9 +226,29 @@ body {
 
 
 .staticimg .title, .staticimg .credits {
-	color: black;
-	text-shadow: none;
+	text-align: center;
+	padding: 10px;
 }
+
+.staticimg img {
+	max-width: 1152px;
+	max-height: 848px;
+}
+
+.staticimg .inner {
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.staticimg::before {
+	background: url(../gfx/reinflytting/colorbar.png) no-repeat top left;
+	width: 224px;
+	content: " ";
+	height: 10px;
+	top: -10px;
+	left: 0;
+	position: absolute;
+}
+
 
 .ghost {
 	opacity: 0;

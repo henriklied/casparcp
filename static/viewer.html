@@ -192,7 +192,7 @@ $(document).ready(function() {
 
 	socket.on('static_image', function(s) {
 		if (!clearSuper(s)) {
-			var html = '<div data-name="Statisk bilde: '+s.src+'" class="staticimg super" id="super_'+s.id+'"><div class="inner"></div></div>';
+			var html = '<div data-name="Statisk bilde: '+s.src+'" class="staticimg topleft super" id="super_'+s.id+'"><div class="inner"></div></div>';
 			$(html).appendTo('#container');
 			if (s.title != "") {
 				$('<div class="title"><h2>'+s.title+'</h2></div>').appendTo('.staticimg .inner');
