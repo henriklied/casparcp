@@ -186,7 +186,7 @@ function parseDigas() {
 								io.emit("digassuper", currentDigas);
 								logg('digas in', currentDigas.title+';'+currentDigas.performer);
 								console.log("Fired digas", currentDigas);
-							}, 0);
+							}, 8000);
 						}
 					}
 				});
