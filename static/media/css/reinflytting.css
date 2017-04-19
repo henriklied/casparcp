@@ -17,12 +17,12 @@
 
 @font-face {
   font-family: 'LFTBook';
-  src: url('/media/fonts/NRK_Etica_Slab_Book.woff2') format('woff2');
+  src: url('/media/fonts/NRK_Etica_Slab_Book.svg') format('svg');
 }
 
 @font-face {
   font-family: 'LFTBold';
-  src: url('/media/fonts/NRK_Etica_Slab_Bold.woff2') format('woff2');
+  src: url('/media/fonts/NRK_Etica_Slab_Bold.svg') format('svg');
 }
 
 html {
