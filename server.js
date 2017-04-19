@@ -319,6 +319,14 @@ io.on('connection', function(socket){
 		});
 	});
 
+	socket.on('ruthfire', function(e) {
+		clearTimeout(digasTimers.outTimer);
+		digasTimers.func();
+		setTimeout(function() {
+			digasTimers.func = null;
+		}, 1000);
+	});
+
 	socket.on('status', function(what, direction, id) {
 		io.emit('status', what, direction, id);
 	});
