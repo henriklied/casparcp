@@ -173,6 +173,30 @@ $(document).ready(function() {
 	});
 
 	socket.on('run_programsuper', function(e) {
+		$('<div data-name="Vignett" id="nrkvignett" class="nrkvignett super"/>')
+			.appendTo('#container')
+			.fadeIn(1000)
+			.delay(8000)
+			.fadeOut(1000, function(e) {
+				$(this).remove();
+			});
+			$('<img src="media/gfx/reinflytting/2_norsk.png" class="vignettext">')
+				.appendTo('.nrkvignett')
+				.delay(100)
+				.fadeIn('slow')
+				.delay(4000)
+				.fadeOut('fast', function() {
+					$(this).remove();
+				});
+			$('<img src="media/gfx/reinflytting/3_samisk.png" class="vignettext">')
+				.appendTo('.nrkvignett')
+				.delay(4900)
+				.fadeIn('slow')
+				.delay(4000)
+				.fadeOut('slow', function() {
+					$(this).remove();
+				});
+
 		$(document).trigger('run_programsuper', 1);
 	});
 

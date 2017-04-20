@@ -252,6 +252,17 @@ body {
 	position: absolute;
 }
 
+.vignettext, .vignettext2 { display: none; }
+.vignettext, .vignettext2, .nrkvignett {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1920px;
+	height: 1080px;
+}
+.nrkvignett {
+	background: url(../gfx/reinflytting/1_bak.png) no-repeat top left;
+}
 
 .ghost {
 	opacity: 0;
