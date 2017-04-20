@@ -7,6 +7,7 @@
 	<script src="media/js/sombiSlider.js"></script>
 	<script src="media/js/typeit.min.js"></script>
 	<script src="media/js/leaflet-min.js"></script>
+	<script src="media/js/l.polyline.snakein.js"></script>
 	<script src="media/js/leaflet.pulse.js"></script>
 	<script src="media/js/smoothslide.min.js"></script>
 	<script src="media/js/letterfx.min.js"></script>
@@ -66,12 +67,17 @@ $(document).ready(function() {
 	  				s.mapData, 
 	  				{
 						color: 'red',
-						weight: 5,
+						weight: 3,
 						opacity: .8,
-						dashArray: '4,10',
-						lineJoin: 'round'
+						dashArray: '10,10'
 	  				}).addTo(mymap);
 	  			mymap.fitBounds(polyline.getBounds());
+	  			console.log(s);
+	  			if (s.animate) {
+		  			mymap.on('zoomend zoomlevelschange zoomstart viewreset', function() {
+		  				polyline.snakeIn();
+		  			});	  				
+	  			}
 	  		} else {
 				var pulsingIcon = L.icon.pulse({iconSize:[18,18],shadowColor:'#ff351a', color: '#ff351a', heartbeat: 3});
 				var marker = L.marker([s.latitude,s.longitude],{icon: pulsingIcon}).addTo(mymap);	  			

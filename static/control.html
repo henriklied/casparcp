@@ -155,9 +155,10 @@ String.prototype.replaceAll = function(search, replace) {
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
 				<p><label>Zoomnivå\
 					<select class="mapsuper_zoom">\
-						<option value="10">Wide</option>\
-						<option value="13">Nearer</option>\
-						<option value="15">Nearest</option>\
+						<option value="10">Stort utsnitt</option>\
+						<option value="13">Middels utsnitt</option>\
+						<option value="15">Nært utsnitt</option>\
+						<option value="18">Ultranært utsnitt</option>\
 					</select></label></p>\
 				<div class="submitters">\
 					<input type="submit" class="map_in in_btn" data-polyline="true" value="INN ruta så langt">\
@@ -166,6 +167,7 @@ String.prototype.replaceAll = function(search, replace) {
 					<input type="submit" class="map_out out_btn" value="UT">\
 				</div>\
 				<div class="clearer"></div>\
+				<label><input type="checkbox"> Animér rute</label>\
 			</div>';
 		return html;		
 	}
@@ -540,7 +542,7 @@ String.prototype.replaceAll = function(search, replace) {
 			return true;
 		}
 
-		var polyline = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20cartodb_id%20>%202468';
+		var polyline = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20cartodb_id%20>%202488';
 		var polyline2 = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20EXTRACT(DAY%20FROM%20now()-time_updated)%20<%2030';
 		var currentPos = 'https://nrk.carto.com/api/v2/sql?q=select%20*%20from%20nrk.spot1%20order%20by%20cartodb_id%20desc%20limit%201';
 		
@@ -563,6 +565,12 @@ String.prototype.replaceAll = function(search, replace) {
 					mapData: json,
 					action: action
 				};
+				console.log(container.find("input[type='checkbox']:checked"));
+				if (container.find("input[type='checkbox']:checked").length) {
+					data['animate'] = true;			
+				} else {
+					data['animate'] = false;
+				}
 				socket.emit('map', data);
 			});
 		} else {

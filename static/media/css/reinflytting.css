@@ -259,6 +259,7 @@ body {
 	left: 0;
 	width: 1920px;
 	height: 1080px;
+	z-index: 9999;
 }
 .nrkvignett {
 	background: url(../gfx/reinflytting/1_bak.png) no-repeat top left;
