@@ -160,14 +160,17 @@ String.prototype.replaceAll = function(search, replace) {
 						<option value="15">Nært utsnitt</option>\
 						<option value="18">Ultranært utsnitt</option>\
 					</select></label></p>\
-				<div class="submitters">\
+				<label>Animér rute <input type="checkbox"></label>\
+				<div class="clearer" style="margin-top: 20px;"></div>\
+				<div class="">\
 					<input type="submit" class="map_in in_btn" data-polyline="true" value="INN ruta så langt">\
 					<input type="submit" class="map_in in_btn" data-24h="true" value="INN ruta siste 24t"><br><br>\
 					<input type="submit" class="map_in in_btn" value="INN prikk">\
 					<input type="submit" class="map_out out_btn" value="UT">\
 				</div>\
 				<div class="clearer"></div>\
-				<label><input type="checkbox"> Animér rute</label>\
+				<p style="margin-top: 30px; max-width: 300px;"><strong>OBS!</strong> Det kan ta litt tid før kartet kommer inn. \
+				Ikke vær utolmodig og trykk flere ganger selv om det går 5-10 sekunder.</p>\
 			</div>';
 		return html;		
 	}
