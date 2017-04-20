@@ -102,6 +102,7 @@ String.prototype.replaceAll = function(search, replace) {
 		$.get('config.json', function(data) {
 			config = data;
 			socket.emit('get_googlesuper', 'person', config.personsuper_csv);
+			socket.emit('get_googlesuper', 'infobox', config.infoboxsuper_csv);
 			socket.emit('get_googlesuper', 'info', config.infosuper_csv);
 		});
 	}
@@ -123,6 +124,15 @@ String.prototype.replaceAll = function(search, replace) {
 		$(".infosuper_csv").html('');
 		$.each(data, function(k,v) {
 			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.infosuper_csv');
+		});
+	}
+
+	function updateInfobox(data) {
+		config.infobox = data;
+		socket.emit('list_shared', 1);
+		$(".infobox_csv").html('');
+		$.each(data, function(k,v) {
+			$('<option value="'+k+'">'+this.name+'</option>').appendTo('.infobox_csv');
 		});
 	}
 
@@ -225,7 +235,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<h2>Personsuper</h2>\
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
 				<p><label class="personsuper_csv_label">Personsupre\
-					<select class="personsuper_csv"></select> <input type="submit" value="Sett inn"></label></p>\
+					<select class="personsuper_csv"></select> <input type="submit" value="Fyll inn"></label></p>\
 				<p><label>Navn\
 					<input type="text" class="txt_personsuper_name"></label></p>\
 				<p><label>Tittel\
@@ -255,6 +265,8 @@ String.prototype.replaceAll = function(search, replace) {
 		var html = '<div class="super">\
 				<h2>Infosuper</h2>\
 				<input type="hidden" class="txt_infosuper_id" value="'+randomNum()+'">\
+				<p><label class="infobox_csv_label">Infosuper\
+					<select class="infobox_csv"></select> <input type="submit" value="Fyll inn"></label></p>\
 				<p><label>Tekst\
 					<input type="text" class="txt_infosuper"></label></p>\
 				<p><label>\
@@ -286,7 +298,7 @@ String.prototype.replaceAll = function(search, replace) {
 				<h2>Infoboks</h2>\
 				<input type="hidden" class="txt_infobox_id" value="'+randomNum()+'">\
 				<p><label class="infosuper_csv_label">Infosupre\
-					<select class="infosuper_csv"></select> <input type="submit" value="Sett inn"></label></p>\
+					<select class="infosuper_csv"></select> <input type="submit" value="Fyll inn"></label></p>\
 				<p><label>Tittel\
 					<input type="text" class="txt_infobox_title"></label></p>\
 				<p><label>Tekst\
@@ -361,6 +373,13 @@ String.prototype.replaceAll = function(search, replace) {
 	});
 	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
 		$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
+		$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
+			$(this).parent().remove();
+		});
+	});
+	$("#infoSuper h2:first").append(' <a href="#">+</a>').on('click', function(e) {
+		$(generateInfoSuper(randomNum())).appendTo("#infoSuper");
+		updateInfobox(config.infobox);
 		$("#infoSuper h2:last").append(' <a href="#">-</a>').on('click', function(e) {
 			$(this).parent().remove();
 		});
@@ -443,6 +462,13 @@ String.prototype.replaceAll = function(search, replace) {
 		$(this).parent().parent().parent().find('.txt_infobox_text').val(choice.title);
 	});
 
+	$("#infoSuper").on('click', '.infobox_csv_label input[type="submit"]', function(e) {
+		var choice = $(this).parent().find('select').val();
+		choice = config.infobox[choice];
+		$(this).parent().parent().parent().find('.txt_infosuper').val(choice.name);
+	});
+
+
 
 	$("#superBox").on('click', 'input.instagram_start', function(e) {
 		socket.emit('instagram', 1);
@@ -467,6 +493,7 @@ String.prototype.replaceAll = function(search, replace) {
 
 	$("#superBox").on('click', 'input.update_personsuper', function(e) {
 		socket.emit('get_googlesuper', 'person', config.personsuper_csv);
+		socket.emit('get_googlesuper', 'infobox', config.infoboxsuper_csv);
 		socket.emit('get_googlesuper', 'info', config.infosuper_csv);
 	});
 
@@ -571,8 +598,12 @@ String.prototype.replaceAll = function(search, replace) {
 	socket.on('get_personsuper', function(data) {
 		updatePersonsuper(data);
 	});
-	socket.on('get_infosuper', function(data) {
+	socket.on('get_infoboxsuper', function(data) {
+		console.log("infosuper", data);
 		updateInfosuper(data);
+	});
+	socket.on('get_infosuper', function(data) {
+		updateInfobox(data);
 	});
 
 

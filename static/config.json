@@ -4,7 +4,8 @@
 	"digasPath": "Z:/Reinflytting.xml",
 	"layout": "reinflytting",
 	"personsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1CMw-Whkm2zsQBMXrxIQyBeI4bBlqnRUKEuutl2TPf8E&exportFormat=tsv",
-	"infosuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1yuH19H5OQLbzsd_SrLvRk2O87uBrPcBHe9ZMYpkrZjY&exportFormat=tsv",
+	"infoboxsuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1yuH19H5OQLbzsd_SrLvRk2O87uBrPcBHe9ZMYpkrZjY&exportFormat=tsv",
+	"infosuper_csv": "https://docs.google.com/feeds/download/spreadsheets/Export?key=1hkdv9gE_NXgw-Rf9F_-CgzHUzDAljjlkp6MhtxCjLfw&exportFormat=tsv",
 	"sombi_url": "https://sombi.nrk.no/api/1.3/document?starred=true&projectId=576a558afd3cf13b2ae0c649",
 	"extra_js": []
 }
