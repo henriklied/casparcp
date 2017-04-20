@@ -210,7 +210,7 @@ $(document).ready(function() {
 
   socket.on('infobox', function(s) {
   	if (!clearSuper(s)) {
-		s.text = s.text.replace(/\n/g, '<p>');
+		s.text = s.text.replace(/\n/g, '<span>');
   		var html = '<div data-name="Infoboks: '+s.title+'" class="super infobox '+s.position+'" id="super_'+s.id+'">';
   		if (s.title != "") {
   			html += '<div class="title ghost">'+s.title+'</div>';

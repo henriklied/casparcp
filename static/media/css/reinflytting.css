@@ -230,6 +230,11 @@ body {
 	padding: 10px;
 }
 
+.infobox span {
+	display: block;
+	padding: 10px 0;
+}
+
 .staticimg .credits {
 
 }
