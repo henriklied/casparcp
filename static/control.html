@@ -155,10 +155,10 @@ String.prototype.replaceAll = function(search, replace) {
 				<input type="hidden" class="txt_personsuper_id" value="'+randomNum()+'">\
 				<p><label>Zoomnivå\
 					<select class="mapsuper_zoom">\
-						<option value="10">Stort utsnitt</option>\
-						<option value="13">Middels utsnitt</option>\
-						<option value="15">Nært utsnitt</option>\
-						<option value="18">Ultranært utsnitt</option>\
+						<option value="8">Stort utsnitt</option>\
+						<option value="10">Middels utsnitt</option>\
+						<option value="13">Nært utsnitt</option>\
+						<option value="15">Ultranært utsnitt</option>\
 					</select></label></p>\
 				<label>Animér rute <input type="checkbox"></label>\
 				<div class="clearer" style="margin-top: 20px;"></div>\
@@ -539,8 +539,8 @@ String.prototype.replaceAll = function(search, replace) {
 			return true;
 		}
 		var min_id = '2526';
-		var polyline = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20cartodb_id%20>%20'+min_id;
-		var polyline2 = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT%20ST_MakeLine(the_geom)%20the_geom%20FROM%20nrk.spot1%20WHERE%20EXTRACT(DAY%20FROM%20now()-time_updated)%20<%2030%20AND%20cartodb_id%20>%20'+min_id;
+		var polyline = 'https://nrk.carto.com/api/v2/sql?q=SELECT%20ST_MakeLine(the_geom%20ORDER%20BY%20time)%20AS%20the_geom%20FROM%20spot1%20WHERE%20time%20BETWEEN%20%272017-04-24T17:00:00Z%27%20AND%20%272017-05-31T00:00:00Z%27&format=GeoJSON';
+		var polyline2 = 'https://nrk.carto.com/api/v2/sql?format=geojson&q=SELECT ST_MakeLine(the_geom ORDER BY time) the_geom FROM nrk.spot1 WHERE EXTRACT(DAY FROM now()-time_updated) < 1 AND cartodb_id >  2526';
 		var currentPos = 'https://nrk.carto.com/api/v2/sql?q=select%20*%20from%20nrk.spot1%20order%20by%20cartodb_id%20desc%20limit%201';
 		
 		if ($(this).data('polyline')) {
